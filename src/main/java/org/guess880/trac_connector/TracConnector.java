@@ -7,6 +7,7 @@ import java.net.URL;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 import org.guess880.trac_connector.object.TracTicket;
 import org.guess880.trac_connector.object.TracTicketAttachment;
 import org.guess880.trac_connector.object.TracTicketAttachments;
@@ -23,6 +24,7 @@ public class TracConnector {
         rpcCfg.setBasicPassword(cfg.getPassword());
         rpcClient = new XmlRpcClient();
         rpcClient.setConfig(rpcCfg);
+        rpcClient.setTransportFactory(new XmlRpcCommonsTransportFactory(rpcClient));
     }
 
     public TracTicket getTicket(final TracTicket ticket) throws XmlRpcException {
