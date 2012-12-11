@@ -17,11 +17,11 @@ public class TracTicket extends TracStruct {
 
     public TracTicket() {
         attachments = new TracTicketAttachments(this);
-        setAPIObjectReader(new TracTicketAPIObjectReader());
-        setAPIObjectWriterForGet(new TracTicketAPIObjectWriterIdOnly());
-        setAPIObjectWriterForCreate(new TracTicketAPIObjectWriterForCreate());
-        setAPIObjectWriterForDelete(new TracTicketAPIObjectWriterIdOnly());
-        setAPIObjectWriterForUpdate(new TracTicketAPIObjectWriterForUpdate());
+        setAPIObjectReader(new DefaultAPIObjectReader());
+        setAPIObjectWriterForGet(new DefaultAPIObjectWriterIdOnly());
+        setAPIObjectWriterForCreate(new DefaultAPIObjectWriterForCreate());
+        setAPIObjectWriterForDelete(new DefaultAPIObjectWriterIdOnly());
+        setAPIObjectWriterForUpdate(new DefaultAPIObjectWriterForUpdate());
     }
 
     public int getId() {
@@ -157,7 +157,7 @@ public class TracTicket extends TracStruct {
         return (Date) getValue(TracTicketAttributes.TIME);
     }
 
-    protected TracTicket setTime(final Date time) {
+    public TracTicket setTime(final Date time) {
         return (TracTicket) setValue(TracTicketAttributes.TIME, time);
     }
 
@@ -165,7 +165,7 @@ public class TracTicket extends TracStruct {
         return (Date) getValue(TracTicketAttributes.CHANGETIME);
     }
 
-    protected TracTicket setChangetime(final Date changetime) {
+    public TracTicket setChangetime(final Date changetime) {
         return (TracTicket) setValue(TracTicketAttributes.CHANGETIME, changetime);
     }
 
@@ -182,7 +182,7 @@ public class TracTicket extends TracStruct {
         return attachments;
     }
 
-    private static class TracTicketAPIObjectReader implements
+    private static class DefaultAPIObjectReader implements
             TracAPIObjectReader {
 
         @SuppressWarnings("unchecked")
@@ -197,7 +197,7 @@ public class TracTicket extends TracStruct {
 
     }
 
-    private static class TracTicketAPIObjectWriterIdOnly implements
+    private static class DefaultAPIObjectWriterIdOnly implements
             TracAPIObjectWriter {
 
         @Override
@@ -207,7 +207,7 @@ public class TracTicket extends TracStruct {
         
     }
 
-    private static class TracTicketAPIObjectWriterForCreate implements
+    private static class DefaultAPIObjectWriterForCreate implements
             TracAPIObjectWriter {
 
         @Override
@@ -221,7 +221,7 @@ public class TracTicket extends TracStruct {
         
     }
 
-    private static class TracTicketAPIObjectWriterForUpdate implements
+    private static class DefaultAPIObjectWriterForUpdate implements
             TracAPIObjectWriter {
 
         @Override

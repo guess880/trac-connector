@@ -20,13 +20,17 @@ public class TracTicketAttachment extends TracObject {
 
     public TracTicketAttachment(final TracTicket ticket) {
         this.ticket = ticket;
-        setAPIObjectReader(new TracTicketAttachmentAPIObjectReader());
-        setAPIObjectWriterForGet(new TracTicketAttachmentAPIObjectWriterForGet());
-        setAPIObjectWriterForUpdate(new TracTicketAttachmentAPIObjectWriterForUpdate());
+        setAPIObjectReader(new DefaultAPIObjectReader());
+        setAPIObjectWriterForGet(new DefaultAPIObjectWriterForGet());
+        setAPIObjectWriterForUpdate(new DefaultAPIObjectWriterForUpdate());
+    }
+
+    protected TracTicket getTicket() {
+        return ticket;
     }
 
     public int getId() {
-        return ticket.getId();
+        return getTicket().getId();
     }
 
     public String getFilename() {
@@ -51,7 +55,7 @@ public class TracTicketAttachment extends TracObject {
         return size;
     }
 
-    protected TracTicketAttachment setSize(final int size) {
+    public TracTicketAttachment setSize(final int size) {
         this.size = size;
         return this;
     }
@@ -60,7 +64,7 @@ public class TracTicketAttachment extends TracObject {
         return time;
     }
 
-    protected TracTicketAttachment setTime(final Date time) {
+    public TracTicketAttachment setTime(final Date time) {
         this.time = time;
         return this;
     }
@@ -83,7 +87,7 @@ public class TracTicketAttachment extends TracObject {
         return setSize(data.length);
     }
 
-    private static class TracTicketAttachmentAPIObjectReader implements
+    private static class DefaultAPIObjectReader implements
             TracAPIObjectReader {
 
         @Override
@@ -103,7 +107,7 @@ public class TracTicketAttachment extends TracObject {
         }
     }
 
-    private static class TracTicketAttachmentAPIObjectWriterForGet implements
+    private static class DefaultAPIObjectWriterForGet implements
             TracAPIObjectWriter {
 
         @Override
@@ -114,7 +118,7 @@ public class TracTicketAttachment extends TracObject {
 
     }
 
-    private static class TracTicketAttachmentAPIObjectWriterForUpdate implements
+    private static class DefaultAPIObjectWriterForUpdate implements
             TracAPIObjectWriter {
 
         @Override

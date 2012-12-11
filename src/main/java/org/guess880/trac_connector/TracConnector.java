@@ -1,63 +1,56 @@
 package org.guess880.trac_connector;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 
-
-import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
-import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
-import org.guess880.trac_connector.object.TracTicket;
-import org.guess880.trac_connector.object.TracTicketAttachment;
-import org.guess880.trac_connector.object.TracTicketAttachments;
+import org.guess880.trac_connector.api.TracAPITemplate;
+import org.guess880.trac_connector.api.TracSearchAPI;
+import org.guess880.trac_connector.api.TracSystemAPI;
+import org.guess880.trac_connector.api.TracTicketAPI;
+import org.guess880.trac_connector.api.TracWikiAPI;
 
-public class TracConnector {
+public class TracConnector extends TracAPITemplate {
 
-    private XmlRpcClient rpcClient;
+    private TracSearchAPI search;
 
-    public void setUp(final TracConnectConfig cfg) throws MalformedURLException,
-            XmlRpcException {
-        final XmlRpcClientConfigImpl rpcCfg = new XmlRpcClientConfigImpl();
-        rpcCfg.setServerURL(new URL(cfg.getUrl()));
-        rpcCfg.setBasicUserName(cfg.getUsername());
-        rpcCfg.setBasicPassword(cfg.getPassword());
-        rpcClient = new XmlRpcClient();
-        rpcClient.setConfig(rpcCfg);
-        rpcClient.setTransportFactory(new XmlRpcCommonsTransportFactory(rpcClient));
+    private TracSystemAPI system;
+
+    private TracTicketAPI ticket;
+
+    private TracWikiAPI wiki;
+
+    public TracConnector(final XmlRpcClient rpcClient) {
+        super(rpcClient);
+        newMemberAPI();
     }
 
-    public TracTicket getTicket(final TracTicket ticket) throws XmlRpcException {
-        ticket.readAPIObject(rpcClient.execute("ticket.get", ticket.writeAPIObjectForGet()));
+    public TracConnector(final TracConnectConfig cfg)
+            throws MalformedURLException {
+        super(cfg);
+        newMemberAPI();
+    }
+
+    private void newMemberAPI() {
+        search = new TracSearchAPI(getRpcClient());
+        system = new TracSystemAPI(getRpcClient());
+        ticket = new TracTicketAPI(getRpcClient());
+        wiki = new TracWikiAPI(getRpcClient());
+    }
+
+    public TracSearchAPI search() {
+        return search;
+    }
+
+    public TracSystemAPI system() {
+        return system;
+    }
+
+    public TracTicketAPI ticket() {
         return ticket;
     }
 
-    public TracTicket createTicket(final TracTicket ticket) throws XmlRpcException {
-        return ticket.setId(((Integer) rpcClient.execute("ticket.create", ticket.writeAPIObjectForCreate())).intValue());
-    }
-
-    public TracTicket deleteTicket(final TracTicket ticket) throws XmlRpcException {
-        rpcClient.execute("ticket.delete", ticket.writeAPIObjectForDelete());
-        return ticket;
-    }
-
-    public TracTicket updateTicket(final TracTicket ticket) throws XmlRpcException {
-        ticket.readAPIObject(rpcClient.execute("ticket.update", ticket.writeAPIObjectForUpdate()));
-        return ticket;
-    }
-
-    public TracTicketAttachments listAttachments(final TracTicketAttachments attachments) throws XmlRpcException {
-        attachments.readAPIObject(rpcClient.execute("ticket.listAttachments", attachments.writeAPIObjectForGet()));
-        return attachments;
-    }
-
-    public TracTicketAttachment getAttachment(final TracTicketAttachment attachment) throws XmlRpcException {
-        attachment.readAPIObject(rpcClient.execute("ticket.getAttachment", attachment.writeAPIObjectForGet()));
-        return attachment;
-    }
-
-    public TracTicketAttachment putAttachment(final TracTicketAttachment attachment) throws XmlRpcException {
-        return attachment.setFilename((String) rpcClient.execute("ticket.putAttachment", attachment.writeAPIObjectForUpdate()));
+    public TracWikiAPI wiki() {
+        return wiki;
     }
 
 }
