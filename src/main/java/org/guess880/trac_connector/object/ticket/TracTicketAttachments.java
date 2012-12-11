@@ -1,4 +1,8 @@
-package org.guess880.trac_connector.object;
+package org.guess880.trac_connector.object.ticket;
+
+import org.guess880.trac_connector.object.AbsTracObjects;
+import org.guess880.trac_connector.object.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.TracObject;
 
 public class TracTicketAttachments extends AbsTracObjects<TracTicketAttachment> {
 

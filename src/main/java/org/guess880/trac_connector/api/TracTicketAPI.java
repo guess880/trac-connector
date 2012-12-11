@@ -5,9 +5,9 @@ import java.net.MalformedURLException;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.TracConnectConfig;
-import org.guess880.trac_connector.object.TracTicket;
-import org.guess880.trac_connector.object.TracTicketAttachment;
-import org.guess880.trac_connector.object.TracTicketAttachments;
+import org.guess880.trac_connector.object.ticket.TracTicket;
+import org.guess880.trac_connector.object.ticket.TracTicketAttachment;
+import org.guess880.trac_connector.object.ticket.TracTicketAttachments;
 
 public class TracTicketAPI extends TracAPITemplate {
 

@@ -11,9 +11,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.apache.xmlrpc.XmlRpcException;
-import org.guess880.trac_connector.object.TracTicket;
-import org.guess880.trac_connector.object.TracTicketAttachment;
-import org.guess880.trac_connector.object.TracTicketAttachments;
+import org.guess880.trac_connector.object.ticket.TracTicket;
+import org.guess880.trac_connector.object.ticket.TracTicketAttachment;
+import org.guess880.trac_connector.object.ticket.TracTicketAttachments;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
