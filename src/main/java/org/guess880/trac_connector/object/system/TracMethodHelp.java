@@ -1,5 +1,6 @@
 package org.guess880.trac_connector.object.system;
 
+import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracAPIObjectWriter;
 import org.guess880.trac_connector.object.TracObject;
@@ -12,8 +13,8 @@ public class TracMethodHelp extends TracObject {
 
     public TracMethodHelp(final String name) {
         this.name = name;
-        setAPIObjectReader(new DefaultAPIObjectReader());
-        setAPIObjectWriterForGet(new DefaultAPIObjectWriter());
+        setGetResultReader(new DefaultAPIObjectReader());
+        setGetParamWriter(new DefaultAPIObjectWriter());
     }
 
     public String getName() {
@@ -32,7 +33,7 @@ public class TracMethodHelp extends TracObject {
     private static class DefaultAPIObjectReader implements TracAPIObjectReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
             final TracMethodHelp signature = (TracMethodHelp) tracObj;
             signature.setHelp((String) apiObj);
             return signature;
@@ -43,7 +44,7 @@ public class TracMethodHelp extends TracObject {
     private static class DefaultAPIObjectWriter implements TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
+        public Object[] write(final ITracObject tracObj) {
             return new Object[] { ((TracMethodHelp) tracObj).getName() };
         }
 

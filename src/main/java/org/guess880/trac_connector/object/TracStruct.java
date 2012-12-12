@@ -5,10 +5,14 @@ import java.util.Map;
 
 import org.guess880.trac_connector.attr.AbsTracAttributes;
 
-
 public class TracStruct extends TracObject {
 
     private Map<String, Object> values;
+
+    public TracStruct() {
+        super();
+        setGetResultReader(new TrucStructGetResultReader());
+    }
 
     protected Map<String, Object> getValues() {
         return values;

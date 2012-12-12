@@ -1,5 +1,6 @@
 package org.guess880.trac_connector.attr;
 
+// FIXME move to TracTicket
 public class TracTicketAttributes extends AbsTracAttributes {
 
     public static final TracTicketAttributes TYPE = new TracTicketAttributes("type");

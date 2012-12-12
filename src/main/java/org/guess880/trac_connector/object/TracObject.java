@@ -2,61 +2,74 @@ package org.guess880.trac_connector.object;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class TracObject {
+public class TracObject implements ITracObject {
 
-    private TracAPIObjectReader reader;
+    private TracAPIObjectReader getMultiResultReader;
 
-    private TracAPIObjectWriter writerForGet;
+    private TracAPIObjectReader getResultReader;
 
-    private TracAPIObjectWriter writerForCreate;
+    private TracAPIObjectWriter getParamWriter;
 
-    private TracAPIObjectWriter writerForDelete;
+    private TracAPIObjectWriter createParamWriter;
 
-    private TracAPIObjectWriter writerForUpdate;
+    private TracAPIObjectWriter deleteParamWriter;
 
-    public TracObject setAPIObjectReader(final TracAPIObjectReader reader) {
-        this.reader = reader;
+    private TracAPIObjectWriter updateParamWriter;
+
+    public TracObject setGetMultiResultReader(final TracAPIObjectReader reader) {
+        this.getMultiResultReader = reader;
         return this;
     }
 
-    public TracObject setAPIObjectWriterForGet(final TracAPIObjectWriter writer) {
-        this.writerForGet = writer;
+    public TracObject setGetResultReader(final TracAPIObjectReader reader) {
+        this.getResultReader = reader;
         return this;
     }
 
-    public TracObject setAPIObjectWriterForCreate(final TracAPIObjectWriter writer) {
-        this.writerForCreate = writer;
+    public TracObject setGetParamWriter(final TracAPIObjectWriter writer) {
+        this.getParamWriter = writer;
         return this;
     }
 
-    public TracObject setAPIObjectWriterForDelete(final TracAPIObjectWriter writer) {
-        this.writerForDelete = writer;
+    public TracObject setCreateParamWriter(final TracAPIObjectWriter writer) {
+        this.createParamWriter = writer;
         return this;
     }
 
-    public TracObject setAPIObjectWriterForUpdate(final TracAPIObjectWriter writer) {
-        this.writerForUpdate = writer;
+    public TracObject setDeleteParamWriter(final TracAPIObjectWriter writer) {
+        this.deleteParamWriter = writer;
         return this;
     }
 
-    public TracObject readAPIObject(final Object apiObj) {
-        return reader.read(this, apiObj);
+    public TracObject setUpdateParamWriter(final TracAPIObjectWriter writer) {
+        this.updateParamWriter = writer;
+        return this;
     }
 
-    public Object[] writeAPIObjectForGet() {
-        return writerForGet.write(this);
+    public TracObject readGetMultiResult(final Object apiObj) {
+        getMultiResultReader.read(this, apiObj);
+        return this;
     }
 
-    public Object[] writeAPIObjectForCreate() {
-        return writerForCreate.write(this);
+    public TracObject readGetResult(final Object apiObj) {
+        getResultReader.read(this, apiObj);
+        return this;
     }
 
-    public Object[] writeAPIObjectForDelete() {
-        return writerForDelete.write(this);
+    public Object[] writeGetParam() {
+        return getParamWriter.write(this);
     }
 
-    public Object[] writeAPIObjectForUpdate() {
-        return writerForUpdate.write(this);
+    public Object[] writeCreateParam() {
+        return createParamWriter.write(this);
+    }
+
+    public Object[] writeDeleteParam() {
+        return deleteParamWriter.write(this);
+    }
+
+    public Object[] writeUpdateParam() {
+        return updateParamWriter.write(this);
     }
 
     @Override

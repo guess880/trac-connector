@@ -1,5 +1,6 @@
 package org.guess880.trac_connector.object.system;
 
+import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracEmptyAPIObjectWriter;
 import org.guess880.trac_connector.object.TracObject;
@@ -13,8 +14,8 @@ public class TracVersion extends TracObject {
     private int minor;
 
     public TracVersion() {
-        setAPIObjectReader(new DefaultAPIObjectReader());
-        setAPIObjectWriterForGet(new TracEmptyAPIObjectWriter());
+        setGetResultReader(new DefaultAPIObjectReader());
+        setGetParamWriter(new TracEmptyAPIObjectWriter());
     }
 
     public int getEpoc() {
@@ -47,7 +48,7 @@ public class TracVersion extends TracObject {
     private static class DefaultAPIObjectReader implements TracAPIObjectReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
             final TracVersion version = (TracVersion) tracObj;
             final Object[] attrs = (Object[]) apiObj;
             version.setEpoc((Integer) attrs[0]);

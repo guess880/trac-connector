@@ -1,16 +1,14 @@
 package org.guess880.trac_connector.object.ticket;
 
-import java.util.Map;
-
 import org.guess880.trac_connector.attr.TracTicketFiledAttributes;
-import org.guess880.trac_connector.object.TracAPIObjectReader;
-import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracStruct;
+import org.guess880.trac_connector.object.TrucStructGetResultReader;
 
 public class TracTicketField extends TracStruct {
 
     public TracTicketField() {
-        setAPIObjectReader(new DefaultAPIObjectReader());
+        super();
+        setGetMultiResultReader(new TrucStructGetResultReader());
     }
 
     public String getName() {
@@ -93,18 +91,4 @@ public class TracTicketField extends TracStruct {
         setValue(TracTicketFiledAttributes.CUSTOM, custom);
         return this;
     }
-
-    private static class DefaultAPIObjectReader implements
-            TracAPIObjectReader {
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
-            final TracTicketField field = (TracTicketField) tracObj;
-            field.setValues((Map<String, Object>) apiObj);
-            return field;
-        }
-
-    }
-
 }

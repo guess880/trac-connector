@@ -8,7 +8,7 @@ public class TracMethods extends AbsTracObjects<TracMethod> {
 
     public TracMethods() {
         super();
-        setAPIObjectWriterForGet(new TracEmptyAPIObjectWriter());
+        setGetMultiParamWriter(new TracEmptyAPIObjectWriter());
     }
 
     @Override

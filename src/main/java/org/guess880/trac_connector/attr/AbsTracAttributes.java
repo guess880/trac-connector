@@ -2,6 +2,7 @@ package org.guess880.trac_connector.attr;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+// FIXME move to object package
 public abstract class AbsTracAttributes {
 
     private final String name;

@@ -20,7 +20,7 @@ public class TracSearchAPI extends TracAPITemplate {
     }
 
     public TracSearchFilters getSearchFilters(final TracSearchFilters filters) throws XmlRpcException {
-        filters.readAPIObject(getRpcClient().execute("search.getSearchFilters", filters.writeAPIObjectForGet()));
+        filters.readGetMultiResult(getRpcClient().execute("search.getSearchFilters", filters.writeGetMultiParam()));
         return filters;
     }
 
@@ -29,7 +29,7 @@ public class TracSearchAPI extends TracAPITemplate {
     }
 
     public TracSearchResults performSearch(final TracSearchResults results) throws XmlRpcException {
-        results.readAPIObject(getRpcClient().execute("search.performSearch", results.writeAPIObjectForGet()));
+        results.readGetMultiResult(getRpcClient().execute("search.performSearch", results.writeGetMultiParam()));
         return results;
     }
 

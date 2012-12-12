@@ -4,14 +4,37 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class AbsTracObjects<E extends TracObject> extends TracObject implements
-        Iterable<E> {
+public abstract class AbsTracObjects<E extends TracObject> implements
+        ITracObject, Iterable<E> {
+
+    private TracAPIObjectReader getMultiResultReader;
+
+    private TracAPIObjectWriter getMultiParamWriter;
 
     private final List<E> list;
 
     public AbsTracObjects() {
         this.list = new ArrayList<E>();
-        setAPIObjectReader(new DefaultAPIObjectReader());
+        setGetMultiResultReader(new DefaultAPIObjectReader());
+    }
+
+    public AbsTracObjects<E> setGetMultiResultReader(final TracAPIObjectReader reader) {
+        this.getMultiResultReader = reader;
+        return this;
+    }
+
+    public AbsTracObjects<E> setGetMultiParamWriter(final TracAPIObjectWriter writer) {
+        this.getMultiParamWriter = writer;
+        return this;
+    }
+
+    public AbsTracObjects<E> readGetMultiResult(final Object apiObj) {
+        getMultiResultReader.read(this, apiObj);
+        return this;
+    }
+
+    public Object[] writeGetMultiParam() {
+        return getMultiParamWriter.write(this);
     }
 
     @Override
@@ -41,12 +64,12 @@ public abstract class AbsTracObjects<E extends TracObject> extends TracObject im
             TracAPIObjectReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
             final AbsTracObjects<?> objects = (AbsTracObjects<?>) tracObj;
             objects.clear();
             final Object[] objAry = (Object[]) apiObj;
             for (final Object obj : objAry) {
-                objects.newElement().readAPIObject(obj);
+                objects.newElement().readGetMultiResult(obj);
             }
             return objects;
         }

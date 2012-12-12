@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.guess880.trac_connector.attr.TracTicketAttributes;
+import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracAPIObjectWriter;
 import org.guess880.trac_connector.object.TracObject;
@@ -12,8 +13,6 @@ import org.guess880.trac_connector.object.TracStruct;
 
 
 public class TracTicket extends TracStruct {
-
-    private TracAPIObjectReader queryReader;
 
     private TracAPIObjectReader createReader;
 
@@ -26,22 +25,13 @@ public class TracTicket extends TracStruct {
     private TracTicketChangeLogs changelogs;
 
     public TracTicket() {
-        setAPIObjectReader(new GetAPIObjectReader());
-        setQueryAPIObjectReader(new IdOnlyAPIObjectReader());
+        setGetResultReader(new GetAPIObjectReader());
+        setGetMultiResultReader(new IdOnlyAPIObjectReader());
         setCreateAPIObjectReader(new IdOnlyAPIObjectReader());
-        setAPIObjectWriterForGet(new DefaultAPIObjectWriterIdOnly());
-        setAPIObjectWriterForCreate(new DefaultAPIObjectWriterForCreate());
-        setAPIObjectWriterForDelete(new DefaultAPIObjectWriterIdOnly());
-        setAPIObjectWriterForUpdate(new DefaultAPIObjectWriterForUpdate());
-    }
-
-    public TracObject setQueryAPIObjectReader(final TracAPIObjectReader queryReader) {
-        this.queryReader = queryReader;
-        return this;
-    }
-
-    public TracObject readQueryAPIObject(final Object apiObj) {
-        return queryReader.read(this, apiObj);
+        setGetParamWriter(new DefaultAPIObjectWriterIdOnly());
+        setCreateParamWriter(new DefaultAPIObjectWriterForCreate());
+        setDeleteParamWriter(new DefaultAPIObjectWriterIdOnly());
+        setUpdateParamWriter(new DefaultAPIObjectWriterForUpdate());
     }
 
     public TracObject setCreateAPIObjectReader(final TracAPIObjectReader createReader) {
@@ -50,7 +40,8 @@ public class TracTicket extends TracStruct {
     }
 
     public TracObject readCreateAPIObject(final Object apiObj) {
-        return createReader.read(this, apiObj);
+        createReader.read(this, apiObj);
+        return this;
     }
 
     public int getId() {
@@ -228,7 +219,7 @@ public class TracTicket extends TracStruct {
 
         @SuppressWarnings("unchecked")
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
             final Object[] objAry = (Object[]) apiObj;
             final TracTicket ticket = (TracTicket) tracObj;
             ticket.setId(((Integer) objAry[0]).intValue());
@@ -242,7 +233,7 @@ public class TracTicket extends TracStruct {
             TracAPIObjectReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
             final TracTicket ticket = (TracTicket) tracObj;
             ticket.setId((Integer) apiObj);
             return ticket;
@@ -254,7 +245,7 @@ public class TracTicket extends TracStruct {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
+        public Object[] write(final ITracObject tracObj) {
             return new Object[] { ((TracTicket) tracObj).getId() };
         }
         
@@ -264,7 +255,7 @@ public class TracTicket extends TracStruct {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
+        public Object[] write(final ITracObject tracObj) {
             final TracTicket ticket = (TracTicket) tracObj;
             final Map<String, Object> attrs = new HashMap<String, Object>(ticket.getValues());
             attrs.remove(TracTicketAttributes.TIME.getName());
@@ -278,7 +269,7 @@ public class TracTicket extends TracStruct {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
+        public Object[] write(final ITracObject tracObj) {
             final TracTicket ticket = (TracTicket) tracObj;
             final Map<String, Object> attrs = new HashMap<String, Object>(ticket.getValues());
             attrs.remove(TracTicketAttributes.TIME.getName());

@@ -7,7 +7,7 @@ public class TracSearchFilters extends AbsTracObjects<TracSearchFilter> {
 
     public TracSearchFilters() {
         super();
-        setAPIObjectWriterForGet(new TracEmptyAPIObjectWriter());
+        setGetMultiParamWriter(new TracEmptyAPIObjectWriter());
     }
 
     @Override

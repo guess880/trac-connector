@@ -6,6 +6,7 @@ import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.TracConnectConfig;
 import org.guess880.trac_connector.object.system.TracMethod;
+import org.guess880.trac_connector.object.system.TracMethodSignature;
 import org.guess880.trac_connector.object.system.TracMethods;
 import org.guess880.trac_connector.object.system.TracVersion;
 
@@ -25,7 +26,7 @@ public class TracSystemAPI extends TracAPITemplate {
     }
 
     public TracMethods listMethods(final TracMethods methods) throws XmlRpcException {
-        methods.readAPIObject(getRpcClient().execute("system.listMethods", methods.writeAPIObjectForGet()));
+        methods.readGetMultiResult(getRpcClient().execute("system.listMethods", methods.writeGetMultiParam()));
         return methods;
     }
 
@@ -34,7 +35,7 @@ public class TracSystemAPI extends TracAPITemplate {
     }
 
     public TracMethod methodHelp(final TracMethod method) throws XmlRpcException {
-        method.getHelp().readAPIObject(getRpcClient().execute("system.methodHelp", method.getHelp().writeAPIObjectForGet()));
+        method.getHelp().readGetResult(getRpcClient().execute("system.methodHelp", method.getHelp().writeGetParam()));
         return method;
     }
 
@@ -43,7 +44,8 @@ public class TracSystemAPI extends TracAPITemplate {
     }
 
     public TracMethod methodSignature(final TracMethod method) throws XmlRpcException {
-        method.getSignature().readAPIObject(getRpcClient().execute("system.methodSignature", method.getSignature().writeAPIObjectForGet()));
+        final TracMethodSignature signature = method.getSignature();
+        signature.readGetResult(getRpcClient().execute("system.methodSignature", signature.writeGetParam()));
         return method;
     }
 
@@ -52,7 +54,7 @@ public class TracSystemAPI extends TracAPITemplate {
     }
 
     public TracVersion getAPIVersion(final TracVersion version) throws XmlRpcException {
-        version.readAPIObject(getRpcClient().execute("system.getAPIVersion", version.writeAPIObjectForGet()));
+        version.readGetResult(getRpcClient().execute("system.getAPIVersion", version.writeGetParam()));
         return version;
     }
 

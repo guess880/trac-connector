@@ -86,7 +86,7 @@ public class TracTicketAPI extends TracAPITemplate {
     }
 
     public TracTickets query(final TracTickets tickets) throws XmlRpcException {
-        tickets.readAPIObject(getRpcClient().execute("ticket.query", tickets.writeAPIObjectForGet()));
+        tickets.readGetMultiResult(getRpcClient().execute("ticket.query", tickets.writeGetMultiParam()));
         return tickets;
     }
 
@@ -95,7 +95,7 @@ public class TracTicketAPI extends TracAPITemplate {
     }
 
     public TracTickets getRecentChanges(final TracTickets tickets) throws XmlRpcException {
-        tickets.readAPIObjectForRecentChanges(getRpcClient().execute("ticket.getRecentChanges", tickets.writeAPIObjectForRecentChanges()));
+        tickets.readGetMultiResult(getRpcClient().execute("ticket.getRecentChanges", tickets.writeAPIObjectForRecentChanges()));
         return tickets;
     }
 
@@ -122,7 +122,7 @@ public class TracTicketAPI extends TracAPITemplate {
     }
 
     public TracTicket get(final TracTicket ticket) throws XmlRpcException {
-        ticket.readAPIObject(getRpcClient().execute("ticket.get", ticket.writeAPIObjectForGet()));
+        ticket.readGetResult(getRpcClient().execute("ticket.get", ticket.writeGetParam()));
         return ticket;
     }
 
@@ -131,7 +131,7 @@ public class TracTicketAPI extends TracAPITemplate {
     }
 
     public TracTicket create(final TracTicket ticket) throws XmlRpcException {
-        ticket.readCreateAPIObject(getRpcClient().execute("ticket.create", ticket.writeAPIObjectForCreate()));
+        ticket.readCreateAPIObject(getRpcClient().execute("ticket.create", ticket.writeCreateParam()));
         return ticket;
     }
 
@@ -140,12 +140,12 @@ public class TracTicketAPI extends TracAPITemplate {
     }
 
     public TracTicket update(final TracTicket ticket) throws XmlRpcException {
-        ticket.readAPIObject(getRpcClient().execute("ticket.update", ticket.writeAPIObjectForUpdate()));
+        ticket.readGetResult(getRpcClient().execute("ticket.update", ticket.writeUpdateParam()));
         return ticket;
     }
 
     public TracTicket delete(final TracTicket ticket) throws XmlRpcException {
-        getRpcClient().execute("ticket.delete", ticket.writeAPIObjectForDelete());
+        getRpcClient().execute("ticket.delete", ticket.writeDeleteParam());
         return ticket;
     }
 
@@ -155,7 +155,7 @@ public class TracTicketAPI extends TracAPITemplate {
 
     public TracTicketChangeLogs changeLog(final TracTicket ticket) throws XmlRpcException {
         final TracTicketChangeLogs changelogs = ticket.getChangelogs();
-        changelogs.readAPIObject(getRpcClient().execute("ticket.changeLog", changelogs.writeAPIObjectForGet()));
+        changelogs.readGetMultiResult(getRpcClient().execute("ticket.changeLog", changelogs.writeGetMultiParam()));
         return changelogs;
     }
 
@@ -165,7 +165,7 @@ public class TracTicketAPI extends TracAPITemplate {
 
     public TracTicketAttachments listAttachments(final TracTicket ticket) throws XmlRpcException {
         final TracTicketAttachments attachments = ticket.getAttachments();
-        attachments.readAPIObject(getRpcClient().execute("ticket.listAttachments", attachments.writeAPIObjectForGet()));
+        attachments.readGetMultiResult(getRpcClient().execute("ticket.listAttachments", attachments.writeGetMultiParam()));
         return attachments;
     }
 
@@ -174,7 +174,7 @@ public class TracTicketAPI extends TracAPITemplate {
     }
 
     public TracTicketAttachment getAttachment(final TracTicketAttachment attachment) throws XmlRpcException {
-        attachment.readDataAPIObject(getRpcClient().execute("ticket.getAttachment", attachment.writeAPIObjectForGet()));
+        attachment.readGetResult(getRpcClient().execute("ticket.getAttachment", attachment.writeGetParam()));
         return attachment;
     }
 
@@ -183,7 +183,7 @@ public class TracTicketAPI extends TracAPITemplate {
     }
 
     public TracTicketAttachment putAttachment(final TracTicketAttachment attachment) throws XmlRpcException {
-        return attachment.setFilename((String) getRpcClient().execute("ticket.putAttachment", attachment.writeAPIObjectForUpdate()));
+        return attachment.setFilename((String) getRpcClient().execute("ticket.putAttachment", attachment.writeUpdateParam()));
     }
 
     public TracTicketAttachment putAttachment(final int ticket, final String filename, final String description, final byte[] data) throws XmlRpcException {
@@ -191,7 +191,7 @@ public class TracTicketAPI extends TracAPITemplate {
     }
 
     public TracTicketAttachment deleteAttachment(final TracTicketAttachment attachment) throws XmlRpcException {
-        getRpcClient().execute("ticket.deleteAttachment", attachment.writeAPIObjectForDelete());
+        getRpcClient().execute("ticket.deleteAttachment", attachment.writeDeleteParam());
         return attachment;
     }
 
@@ -200,7 +200,7 @@ public class TracTicketAPI extends TracAPITemplate {
     }
 
     public TracTicketFields getTicketFields(final TracTicketFields fields) throws XmlRpcException {
-        fields.readAPIObject(getRpcClient().execute("ticket.getTicketFields", fields.writeAPIObjectForGet()));
+        fields.readGetMultiResult(getRpcClient().execute("ticket.getTicketFields", fields.writeGetMultiParam()));
         return fields;
     }
 

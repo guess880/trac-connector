@@ -1,5 +1,6 @@
 package org.guess880.trac_connector.object.system;
 
+import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracObject;
 
@@ -12,7 +13,7 @@ public class TracMethod extends TracObject {
     private TracMethodSignature signature;
 
     public TracMethod() {
-        setAPIObjectReader(new NameAPIObjectReader());
+        setGetMultiResultReader(new NameAPIObjectReader());
     }
 
     public String getName() {
@@ -51,7 +52,7 @@ public class TracMethod extends TracObject {
     private static class NameAPIObjectReader implements TracAPIObjectReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
             final TracMethod method = (TracMethod) tracObj;
             method.setName((String) apiObj);
             return method;

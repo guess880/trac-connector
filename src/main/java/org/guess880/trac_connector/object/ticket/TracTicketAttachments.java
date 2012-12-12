@@ -1,8 +1,8 @@
 package org.guess880.trac_connector.object.ticket;
 
 import org.guess880.trac_connector.object.AbsTracObjects;
+import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectWriter;
-import org.guess880.trac_connector.object.TracObject;
 
 public class TracTicketAttachments extends AbsTracObjects<TracTicketAttachment> {
 
@@ -11,7 +11,7 @@ public class TracTicketAttachments extends AbsTracObjects<TracTicketAttachment> 
     public TracTicketAttachments(final TracTicket ticket) {
         super();
         this.ticket = ticket;
-        setAPIObjectWriterForGet(new DefaultAPIObjectWriterForGet());
+        setGetMultiParamWriter(new DefaultAPIObjectWriterForGet());
     }
 
     public TracTicket getTicket() {
@@ -28,7 +28,7 @@ public class TracTicketAttachments extends AbsTracObjects<TracTicketAttachment> 
     private static class DefaultAPIObjectWriterForGet implements TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
+        public Object[] write(final ITracObject tracObj) {
             return new Object[] { ((TracTicketAttachments) tracObj).getTicket().getId() };
         }
         

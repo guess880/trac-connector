@@ -3,13 +3,10 @@ package org.guess880.trac_connector.object.ticket;
 import java.util.Date;
 
 import org.guess880.trac_connector.object.AbsTracObjects;
-import org.guess880.trac_connector.object.TracAPIObjectReader;
+import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectWriter;
-import org.guess880.trac_connector.object.TracObject;
 
 public class TracTickets extends AbsTracObjects<TracTicket> {
-
-    private TracAPIObjectReader recentChangesReader;
 
     private TracAPIObjectWriter recentChangesWriter;
 
@@ -18,22 +15,12 @@ public class TracTickets extends AbsTracObjects<TracTicket> {
     private Date since;
 
     public TracTickets() {
-        setAPIObjectReader(new DefaultAPIObjectReader());
-        setAPIObjectReaderForRecentChanges(new DefaultAPIObjectReader());
-        setAPIObjectWriterForGet(new DefaultAPIObjectWriter());
+        super();
+        setGetMultiParamWriter(new DefaultAPIObjectWriter());
         setAPIObjectWriterForRecentChanges(new APIObjectWriterForRecentChanges());
     }
 
-    public TracObject setAPIObjectReaderForRecentChanges(final TracAPIObjectReader reader) {
-        this.recentChangesReader = reader;
-        return this;
-    }
-
-    public TracObject readAPIObjectForRecentChanges(final Object apiObj) {
-        return recentChangesReader.read(this, apiObj);
-    }
-
-    public TracObject setAPIObjectWriterForRecentChanges(final TracAPIObjectWriter writer) {
+    public TracTickets setAPIObjectWriterForRecentChanges(final TracAPIObjectWriter writer) {
         this.recentChangesWriter = writer;
         return this;
     }
@@ -74,7 +61,7 @@ public class TracTickets extends AbsTracObjects<TracTicket> {
     private static class DefaultAPIObjectWriter implements TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
+        public Object[] write(final ITracObject tracObj) {
             final TracTickets tickets = (TracTickets) tracObj;
             return tickets.getQueryStr() == null
                     ? new Object[] {}
@@ -86,27 +73,11 @@ public class TracTickets extends AbsTracObjects<TracTicket> {
     private static class APIObjectWriterForRecentChanges implements TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
+        public Object[] write(final ITracObject tracObj) {
             final TracTickets tickets = (TracTickets) tracObj;
             return tickets.getSince() == null
                     ? new Object[] {}
                     : new Object[] { tickets.getSince() };
-        }
-
-    }
-
-    private static class DefaultAPIObjectReader implements
-            TracAPIObjectReader {
-
-        @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
-            final TracTickets tickets = (TracTickets) tracObj;
-            tickets.clear();
-            final Object[] objAry = (Object[]) apiObj;
-            for (final Object obj : objAry) {
-                tickets.newElement().readQueryAPIObject(obj);
-            }
-            return tickets;
         }
 
     }

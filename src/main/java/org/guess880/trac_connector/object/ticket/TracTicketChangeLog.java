@@ -2,6 +2,7 @@ package org.guess880.trac_connector.object.ticket;
 
 import java.util.Date;
 
+import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracObject;
 
@@ -20,7 +21,7 @@ public class TracTicketChangeLog extends TracObject {
     private int permanent;
 
     public TracTicketChangeLog() {
-        setAPIObjectReader(new DefaultAPIObjectReader());
+        setGetMultiResultReader(new DefaultAPIObjectReader());
     }
 
     public Date getTime() {
@@ -81,7 +82,7 @@ public class TracTicketChangeLog extends TracObject {
             TracAPIObjectReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
             final Object[] aryObj = (Object[]) apiObj;
             final TracTicketChangeLog changelog = (TracTicketChangeLog) tracObj;
             changelog.setTime((Date) aryObj[0]);
