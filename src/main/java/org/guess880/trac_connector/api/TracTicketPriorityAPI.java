@@ -17,7 +17,7 @@ public class TracTicketPriorityAPI extends AbsTracTicketEnumFieldAPI {
     }
 
     @Override
-    protected String getEnumName() {
+    protected String getFieldName() {
         return "priority";
     }
 

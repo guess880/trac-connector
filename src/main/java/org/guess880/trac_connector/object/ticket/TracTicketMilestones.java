@@ -1,18 +1,18 @@
-package org.guess880.trac_connector.object.system;
+package org.guess880.trac_connector.object.ticket;
 
 import org.guess880.trac_connector.object.AbsTracObjects;
 import org.guess880.trac_connector.object.TracEmptyAPIObjectWriter;
 
-public class TracMethods extends AbsTracObjects<TracMethod> {
+public class TracTicketMilestones extends AbsTracObjects<TracTicketMilestone> {
 
-    public TracMethods() {
+    public TracTicketMilestones() {
         super();
         setGetMultiParamWriter(new TracEmptyAPIObjectWriter());
     }
 
     @Override
-    public TracMethod newElement() {
-        final TracMethod e = new TracMethod();
+    public TracTicketMilestone newElement() {
+        final TracTicketMilestone e = new TracTicketMilestone();
         add(e);
         return e;
     }

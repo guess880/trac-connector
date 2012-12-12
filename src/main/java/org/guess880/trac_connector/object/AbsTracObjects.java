@@ -58,7 +58,7 @@ public abstract class AbsTracObjects<E extends TracObject> implements
         return list.isEmpty();
     }
 
-    public abstract TracObject newElement();
+    public abstract E newElement();
 
     private static class DefaultAPIObjectReader implements
             TracAPIObjectReader {

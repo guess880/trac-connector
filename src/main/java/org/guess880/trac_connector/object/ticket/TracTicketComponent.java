@@ -1,14 +1,9 @@
 package org.guess880.trac_connector.object.ticket;
 
-import org.guess880.trac_connector.object.ITracObject;
-import org.guess880.trac_connector.object.TracAPIObjectWriter;
-
 public class TracTicketComponent extends TracTicketStructFieldTemplate {
 
     public TracTicketComponent() {
         super();
-        setCreateParamWriter(new DefaultCreateParamWriter());
-        setUpdateParamWriter(new DefaultUpdateParamWriter());
     }
 
     public String getOwner() {
@@ -38,27 +33,6 @@ public class TracTicketComponent extends TracTicketStructFieldTemplate {
 
         protected Attribute(final String name) {
             super(name);
-        }
-
-    }
-
-    private static class DefaultCreateParamWriter implements
-            TracAPIObjectWriter {
-
-        @Override
-        public Object[] write(final ITracObject tracObj) {
-            final TracTicketComponent component = (TracTicketComponent) tracObj;
-            return new Object[] { component.getName(), component.getValues() };
-        }
-
-    }
-
-    private static class DefaultUpdateParamWriter implements TracAPIObjectWriter {
-
-        @Override
-        public Object[] write(final ITracObject tracObj) {
-            final TracTicketComponent component = (TracTicketComponent) tracObj;
-            return new Object[] { component.getUpdateKey(), component.getValues() };
         }
 
     }

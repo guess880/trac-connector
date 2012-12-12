@@ -4,9 +4,11 @@ import java.net.MalformedURLException;
 
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.TracConnectConfig;
+import org.guess880.trac_connector.object.ticket.TracTicketMilestone;
+import org.guess880.trac_connector.object.ticket.TracTicketMilestones;
 
-
-public class TracTicketMilestoneAPI extends TracAPITemplate {
+public class TracTicketMilestoneAPI extends
+        AbsTracTicketStructFieldAPI<TracTicketMilestone, TracTicketMilestones> {
 
     public TracTicketMilestoneAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);
@@ -15,6 +17,21 @@ public class TracTicketMilestoneAPI extends TracAPITemplate {
     public TracTicketMilestoneAPI(final TracConnectConfig cfg)
             throws MalformedURLException {
         super(cfg);
+    }
+
+    @Override
+    protected TracTicketMilestones newFields() {
+        return new TracTicketMilestones();
+    }
+
+    @Override
+    protected TracTicketMilestone newField() {
+        return new TracTicketMilestone();
+    }
+
+    @Override
+    protected String getFieldName() {
+        return "milestone";
     }
 
 }

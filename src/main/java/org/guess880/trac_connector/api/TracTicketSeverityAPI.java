@@ -17,7 +17,7 @@ public class TracTicketSeverityAPI extends AbsTracTicketEnumFieldAPI {
     }
 
     @Override
-    protected String getEnumName() {
+    protected String getFieldName() {
         return "severity";
     }
 

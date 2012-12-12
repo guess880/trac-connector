@@ -18,7 +18,7 @@ public class TracTicketTypeAPI extends AbsTracTicketEnumFieldAPI {
     }
 
     @Override
-    protected String getEnumName() {
+    protected String getFieldName() {
         return "type";
     }
 

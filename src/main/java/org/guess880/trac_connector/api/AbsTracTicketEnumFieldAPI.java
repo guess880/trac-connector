@@ -60,14 +60,14 @@ abstract class AbsTracTicketEnumFieldAPI extends TracAPITemplate {
         return update(new TracTicketEnumField().setName(name).setValue(value));
     }
 
-    private String getAPIName(final String method) {
+    protected String getAPIName(final String method) {
         return new StringBuilder("ticket.")
-            .append(getEnumName())
+            .append(getFieldName())
             .append(".")
             .append(method)
             .toString();
     }
 
-    protected abstract String getEnumName();
+    protected abstract String getFieldName();
 
 }

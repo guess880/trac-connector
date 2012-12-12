@@ -13,9 +13,11 @@ public class TracTicketStructFieldTemplate extends TracStruct {
 
     public TracTicketStructFieldTemplate() {
         super();
-        setGetParamWriter(new NameOnlyParamWriter());
         setGetMultiResultReader(new DefaultGetMultiResultReader());
+        setGetParamWriter(new NameOnlyParamWriter());
         setDeleteParamWriter(new NameOnlyParamWriter());
+        setCreateParamWriter(new DefaultCreateParamWriter());
+        setUpdateParamWriter(new DefaultUpdateParamWriter());
     }
 
     public String getUpdateKey() {
@@ -64,6 +66,27 @@ public class TracTicketStructFieldTemplate extends TracStruct {
             final TracTicketStructFieldTemplate field = (TracTicketStructFieldTemplate) tracObj;
             field.setName((String) apiObj);
             return field;
+        }
+
+    }
+
+    private static class DefaultCreateParamWriter implements
+            TracAPIObjectWriter {
+
+        @Override
+        public Object[] write(final ITracObject tracObj) {
+            final TracTicketStructFieldTemplate field = (TracTicketStructFieldTemplate) tracObj;
+            return new Object[] { field.getName(), field.getValues() };
+        }
+
+    }
+
+    private static class DefaultUpdateParamWriter implements TracAPIObjectWriter {
+
+        @Override
+        public Object[] write(final ITracObject tracObj) {
+            final TracTicketStructFieldTemplate field = (TracTicketStructFieldTemplate) tracObj;
+            return new Object[] { field.getUpdateKey(), field.getValues() };
         }
 
     }

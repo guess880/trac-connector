@@ -17,7 +17,7 @@ public class TracTicketResolutionAPI extends AbsTracTicketEnumFieldAPI {
     }
 
     @Override
-    protected String getEnumName() {
+    protected String getFieldName() {
         return "resolution";
     }
 
