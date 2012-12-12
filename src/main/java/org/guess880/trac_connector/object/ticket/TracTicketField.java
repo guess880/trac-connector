@@ -2,7 +2,7 @@ package org.guess880.trac_connector.object.ticket;
 
 import org.guess880.trac_connector.object.AbsTracAttribute;
 import org.guess880.trac_connector.object.TracStruct;
-import org.guess880.trac_connector.object.TrucStructGetResultReader;
+import org.guess880.trac_connector.object.converter.TrucStructGetResultReader;
 
 public class TracTicketField extends TracStruct {
 

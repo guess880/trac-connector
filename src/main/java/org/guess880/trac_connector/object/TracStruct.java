@@ -3,6 +3,8 @@ package org.guess880.trac_connector.object;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.guess880.trac_connector.object.converter.TrucStructGetResultReader;
+
 
 public class TracStruct extends TracObject {
 
@@ -17,7 +19,7 @@ public class TracStruct extends TracObject {
         return values;
     }
 
-    protected TracObject setValues(final Map<String, Object> values) {
+    public TracObject setValues(final Map<String, Object> values) {
         this.values = values;
         return this;
     }

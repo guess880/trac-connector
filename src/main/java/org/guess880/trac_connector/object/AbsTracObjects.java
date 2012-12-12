@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
+import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+
 public abstract class AbsTracObjects<E extends TracObject> implements
         ITracObject, Iterable<E> {
 

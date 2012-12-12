@@ -1,6 +1,8 @@
 package org.guess880.trac_connector.object;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
+import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
 public class TracObject implements ITracObject {
 

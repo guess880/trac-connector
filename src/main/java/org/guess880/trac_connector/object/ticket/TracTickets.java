@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.guess880.trac_connector.object.AbsTracObjects;
 import org.guess880.trac_connector.object.ITracObject;
-import org.guess880.trac_connector.object.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
 public class TracTickets extends AbsTracObjects<TracTicket> {
 

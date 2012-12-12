@@ -1,8 +1,8 @@
 package org.guess880.trac_connector.object.system;
 
 import org.guess880.trac_connector.object.ITracObject;
-import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracObject;
+import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
 
 public class TracMethod extends TracObject {
 

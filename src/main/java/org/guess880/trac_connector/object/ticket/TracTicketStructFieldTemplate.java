@@ -2,9 +2,9 @@ package org.guess880.trac_connector.object.ticket;
 
 import org.guess880.trac_connector.object.AbsTracAttribute;
 import org.guess880.trac_connector.object.ITracObject;
-import org.guess880.trac_connector.object.TracAPIObjectReader;
-import org.guess880.trac_connector.object.TracAPIObjectWriter;
 import org.guess880.trac_connector.object.TracStruct;
+import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
+import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
 public class TracTicketStructFieldTemplate extends TracStruct {
 

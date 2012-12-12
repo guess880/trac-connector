@@ -3,9 +3,9 @@ package org.guess880.trac_connector.object.ticket;
 import java.util.Date;
 
 import org.guess880.trac_connector.object.ITracObject;
-import org.guess880.trac_connector.object.TracAPIObjectReader;
-import org.guess880.trac_connector.object.TracAPIObjectWriter;
 import org.guess880.trac_connector.object.TracObject;
+import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
+import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
 public class TracTicketAttachment extends TracObject {
 
