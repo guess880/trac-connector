@@ -6,12 +6,12 @@ import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracAPIObjectWriter;
 import org.guess880.trac_connector.object.TracStruct;
 
-public class TracTicketFieldStructTemplate extends TracStruct {
+public class TracTicketStructFieldTemplate extends TracStruct {
 
     // TODO difficult to handle
     private String updateKey;
 
-    public TracTicketFieldStructTemplate() {
+    public TracTicketStructFieldTemplate() {
         super();
         setGetParamWriter(new NameOnlyParamWriter());
         setGetMultiResultReader(new DefaultGetMultiResultReader());
@@ -22,7 +22,7 @@ public class TracTicketFieldStructTemplate extends TracStruct {
         return updateKey;
     }
 
-    public TracTicketFieldStructTemplate setUpdateKey(final String updateKey) {
+    public TracTicketStructFieldTemplate setUpdateKey(final String updateKey) {
         this.updateKey = updateKey;
         return this;
     }
@@ -31,7 +31,7 @@ public class TracTicketFieldStructTemplate extends TracStruct {
         return (String) getValue(Attribute.NAME);
     }
 
-    public TracTicketFieldStructTemplate setName(final String name) {
+    public TracTicketStructFieldTemplate setName(final String name) {
         setValue(Attribute.NAME, name);
         return this;
     }
@@ -50,7 +50,7 @@ public class TracTicketFieldStructTemplate extends TracStruct {
 
         @Override
         public Object[] write(final ITracObject tracObj) {
-            return new Object[] { ((TracTicketFieldStructTemplate) tracObj)
+            return new Object[] { ((TracTicketStructFieldTemplate) tracObj)
                     .getName() };
         }
 
@@ -61,7 +61,7 @@ public class TracTicketFieldStructTemplate extends TracStruct {
 
         @Override
         public ITracObject read(final ITracObject tracObj, final Object apiObj) {
-            final TracTicketFieldStructTemplate field = (TracTicketFieldStructTemplate) tracObj;
+            final TracTicketStructFieldTemplate field = (TracTicketStructFieldTemplate) tracObj;
             field.setName((String) apiObj);
             return field;
         }

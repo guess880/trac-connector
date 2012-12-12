@@ -25,7 +25,7 @@ public class TracTicketComponentAPI extends TracAPITemplate {
         return components;
     }
 
-    private TracTicketComponent get(final TracTicketComponent component)
+    public TracTicketComponent get(final TracTicketComponent component)
             throws XmlRpcException {
         component.readGetResult(getRpcClient().execute("ticket.component.get", component.writeGetParam()));
         return component;

@@ -3,7 +3,7 @@ package org.guess880.trac_connector.object.ticket;
 import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectWriter;
 
-public class TracTicketComponent extends TracTicketFieldStructTemplate {
+public class TracTicketComponent extends TracTicketStructFieldTemplate {
 
     public TracTicketComponent() {
         super();
@@ -30,7 +30,7 @@ public class TracTicketComponent extends TracTicketFieldStructTemplate {
     }
 
     protected static class Attribute extends
-            TracTicketFieldStructTemplate.Attribute {
+            TracTicketStructFieldTemplate.Attribute {
 
         public static final Attribute OWNER = new Attribute("owner");
 
