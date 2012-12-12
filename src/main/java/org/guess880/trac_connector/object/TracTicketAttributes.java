@@ -1,4 +1,4 @@
-package org.guess880.trac_connector.attr;
+package org.guess880.trac_connector.object;
 
 // FIXME move to TracTicket
 public class TracTicketAttributes extends AbsTracAttributes {

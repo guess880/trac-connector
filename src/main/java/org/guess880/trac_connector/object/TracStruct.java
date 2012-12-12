@@ -3,7 +3,6 @@ package org.guess880.trac_connector.object;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.guess880.trac_connector.attr.AbsTracAttributes;
 
 public class TracStruct extends TracObject {
 

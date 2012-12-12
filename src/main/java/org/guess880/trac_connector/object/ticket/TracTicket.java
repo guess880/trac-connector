@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.guess880.trac_connector.attr.TracTicketAttributes;
 import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracAPIObjectWriter;
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracStruct;
+import org.guess880.trac_connector.object.TracTicketAttributes;
 
 
 public class TracTicket extends TracStruct {

@@ -1,6 +1,6 @@
 package org.guess880.trac_connector.object.ticket;
 
-import org.guess880.trac_connector.attr.AbsTracAttributes;
+import org.guess880.trac_connector.object.AbsTracAttributes;
 import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracAPIObjectWriter;
