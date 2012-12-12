@@ -22,11 +22,11 @@ public class TracStruct extends TracObject {
         return this;
     }
 
-    public Object getValue(final AbsTracAttributes attr) {
+    public Object getValue(final AbsTracAttribute attr) {
         return values == null ? null : values.get(attr.getName());
     }
 
-    public TracObject setValue(final AbsTracAttributes attr, final Object value) {
+    public TracObject setValue(final AbsTracAttribute attr, final Object value) {
         if (values == null) {
             values = new HashMap<String, Object>();
         }

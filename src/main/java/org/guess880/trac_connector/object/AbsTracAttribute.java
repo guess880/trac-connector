@@ -2,12 +2,11 @@ package org.guess880.trac_connector.object;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-// FIXME move to object package
-public abstract class AbsTracAttributes {
+public abstract class AbsTracAttribute {
 
     private final String name;
 
-    protected AbsTracAttributes(final String name) {
+    protected AbsTracAttribute(final String name) {
         this.name = name;
     }
 
@@ -23,10 +22,10 @@ public abstract class AbsTracAttributes {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof AbsTracAttributes)) {
+        if (!(obj instanceof AbsTracAttribute)) {
             return false;
         }
-        AbsTracAttributes other = (AbsTracAttributes) obj;
+        AbsTracAttribute other = (AbsTracAttribute) obj;
         if (name == null) {
             if (other.name != null) {
                 return false;

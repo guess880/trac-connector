@@ -4,13 +4,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.guess880.trac_connector.object.AbsTracAttribute;
 import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracAPIObjectWriter;
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracStruct;
-import org.guess880.trac_connector.object.TracTicketAttributes;
-
 
 public class TracTicket extends TracStruct {
 
@@ -54,131 +53,131 @@ public class TracTicket extends TracStruct {
     }
 
     public String getType() {
-        return (String) getValue(TracTicketAttributes.TYPE);
+        return (String) getValue(Attribute.TYPE);
     }
 
     public TracTicket setType(final String type) {
-        return (TracTicket) setValue(TracTicketAttributes.TYPE, type);
+        return (TracTicket) setValue(Attribute.TYPE, type);
     }
 
     public String getComponent() {
-        return (String) getValue(TracTicketAttributes.COMPONENT);
+        return (String) getValue(Attribute.COMPONENT);
     }
 
     public TracTicket setComponent(final String component) {
-        return (TracTicket) setValue(TracTicketAttributes.COMPONENT, component);
+        return (TracTicket) setValue(Attribute.COMPONENT, component);
     }
 
     public String getSeverity() {
-        return (String) getValue(TracTicketAttributes.SEVERITY);
+        return (String) getValue(Attribute.SEVERITY);
     }
 
     public TracTicket setSeverity(final String severity) {
-        return (TracTicket) setValue(TracTicketAttributes.SEVERITY, severity);
+        return (TracTicket) setValue(Attribute.SEVERITY, severity);
     }
 
     public String getPriority() {
-        return (String) getValue(TracTicketAttributes.PRIORITY);
+        return (String) getValue(Attribute.PRIORITY);
     }
 
     public TracTicket setPriority(final String priority) {
-        return (TracTicket) setValue(TracTicketAttributes.PRIORITY, priority);
+        return (TracTicket) setValue(Attribute.PRIORITY, priority);
     }
 
     public String getOwner() {
-        return (String) getValue(TracTicketAttributes.OWNER);
+        return (String) getValue(Attribute.OWNER);
     }
 
     public TracTicket setOwner(final String owner) {
-        return (TracTicket) setValue(TracTicketAttributes.OWNER, owner);
+        return (TracTicket) setValue(Attribute.OWNER, owner);
     }
 
     public String getReporter() {
-        return (String) getValue(TracTicketAttributes.REPORTER);
+        return (String) getValue(Attribute.REPORTER);
     }
 
     public TracTicket setReporter(final String reporter) {
-        return (TracTicket) setValue(TracTicketAttributes.REPORTER, reporter);
+        return (TracTicket) setValue(Attribute.REPORTER, reporter);
     }
 
     public String getCc() {
-        return (String) getValue(TracTicketAttributes.CC);
+        return (String) getValue(Attribute.CC);
     }
 
     public TracTicket setCc(final String cc) {
-        return (TracTicket) setValue(TracTicketAttributes.CC, cc);
+        return (TracTicket) setValue(Attribute.CC, cc);
     }
 
     public String getVersion() {
-        return (String) getValue(TracTicketAttributes.VERSION);
+        return (String) getValue(Attribute.VERSION);
     }
 
     public TracTicket setVersion(final String version) {
-        return (TracTicket) setValue(TracTicketAttributes.VERSION, version);
+        return (TracTicket) setValue(Attribute.VERSION, version);
     }
 
     public String getMilestone() {
-        return (String) getValue(TracTicketAttributes.MILESTONE);
+        return (String) getValue(Attribute.MILESTONE);
     }
 
     public TracTicket setMilestone(final String milestone) {
-        return (TracTicket) setValue(TracTicketAttributes.MILESTONE, milestone);
+        return (TracTicket) setValue(Attribute.MILESTONE, milestone);
     }
 
     public String getStatus() {
-        return (String) getValue(TracTicketAttributes.STATUS);
+        return (String) getValue(Attribute.STATUS);
     }
 
     public TracTicket setStatus(final String status) {
-        return (TracTicket) setValue(TracTicketAttributes.STATUS, status);
+        return (TracTicket) setValue(Attribute.STATUS, status);
     }
 
     public String getResolution() {
-        return (String) getValue(TracTicketAttributes.RESOLUTION);
+        return (String) getValue(Attribute.RESOLUTION);
     }
 
     public TracTicket setResolution(final String resolution) {
-        return (TracTicket) setValue(TracTicketAttributes.RESOLUTION, resolution);
+        return (TracTicket) setValue(Attribute.RESOLUTION, resolution);
     }
 
     public String getSummary() {
-        return (String) getValue(TracTicketAttributes.SUMMARY);
+        return (String) getValue(Attribute.SUMMARY);
     }
 
     public TracTicket setSummary(final String summary) {
-        return (TracTicket) setValue(TracTicketAttributes.SUMMARY, summary);
+        return (TracTicket) setValue(Attribute.SUMMARY, summary);
     }
 
     public String getDescription() {
-        return (String) getValue(TracTicketAttributes.DESCRIPTION);
+        return (String) getValue(Attribute.DESCRIPTION);
     }
 
     public TracTicket setDescription(final String description) {
-        return (TracTicket) setValue(TracTicketAttributes.DESCRIPTION, description);
+        return (TracTicket) setValue(Attribute.DESCRIPTION, description);
     }
 
     public String getKeywords() {
-        return (String) getValue(TracTicketAttributes.KEYWORDS);
+        return (String) getValue(Attribute.KEYWORDS);
     }
 
     public TracTicket setKeywords(final String keywords) {
-        return (TracTicket) setValue(TracTicketAttributes.KEYWORDS, keywords);
+        return (TracTicket) setValue(Attribute.KEYWORDS, keywords);
     }
 
     public Date getTime() {
-        return (Date) getValue(TracTicketAttributes.TIME);
+        return (Date) getValue(Attribute.TIME);
     }
 
     public TracTicket setTime(final Date time) {
-        return (TracTicket) setValue(TracTicketAttributes.TIME, time);
+        return (TracTicket) setValue(Attribute.TIME, time);
     }
 
     public Date getChangetime() {
-        return (Date) getValue(TracTicketAttributes.CHANGETIME);
+        return (Date) getValue(Attribute.CHANGETIME);
     }
 
     public TracTicket setChangetime(final Date changetime) {
-        return (TracTicket) setValue(TracTicketAttributes.CHANGETIME, changetime);
+        return (TracTicket) setValue(Attribute.CHANGETIME, changetime);
     }
 
     public String getUpdateComment() {
@@ -212,6 +211,46 @@ public class TracTicket extends TracStruct {
     public TracTicket setAttachments(final TracTicketChangeLogs changelogs) {
         this.changelogs = changelogs;
         return this;
+    }
+
+    protected static class Attribute extends AbsTracAttribute {
+
+        public static final Attribute TYPE = new Attribute("type");
+
+        public static final Attribute COMPONENT = new Attribute("component");
+
+        public static final Attribute SEVERITY = new Attribute("severity");
+
+        public static final Attribute PRIORITY = new Attribute("priority");
+
+        public static final Attribute OWNER = new Attribute("owner");
+
+        public static final Attribute REPORTER = new Attribute("reporter");
+
+        public static final Attribute CC = new Attribute("cc");
+
+        public static final Attribute VERSION = new Attribute("version");
+
+        public static final Attribute MILESTONE = new Attribute("milestone");
+
+        public static final Attribute STATUS = new Attribute("status");
+
+        public static final Attribute RESOLUTION = new Attribute("resolution");
+
+        public static final Attribute SUMMARY = new Attribute("summary");
+
+        public static final Attribute DESCRIPTION = new Attribute("description");
+
+        public static final Attribute KEYWORDS = new Attribute("keywords");
+
+        public static final Attribute TIME = new Attribute("time");
+
+        public static final Attribute CHANGETIME = new Attribute("changetime");
+
+        protected Attribute(final String name) {
+            super(name);
+        }
+
     }
 
     private static class GetAPIObjectReader implements
@@ -258,8 +297,8 @@ public class TracTicket extends TracStruct {
         public Object[] write(final ITracObject tracObj) {
             final TracTicket ticket = (TracTicket) tracObj;
             final Map<String, Object> attrs = new HashMap<String, Object>(ticket.getValues());
-            attrs.remove(TracTicketAttributes.TIME.getName());
-            attrs.remove(TracTicketAttributes.CHANGETIME.getName());
+            attrs.remove(Attribute.TIME.getName());
+            attrs.remove(Attribute.CHANGETIME.getName());
             return new Object[] { ticket.getSummary(), ticket.getDescription(), attrs };
         }
         
@@ -272,8 +311,8 @@ public class TracTicket extends TracStruct {
         public Object[] write(final ITracObject tracObj) {
             final TracTicket ticket = (TracTicket) tracObj;
             final Map<String, Object> attrs = new HashMap<String, Object>(ticket.getValues());
-            attrs.remove(TracTicketAttributes.TIME.getName());
-            attrs.remove(TracTicketAttributes.CHANGETIME.getName());
+            attrs.remove(Attribute.TIME.getName());
+            attrs.remove(Attribute.CHANGETIME.getName());
             return new Object[] { ticket.getId(), ticket.getUpdateComment(), attrs };
         }
         

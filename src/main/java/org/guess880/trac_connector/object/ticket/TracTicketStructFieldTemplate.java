@@ -1,6 +1,6 @@
 package org.guess880.trac_connector.object.ticket;
 
-import org.guess880.trac_connector.object.AbsTracAttributes;
+import org.guess880.trac_connector.object.AbsTracAttribute;
 import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracAPIObjectReader;
 import org.guess880.trac_connector.object.TracAPIObjectWriter;
@@ -38,7 +38,7 @@ public class TracTicketStructFieldTemplate extends TracStruct {
         return this;
     }
 
-    protected static class Attribute extends AbsTracAttributes {
+    protected static class Attribute extends AbsTracAttribute {
 
         public static final Attribute NAME = new Attribute("name");
 
