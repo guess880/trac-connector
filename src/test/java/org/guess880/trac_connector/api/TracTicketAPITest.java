@@ -15,6 +15,9 @@ import org.apache.xmlrpc.XmlRpcException;
 import org.guess880.trac_connector.object.ticket.TracTicket;
 import org.guess880.trac_connector.object.ticket.TracTicketAttachment;
 import org.guess880.trac_connector.object.ticket.TracTicketAttachments;
+import org.guess880.trac_connector.object.ticket.TracTicketChangeLog;
+import org.guess880.trac_connector.object.ticket.TracTicketChangeLogs;
+import org.guess880.trac_connector.object.ticket.TracTicketFields;
 import org.guess880.trac_connector.object.ticket.TracTickets;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -97,6 +100,7 @@ public class TracTicketAPITest {
         t1.setDescription("this is description.");
         api.create(t1);
         try {
+            // create test
             final File f1 = new File("target/test-classes/create.txt");
             byte[] b1 = new byte[(int) f1.length()];
             final FileInputStream in1 = new FileInputStream(f1);
@@ -123,6 +127,7 @@ public class TracTicketAPITest {
                 assertThat(a.getAuthor(), is(not(nullValue())));
                 assertThat(a.getData(), is(equalTo(b1)));
             }
+            // update test
             final File f2 = new File("target/test-classes/update.txt");
             byte[] b2 = new byte[(int) f2.length()];
             final FileInputStream in2 = new FileInputStream(f2);
@@ -147,9 +152,29 @@ public class TracTicketAPITest {
                 assertThat(a.getAuthor(), is(not(nullValue())));
                 assertThat(a.getData(), is(equalTo(b2)));
             }
+            // delete test
+            api.deleteAttachment(a1);
+            final TracTicketAttachments as3 = api.listAttachments(t1);
+            assertThat(as3.isEmpty(), is(equalTo(true)));
         } finally {
             api.delete(t1);
         }
+    }
+
+    // FIXME no assertion
+    @Test
+    public void testChangeLog() throws XmlRpcException {
+        final TracTicketChangeLogs logs = api.changeLog(13);
+        for (final TracTicketChangeLog log : logs) {
+            System.out.println(log);
+        }
+    }
+
+    // FIXME no assertion
+    @Test
+    public void testGetTicketFields() throws XmlRpcException {
+        final TracTicketFields fields = api.getTicketFields();
+        System.out.println(fields);
     }
 
 }

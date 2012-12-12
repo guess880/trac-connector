@@ -30,6 +30,7 @@ public class TracTicketAttachment extends TracObject {
         setDataAPIObjectReader(new DataAPIObjectReader());
         setAPIObjectWriterForGet(new DefaultAPIObjectWriterForGet());
         setAPIObjectWriterForUpdate(new DefaultAPIObjectWriterForUpdate());
+        setAPIObjectWriterForDelete(new DefaultAPIObjectWriterForDelete());
     }
 
     public TracObject setDataAPIObjectReader(final TracAPIObjectReader dataReader) {
@@ -148,6 +149,17 @@ public class TracTicketAttachment extends TracObject {
         public Object[] write(final TracObject tracObj) {
             final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
             return new Object[] { attach.getId(), attach.getFilename(), attach.getDescription(), attach.getData() };
+        }
+
+    }
+
+    private static class DefaultAPIObjectWriterForDelete implements
+            TracAPIObjectWriter {
+
+        @Override
+        public Object[] write(final TracObject tracObj) {
+            final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
+            return new Object[] { attach.getId(), attach.getFilename() };
         }
 
     }

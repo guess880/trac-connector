@@ -23,6 +23,8 @@ public class TracTicket extends TracStruct {
 
     private TracTicketAttachments attachments;
 
+    private TracTicketChangeLogs changelogs;
+
     public TracTicket() {
         setAPIObjectReader(new GetAPIObjectReader());
         setQueryAPIObjectReader(new IdOnlyAPIObjectReader());
@@ -206,6 +208,18 @@ public class TracTicket extends TracStruct {
 
     public TracTicket setAttachments(final TracTicketAttachments attachments) {
         this.attachments = attachments;
+        return this;
+    }
+
+    public TracTicketChangeLogs getChangelogs() {
+        if (changelogs == null) {
+            changelogs = new TracTicketChangeLogs(this);
+        }
+        return changelogs;
+    }
+
+    public TracTicket setAttachments(final TracTicketChangeLogs changelogs) {
+        this.changelogs = changelogs;
         return this;
     }
 

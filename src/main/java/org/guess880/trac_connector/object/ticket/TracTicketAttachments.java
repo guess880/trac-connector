@@ -14,12 +14,8 @@ public class TracTicketAttachments extends AbsTracObjects<TracTicketAttachment> 
         setAPIObjectWriterForGet(new DefaultAPIObjectWriterForGet());
     }
 
-    protected TracTicket getTicket() {
+    public TracTicket getTicket() {
         return ticket;
-    }
-
-    public int getId() {
-        return getTicket().getId();
     }
 
     @Override
@@ -33,7 +29,7 @@ public class TracTicketAttachments extends AbsTracObjects<TracTicketAttachment> 
 
         @Override
         public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracTicketAttachments) tracObj).getId() };
+            return new Object[] { ((TracTicketAttachments) tracObj).getTicket().getId() };
         }
         
     }
