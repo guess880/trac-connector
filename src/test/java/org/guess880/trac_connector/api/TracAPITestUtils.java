@@ -11,4 +11,11 @@ public class TracAPITestUtils {
                 .setPassword("rpc");
     }
 
+    public static final void sysOutArray(final Object obj) {
+        final Object[] objAry = (Object[]) obj;
+        for (Object o : objAry) {
+            System.out.println(o);
+        }
+    }
+
 }

@@ -8,6 +8,8 @@ import org.guess880.trac_connector.object.TracObject;
 
 public class TracTicketAttachment extends TracObject {
 
+    private TracAPIObjectReader dataReader;
+
     private final TracTicket ticket;
 
     private String filename;
@@ -24,9 +26,19 @@ public class TracTicketAttachment extends TracObject {
 
     public TracTicketAttachment(final TracTicket ticket) {
         this.ticket = ticket;
-        setAPIObjectReader(new DefaultAPIObjectReader());
+        setAPIObjectReader(new AttributesAPIObjectReader());
+        setDataAPIObjectReader(new DataAPIObjectReader());
         setAPIObjectWriterForGet(new DefaultAPIObjectWriterForGet());
         setAPIObjectWriterForUpdate(new DefaultAPIObjectWriterForUpdate());
+    }
+
+    public TracObject setDataAPIObjectReader(final TracAPIObjectReader dataReader) {
+        this.dataReader = dataReader;
+        return this;
+    }
+
+    public TracObject readDataAPIObject(final Object apiObj) {
+        return dataReader.read(this, apiObj);
     }
 
     protected TracTicket getTicket() {
@@ -91,22 +103,29 @@ public class TracTicketAttachment extends TracObject {
         return setSize(data.length);
     }
 
-    private static class DefaultAPIObjectReader implements
+    private static class AttributesAPIObjectReader implements
             TracAPIObjectReader {
 
         @Override
         public TracObject read(final TracObject tracObj, final Object apiObj) {
             final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
-            if (apiObj instanceof Object[]) {
-                final Object[] attrs = (Object[]) apiObj;
-                attach.setFilename((String) attrs[0]);
-                attach.setDescription((String) attrs[1]);
-                attach.setSize((Integer) attrs[2]);
-                attach.setTime((Date) attrs[3]);
-                attach.setAuthor((String) attrs[4]);
-            } else {
-                attach.setData((byte[]) apiObj);
-            }
+            final Object[] attrs = (Object[]) apiObj;
+            attach.setFilename((String) attrs[0]);
+            attach.setDescription((String) attrs[1]);
+            attach.setSize((Integer) attrs[2]);
+            attach.setTime((Date) attrs[3]);
+            attach.setAuthor((String) attrs[4]);
+            return attach;
+        }
+    }
+
+    private static class DataAPIObjectReader implements
+            TracAPIObjectReader {
+
+        @Override
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
+            final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
+            attach.setData((byte[]) apiObj);
             return attach;
         }
     }

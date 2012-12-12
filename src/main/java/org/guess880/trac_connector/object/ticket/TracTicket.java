@@ -13,6 +13,10 @@ import org.guess880.trac_connector.object.TracStruct;
 
 public class TracTicket extends TracStruct {
 
+    private TracAPIObjectReader queryReader;
+
+    private TracAPIObjectReader createReader;
+
     private int id;
 
     private String updateComment;
@@ -20,12 +24,31 @@ public class TracTicket extends TracStruct {
     private TracTicketAttachments attachments;
 
     public TracTicket() {
-        attachments = new TracTicketAttachments(this);
-        setAPIObjectReader(new DefaultAPIObjectReader());
+        setAPIObjectReader(new GetAPIObjectReader());
+        setQueryAPIObjectReader(new IdOnlyAPIObjectReader());
+        setCreateAPIObjectReader(new IdOnlyAPIObjectReader());
         setAPIObjectWriterForGet(new DefaultAPIObjectWriterIdOnly());
         setAPIObjectWriterForCreate(new DefaultAPIObjectWriterForCreate());
         setAPIObjectWriterForDelete(new DefaultAPIObjectWriterIdOnly());
         setAPIObjectWriterForUpdate(new DefaultAPIObjectWriterForUpdate());
+    }
+
+    public TracObject setQueryAPIObjectReader(final TracAPIObjectReader queryReader) {
+        this.queryReader = queryReader;
+        return this;
+    }
+
+    public TracObject readQueryAPIObject(final Object apiObj) {
+        return queryReader.read(this, apiObj);
+    }
+
+    public TracObject setCreateAPIObjectReader(final TracAPIObjectReader createReader) {
+        this.createReader = createReader;
+        return this;
+    }
+
+    public TracObject readCreateAPIObject(final Object apiObj) {
+        return createReader.read(this, apiObj);
     }
 
     public int getId() {
@@ -86,19 +109,11 @@ public class TracTicket extends TracStruct {
     }
 
     public String getCc() {
-        return null;
-    }
-
-    public String getCcCommaText() {
         return (String) getValue(TracTicketAttributes.CC);
     }
 
     public TracTicket setCc(final String cc) {
         return (TracTicket) setValue(TracTicketAttributes.CC, cc);
-    }
-
-    public TracTicket addCc(final String oneOfCc) {
-        return null;
     }
 
     public String getVersion() {
@@ -183,10 +198,18 @@ public class TracTicket extends TracStruct {
     }
 
     public TracTicketAttachments getAttachments() {
+        if (attachments == null) {
+            attachments = new TracTicketAttachments(this);
+        }
         return attachments;
     }
 
-    private static class DefaultAPIObjectReader implements
+    public TracTicket setAttachments(final TracTicketAttachments attachments) {
+        this.attachments = attachments;
+        return this;
+    }
+
+    private static class GetAPIObjectReader implements
             TracAPIObjectReader {
 
         @SuppressWarnings("unchecked")
@@ -196,6 +219,18 @@ public class TracTicket extends TracStruct {
             final TracTicket ticket = (TracTicket) tracObj;
             ticket.setId(((Integer) objAry[0]).intValue());
             ticket.setValues((Map<String, Object>) objAry[3]);
+            return ticket;
+        }
+
+    }
+
+    private static class IdOnlyAPIObjectReader implements
+            TracAPIObjectReader {
+
+        @Override
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
+            final TracTicket ticket = (TracTicket) tracObj;
+            ticket.setId((Integer) apiObj);
             return ticket;
         }
 
