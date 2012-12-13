@@ -15,10 +15,8 @@ public class TracTicketChangeLogs extends AbsTracObjects<TracTicketChangeLog> {
     }
 
     @Override
-    public TracTicketChangeLog newElement() {
-        final TracTicketChangeLog e = new TracTicketChangeLog();
-        add(e);
-        return e;
+    protected TracTicketChangeLog newElement() {
+        return new TracTicketChangeLog();
     }
 
     public TracTicket getTicket() {

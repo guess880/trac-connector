@@ -61,7 +61,13 @@ public abstract class AbsTracObjects<E extends TracObjectBase> implements
         return list.isEmpty();
     }
 
-    public abstract E newElement();
+    public E addNewElement() {
+        final E e = newElement();
+        add(e);
+        return e;
+    }
+
+    protected abstract E newElement();
 
     private static class GetMultiResultReader implements
             TracAPIResultReader {
@@ -72,7 +78,7 @@ public abstract class AbsTracObjects<E extends TracObjectBase> implements
             objects.clear();
             final Object[] objAry = (Object[]) result;
             for (final Object obj : objAry) {
-                objects.newElement().readGetMultiResult(obj);
+                objects.addNewElement().readGetMultiResult(obj);
             }
             return objects;
         }

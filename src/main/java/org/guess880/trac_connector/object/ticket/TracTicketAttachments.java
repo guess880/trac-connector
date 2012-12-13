@@ -19,10 +19,8 @@ public class TracTicketAttachments extends AbsTracObjects<TracTicketAttachment> 
     }
 
     @Override
-    public TracTicketAttachment newElement() {
-        final TracTicketAttachment attach = new TracTicketAttachment(getTicket());
-        add(attach);
-        return attach;
+    protected TracTicketAttachment newElement() {
+        return new TracTicketAttachment(getTicket());
     }
 
     private static class GetMultiParamWriter implements TracAPIParamWriter {

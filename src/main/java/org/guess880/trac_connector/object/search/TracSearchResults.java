@@ -16,10 +16,8 @@ public class TracSearchResults extends AbsTracObjects<TracSearchResult> {
     }
 
     @Override
-    public TracSearchResult newElement() {
-        final TracSearchResult result = new TracSearchResult();
-        add(result);
-        return result;
+    protected TracSearchResult newElement() {
+        return new TracSearchResult();
     }
 
     public String getQuery() {

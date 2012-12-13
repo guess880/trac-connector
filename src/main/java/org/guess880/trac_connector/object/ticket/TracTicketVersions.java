@@ -11,10 +11,8 @@ public class TracTicketVersions extends AbsTracObjects<TracTicketVersion> {
     }
 
     @Override
-    public TracTicketVersion newElement() {
-        final TracTicketVersion e = new TracTicketVersion();
-        add(e);
-        return e;
+    protected TracTicketVersion newElement() {
+        return new TracTicketVersion();
     }
 
 }

@@ -11,10 +11,8 @@ public class TracTicketComponents extends AbsTracObjects<TracTicketComponent> {
     }
 
     @Override
-    public TracTicketComponent newElement() {
-        final TracTicketComponent e = new TracTicketComponent();
-        add(e);
-        return e;
+    protected TracTicketComponent newElement() {
+        return new TracTicketComponent();
     }
 
 }

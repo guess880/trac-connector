@@ -11,10 +11,8 @@ public class TracTicketFields extends AbsTracObjects<TracTicketField> {
     }
 
     @Override
-    public TracTicketField newElement() {
-        final TracTicketField e = new TracTicketField();
-        add(e);
-        return e;
+    protected TracTicketField newElement() {
+        return new TracTicketField();
     }
 
 }

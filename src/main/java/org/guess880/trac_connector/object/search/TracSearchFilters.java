@@ -11,10 +11,8 @@ public class TracSearchFilters extends AbsTracObjects<TracSearchFilter> {
     }
 
     @Override
-    public TracSearchFilter newElement() {
-        final TracSearchFilter filter = new TracSearchFilter();
-        add(filter);
-        return filter;
+    protected TracSearchFilter newElement() {
+        return new TracSearchFilter();
     }
 
 }

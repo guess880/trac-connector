@@ -11,10 +11,8 @@ public class TracTicketMilestones extends AbsTracObjects<TracTicketMilestone> {
     }
 
     @Override
-    public TracTicketMilestone newElement() {
-        final TracTicketMilestone e = new TracTicketMilestone();
-        add(e);
-        return e;
+    protected TracTicketMilestone newElement() {
+        return new TracTicketMilestone();
     }
 
 }

@@ -11,10 +11,8 @@ public class TracMethods extends AbsTracObjects<TracMethod> {
     }
 
     @Override
-    public TracMethod newElement() {
-        final TracMethod e = new TracMethod();
-        add(e);
-        return e;
+    protected TracMethod newElement() {
+        return new TracMethod();
     }
 
 }

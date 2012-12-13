@@ -11,10 +11,8 @@ public class TracTicketStatuses extends AbsTracObjects<TracTicketStatus> {
     }
 
     @Override
-    public TracTicketStatus newElement() {
-        final TracTicketStatus e = new TracTicketStatus();
-        add(e);
-        return e;
+    protected TracTicketStatus newElement() {
+        return new TracTicketStatus();
     }
 
 }

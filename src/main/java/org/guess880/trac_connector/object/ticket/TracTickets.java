@@ -30,10 +30,8 @@ public class TracTickets extends AbsTracObjects<TracTicket> {
     }
 
     @Override
-    public TracTicket newElement() {
-        final TracTicket e = new TracTicket();
-        add(e);
-        return e;
+    protected TracTicket newElement() {
+        return new TracTicket();
     }
 
     

@@ -109,7 +109,7 @@ public class TracTicketAPITest {
             } finally {
                 in1.close();
             }
-            final TracTicketAttachment a1 = t1.getAttachments().newElement()
+            final TracTicketAttachment a1 = t1.getAttachments().addNewElement()
                     .setFilename("create.txt")
                     .setDescription("this is description.")
                     .setData(b1);
