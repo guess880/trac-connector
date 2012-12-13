@@ -11,9 +11,9 @@ public class TrucStructGetResultReader implements
     @SuppressWarnings("unchecked")
     @Override
     public TracObject read(final TracObject tracObj, final Object result) {
-        final TracStructTemplate field = (TracStructTemplate) tracObj;
-        field.setValues((Map<String, Object>) result);
-        return field;
+        final TracStructTemplate struct = (TracStructTemplate) tracObj;
+        struct.setValues((Map<String, Object>) result);
+        return struct;
     }
 
 }
