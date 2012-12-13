@@ -6,13 +6,13 @@ import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracStructTemplate;
 
 public class TrucStructGetResultReader implements
-        TracAPIObjectReader {
+        TracAPIResultReader {
 
     @SuppressWarnings("unchecked")
     @Override
-    public TracObject read(final TracObject tracObj, final Object apiObj) {
+    public TracObject read(final TracObject tracObj, final Object result) {
         final TracStructTemplate field = (TracStructTemplate) tracObj;
-        field.setValues((Map<String, Object>) apiObj);
+        field.setValues((Map<String, Object>) result);
         return field;
     }
 

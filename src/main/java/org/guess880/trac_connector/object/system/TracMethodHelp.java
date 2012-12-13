@@ -2,8 +2,8 @@ package org.guess880.trac_connector.object.system;
 
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracObjectTemplate;
-import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
-import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIResultReader;
+import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public class TracMethodHelp extends TracObjectTemplate {
 
@@ -13,8 +13,8 @@ public class TracMethodHelp extends TracObjectTemplate {
 
     public TracMethodHelp(final String name) {
         this.name = name;
-        setGetResultReader(new DefaultAPIObjectReader());
-        setGetParamWriter(new DefaultAPIObjectWriter());
+        setGetResultReader(new GetResultReader());
+        setGetParamWriter(new GetParamWriter());
     }
 
     public String getName() {
@@ -30,18 +30,18 @@ public class TracMethodHelp extends TracObjectTemplate {
         return this;
     }
 
-    private static class DefaultAPIObjectReader implements TracAPIObjectReader {
+    private static class GetResultReader implements TracAPIResultReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object result) {
             final TracMethodHelp signature = (TracMethodHelp) tracObj;
-            signature.setHelp((String) apiObj);
+            signature.setHelp((String) result);
             return signature;
         }
 
     }
 
-    private static class DefaultAPIObjectWriter implements TracAPIObjectWriter {
+    private static class GetParamWriter implements TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {

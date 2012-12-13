@@ -1,49 +1,49 @@
 package org.guess880.trac_connector.object;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
-import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIResultReader;
+import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public class TracObjectTemplate implements TracObject {
 
-    private TracAPIObjectReader getMultiResultReader;
+    private TracAPIResultReader getMultiResultReader;
 
-    private TracAPIObjectReader getResultReader;
+    private TracAPIResultReader getResultReader;
 
-    private TracAPIObjectWriter getParamWriter;
+    private TracAPIParamWriter getParamWriter;
 
-    private TracAPIObjectWriter createParamWriter;
+    private TracAPIParamWriter createParamWriter;
 
-    private TracAPIObjectWriter deleteParamWriter;
+    private TracAPIParamWriter deleteParamWriter;
 
-    private TracAPIObjectWriter updateParamWriter;
+    private TracAPIParamWriter updateParamWriter;
 
-    public TracObjectTemplate setGetMultiResultReader(final TracAPIObjectReader reader) {
+    public TracObjectTemplate setGetMultiResultReader(final TracAPIResultReader reader) {
         this.getMultiResultReader = reader;
         return this;
     }
 
-    public TracObjectTemplate setGetResultReader(final TracAPIObjectReader reader) {
+    public TracObjectTemplate setGetResultReader(final TracAPIResultReader reader) {
         this.getResultReader = reader;
         return this;
     }
 
-    public TracObjectTemplate setGetParamWriter(final TracAPIObjectWriter writer) {
+    public TracObjectTemplate setGetParamWriter(final TracAPIParamWriter writer) {
         this.getParamWriter = writer;
         return this;
     }
 
-    public TracObjectTemplate setCreateParamWriter(final TracAPIObjectWriter writer) {
+    public TracObjectTemplate setCreateParamWriter(final TracAPIParamWriter writer) {
         this.createParamWriter = writer;
         return this;
     }
 
-    public TracObjectTemplate setDeleteParamWriter(final TracAPIObjectWriter writer) {
+    public TracObjectTemplate setDeleteParamWriter(final TracAPIParamWriter writer) {
         this.deleteParamWriter = writer;
         return this;
     }
 
-    public TracObjectTemplate setUpdateParamWriter(final TracAPIObjectWriter writer) {
+    public TracObjectTemplate setUpdateParamWriter(final TracAPIParamWriter writer) {
         this.updateParamWriter = writer;
         return this;
     }

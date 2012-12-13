@@ -2,7 +2,7 @@ package org.guess880.trac_connector.object.search;
 
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracObjectTemplate;
-import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
+import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 
 public class TracSearchFilter extends TracObjectTemplate {
 
@@ -11,7 +11,7 @@ public class TracSearchFilter extends TracObjectTemplate {
     private String description;
 
     public TracSearchFilter() {
-        setGetMultiResultReader(new DefaultAPIObjectReader());
+        setGetMultiResultReader(new GetMultiResultReader());
     }
 
     public String getName() {
@@ -32,13 +32,13 @@ public class TracSearchFilter extends TracObjectTemplate {
         return this;
     }
 
-    private static class DefaultAPIObjectReader implements
-            TracAPIObjectReader {
+    private static class GetMultiResultReader implements
+            TracAPIResultReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object result) {
             final TracSearchFilter filter = (TracSearchFilter) tracObj;
-            final Object[] attrs = (Object[]) apiObj;
+            final Object[] attrs = (Object[]) result;
             filter.setName((String) attrs[0]);
             filter.setDescription((String) attrs[1]);
             return filter;

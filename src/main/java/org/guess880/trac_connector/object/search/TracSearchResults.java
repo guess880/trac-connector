@@ -2,7 +2,7 @@ package org.guess880.trac_connector.object.search;
 
 import org.guess880.trac_connector.object.AbsTracObjects;
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public class TracSearchResults extends AbsTracObjects<TracSearchResult> {
 
@@ -12,7 +12,7 @@ public class TracSearchResults extends AbsTracObjects<TracSearchResult> {
 
     public TracSearchResults() {
         super();
-        setGetMultiParamWriter(new DefaultAPIObjectWriterForGet());
+        setGetMultiParamWriter(new GetMultiParamWriter());
     }
 
     @Override
@@ -40,8 +40,8 @@ public class TracSearchResults extends AbsTracObjects<TracSearchResult> {
         return this;
     }
 
-    private static class DefaultAPIObjectWriterForGet implements
-            TracAPIObjectWriter {
+    private static class GetMultiParamWriter implements
+            TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {

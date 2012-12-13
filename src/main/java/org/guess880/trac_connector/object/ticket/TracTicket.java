@@ -8,12 +8,12 @@ import org.guess880.trac_connector.object.AbsTracAttribute;
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracObjectTemplate;
 import org.guess880.trac_connector.object.TracStructTemplate;
-import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
-import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIResultReader;
+import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public class TracTicket extends TracStructTemplate {
 
-    private TracAPIObjectReader createReader;
+    private TracAPIResultReader createReader;
 
     private int id;
 
@@ -24,16 +24,16 @@ public class TracTicket extends TracStructTemplate {
     private TracTicketChangeLogs changelogs;
 
     public TracTicket() {
-        setGetResultReader(new GetAPIObjectReader());
-        setGetMultiResultReader(new IdOnlyAPIObjectReader());
-        setCreateAPIObjectReader(new IdOnlyAPIObjectReader());
-        setGetParamWriter(new DefaultAPIObjectWriterIdOnly());
-        setCreateParamWriter(new DefaultAPIObjectWriterForCreate());
-        setDeleteParamWriter(new DefaultAPIObjectWriterIdOnly());
-        setUpdateParamWriter(new DefaultAPIObjectWriterForUpdate());
+        setGetResultReader(new GetResultReader());
+        setGetMultiResultReader(new IdOnlyResultReader());
+        setCreateAPIObjectReader(new IdOnlyResultReader());
+        setGetParamWriter(new IdOnlyParamWriter());
+        setCreateParamWriter(new CreateParamWriter());
+        setDeleteParamWriter(new IdOnlyParamWriter());
+        setUpdateParamWriter(new UpdateParamWriter());
     }
 
-    public TracObjectTemplate setCreateAPIObjectReader(final TracAPIObjectReader createReader) {
+    public TracObjectTemplate setCreateAPIObjectReader(final TracAPIResultReader createReader) {
         this.createReader = createReader;
         return this;
     }
@@ -253,13 +253,13 @@ public class TracTicket extends TracStructTemplate {
 
     }
 
-    private static class GetAPIObjectReader implements
-            TracAPIObjectReader {
+    private static class GetResultReader implements
+            TracAPIResultReader {
 
         @SuppressWarnings("unchecked")
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
-            final Object[] objAry = (Object[]) apiObj;
+        public TracObject read(final TracObject tracObj, final Object result) {
+            final Object[] objAry = (Object[]) result;
             final TracTicket ticket = (TracTicket) tracObj;
             ticket.setId(((Integer) objAry[0]).intValue());
             ticket.setValues((Map<String, Object>) objAry[3]);
@@ -268,20 +268,20 @@ public class TracTicket extends TracStructTemplate {
 
     }
 
-    private static class IdOnlyAPIObjectReader implements
-            TracAPIObjectReader {
+    private static class IdOnlyResultReader implements
+            TracAPIResultReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object result) {
             final TracTicket ticket = (TracTicket) tracObj;
-            ticket.setId((Integer) apiObj);
+            ticket.setId((Integer) result);
             return ticket;
         }
 
     }
 
-    private static class DefaultAPIObjectWriterIdOnly implements
-            TracAPIObjectWriter {
+    private static class IdOnlyParamWriter implements
+            TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {
@@ -290,8 +290,8 @@ public class TracTicket extends TracStructTemplate {
         
     }
 
-    private static class DefaultAPIObjectWriterForCreate implements
-            TracAPIObjectWriter {
+    private static class CreateParamWriter implements
+            TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {
@@ -304,8 +304,8 @@ public class TracTicket extends TracStructTemplate {
         
     }
 
-    private static class DefaultAPIObjectWriterForUpdate implements
-            TracAPIObjectWriter {
+    private static class UpdateParamWriter implements
+            TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {

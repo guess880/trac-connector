@@ -4,29 +4,29 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
-import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIResultReader;
+import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public abstract class AbsTracObjects<E extends TracObjectTemplate> implements
         TracObject, Iterable<E> {
 
-    private TracAPIObjectReader getMultiResultReader;
+    private TracAPIResultReader getMultiResultReader;
 
-    private TracAPIObjectWriter getMultiParamWriter;
+    private TracAPIParamWriter getMultiParamWriter;
 
     private final List<E> list;
 
     public AbsTracObjects() {
         this.list = new ArrayList<E>();
-        setGetMultiResultReader(new DefaultAPIObjectReader());
+        setGetMultiResultReader(new GetMultiResultReader());
     }
 
-    public AbsTracObjects<E> setGetMultiResultReader(final TracAPIObjectReader reader) {
+    public AbsTracObjects<E> setGetMultiResultReader(final TracAPIResultReader reader) {
         this.getMultiResultReader = reader;
         return this;
     }
 
-    public AbsTracObjects<E> setGetMultiParamWriter(final TracAPIObjectWriter writer) {
+    public AbsTracObjects<E> setGetMultiParamWriter(final TracAPIParamWriter writer) {
         this.getMultiParamWriter = writer;
         return this;
     }
@@ -63,14 +63,14 @@ public abstract class AbsTracObjects<E extends TracObjectTemplate> implements
 
     public abstract E newElement();
 
-    private static class DefaultAPIObjectReader implements
-            TracAPIObjectReader {
+    private static class GetMultiResultReader implements
+            TracAPIResultReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object result) {
             final AbsTracObjects<?> objects = (AbsTracObjects<?>) tracObj;
             objects.clear();
-            final Object[] objAry = (Object[]) apiObj;
+            final Object[] objAry = (Object[]) result;
             for (final Object obj : objAry) {
                 objects.newElement().readGetMultiResult(obj);
             }

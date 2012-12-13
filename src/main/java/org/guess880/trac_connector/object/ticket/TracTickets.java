@@ -4,11 +4,11 @@ import java.util.Date;
 
 import org.guess880.trac_connector.object.AbsTracObjects;
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public class TracTickets extends AbsTracObjects<TracTicket> {
 
-    private TracAPIObjectWriter recentChangesWriter;
+    private TracAPIParamWriter recentChangesWriter;
 
     private String queryStr;
 
@@ -16,11 +16,11 @@ public class TracTickets extends AbsTracObjects<TracTicket> {
 
     public TracTickets() {
         super();
-        setGetMultiParamWriter(new DefaultAPIObjectWriter());
-        setAPIObjectWriterForRecentChanges(new APIObjectWriterForRecentChanges());
+        setGetMultiParamWriter(new GetMultiParamWriter());
+        setRecentChangesParamWriter(new RecentChangesParamWriter());
     }
 
-    public TracTickets setAPIObjectWriterForRecentChanges(final TracAPIObjectWriter writer) {
+    public TracTickets setRecentChangesParamWriter(final TracAPIParamWriter writer) {
         this.recentChangesWriter = writer;
         return this;
     }
@@ -58,7 +58,7 @@ public class TracTickets extends AbsTracObjects<TracTicket> {
         return this;
     }
 
-    private static class DefaultAPIObjectWriter implements TracAPIObjectWriter {
+    private static class GetMultiParamWriter implements TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {
@@ -70,7 +70,7 @@ public class TracTickets extends AbsTracObjects<TracTicket> {
 
     }
 
-    private static class APIObjectWriterForRecentChanges implements TracAPIObjectWriter {
+    private static class RecentChangesParamWriter implements TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {

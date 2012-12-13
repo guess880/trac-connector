@@ -2,7 +2,7 @@ package org.guess880.trac_connector.object.converter;
 
 import org.guess880.trac_connector.object.TracObject;
 
-public interface TracAPIObjectWriter {
+public interface TracAPIParamWriter {
 
     Object[] write(final TracObject tracObj);
 

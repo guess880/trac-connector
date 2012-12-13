@@ -4,8 +4,8 @@ import java.util.Date;
 
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracObjectTemplate;
-import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
-import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIResultReader;
+import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public class TracTicketAttachment extends TracObjectTemplate {
 
@@ -25,11 +25,11 @@ public class TracTicketAttachment extends TracObjectTemplate {
 
     public TracTicketAttachment(final TracTicket ticket) {
         this.ticket = ticket;
-        setGetMultiResultReader(new AttributesAPIObjectReader());
-        setGetResultReader(new DataAPIObjectReader());
-        setGetParamWriter(new DefaultAPIObjectWriterForGet());
-        setUpdateParamWriter(new DefaultAPIObjectWriterForUpdate());
-        setDeleteParamWriter(new DefaultAPIObjectWriterForDelete());
+        setGetMultiResultReader(new GetMultiResultReader());
+        setGetResultReader(new GetResultReader());
+        setGetParamWriter(new GetParamWriter());
+        setUpdateParamWriter(new UpdateParamWriter());
+        setDeleteParamWriter(new DeleteParamWriter());
     }
 
     protected TracTicket getTicket() {
@@ -94,13 +94,13 @@ public class TracTicketAttachment extends TracObjectTemplate {
         return setSize(data.length);
     }
 
-    private static class AttributesAPIObjectReader implements
-            TracAPIObjectReader {
+    private static class GetMultiResultReader implements
+            TracAPIResultReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object result) {
             final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
-            final Object[] attrs = (Object[]) apiObj;
+            final Object[] attrs = (Object[]) result;
             attach.setFilename((String) attrs[0]);
             attach.setDescription((String) attrs[1]);
             attach.setSize((Integer) attrs[2]);
@@ -110,19 +110,19 @@ public class TracTicketAttachment extends TracObjectTemplate {
         }
     }
 
-    private static class DataAPIObjectReader implements
-            TracAPIObjectReader {
+    private static class GetResultReader implements
+            TracAPIResultReader {
 
         @Override
-        public TracObjectTemplate read(final TracObject tracObj, final Object apiObj) {
+        public TracObjectTemplate read(final TracObject tracObj, final Object result) {
             final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
-            attach.setData((byte[]) apiObj);
+            attach.setData((byte[]) result);
             return attach;
         }
     }
 
-    private static class DefaultAPIObjectWriterForGet implements
-            TracAPIObjectWriter {
+    private static class GetParamWriter implements
+            TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {
@@ -132,8 +132,8 @@ public class TracTicketAttachment extends TracObjectTemplate {
 
     }
 
-    private static class DefaultAPIObjectWriterForUpdate implements
-            TracAPIObjectWriter {
+    private static class UpdateParamWriter implements
+            TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {
@@ -143,8 +143,8 @@ public class TracTicketAttachment extends TracObjectTemplate {
 
     }
 
-    private static class DefaultAPIObjectWriterForDelete implements
-            TracAPIObjectWriter {
+    private static class DeleteParamWriter implements
+            TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {

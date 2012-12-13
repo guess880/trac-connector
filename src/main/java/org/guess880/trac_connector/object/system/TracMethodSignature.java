@@ -2,8 +2,8 @@ package org.guess880.trac_connector.object.system;
 
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracObjectTemplate;
-import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
-import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIResultReader;
+import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public class TracMethodSignature extends TracObjectTemplate {
 
@@ -15,8 +15,8 @@ public class TracMethodSignature extends TracObjectTemplate {
 
     public TracMethodSignature(final String name) {
         this.name = name;
-        setGetResultReader(new DefaultAPIObjectReader());
-        setGetParamWriter(new DefaultAPIObjectWriter());
+        setGetResultReader(new GetResultReader());
+        setGetParamWriter(new GetParamWriter());
     }
 
     public String getName() {
@@ -41,11 +41,11 @@ public class TracMethodSignature extends TracObjectTemplate {
         return this;
     }
 
-    private static class DefaultAPIObjectReader implements TracAPIObjectReader {
+    private static class GetResultReader implements TracAPIResultReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
-            final Object[] objAry = (Object[]) apiObj;
+        public TracObject read(final TracObject tracObj, final Object result) {
+            final Object[] objAry = (Object[]) result;
             final TracMethodSignature signature = (TracMethodSignature) tracObj;
             signature.setReturnType((String) objAry[0]);
             signature.setParameterTypes((String) objAry[1]);
@@ -54,7 +54,7 @@ public class TracMethodSignature extends TracObjectTemplate {
 
     }
 
-    private static class DefaultAPIObjectWriter implements TracAPIObjectWriter {
+    private static class GetParamWriter implements TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {

@@ -2,8 +2,8 @@ package org.guess880.trac_connector.object.ticket;
 
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracObjectTemplate;
-import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
-import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIResultReader;
+import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public class TracTicketEnumField extends TracObjectTemplate {
 
@@ -13,8 +13,8 @@ public class TracTicketEnumField extends TracObjectTemplate {
 
     public TracTicketEnumField() {
         super();
-        setGetMultiResultReader(new DefaultGetMultiResultReader());
-        setGetResultReader(new DefaultGetResultReader());
+        setGetMultiResultReader(new GetMultiResultReader());
+        setGetResultReader(new GetResultReader());
         setGetParamWriter(new NameOnlyParamWriter());
         setDeleteParamWriter(new NameOnlyParamWriter());
         setCreateParamWriter(new NameAndValueParamWriter());
@@ -39,25 +39,25 @@ public class TracTicketEnumField extends TracObjectTemplate {
         return this;
     }
 
-    private static class DefaultGetMultiResultReader implements TracAPIObjectReader {
+    private static class GetMultiResultReader implements TracAPIResultReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
-            return ((TracTicketEnumField) tracObj).setName((String) apiObj);
+        public TracObject read(final TracObject tracObj, final Object result) {
+            return ((TracTicketEnumField) tracObj).setName((String) result);
         }
         
     }
 
-    private static class DefaultGetResultReader implements TracAPIObjectReader {
+    private static class GetResultReader implements TracAPIResultReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
-            return ((TracTicketEnumField) tracObj).setValue((String) apiObj);
+        public TracObject read(final TracObject tracObj, final Object result) {
+            return ((TracTicketEnumField) tracObj).setValue((String) result);
         }
         
     }
 
-    private static class NameOnlyParamWriter implements TracAPIObjectWriter {
+    private static class NameOnlyParamWriter implements TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {
@@ -67,7 +67,7 @@ public class TracTicketEnumField extends TracObjectTemplate {
     }
 
     private static class NameAndValueParamWriter implements
-            TracAPIObjectWriter {
+            TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {

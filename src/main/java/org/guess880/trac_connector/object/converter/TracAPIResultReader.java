@@ -2,8 +2,8 @@ package org.guess880.trac_connector.object.converter;
 
 import org.guess880.trac_connector.object.TracObject;
 
-public interface TracAPIObjectReader {
+public interface TracAPIResultReader {
 
-    TracObject read(final TracObject tracObj, final Object apiObj);
+    TracObject read(final TracObject tracObj, final Object result);
 
 }

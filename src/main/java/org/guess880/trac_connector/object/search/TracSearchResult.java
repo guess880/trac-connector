@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracObjectTemplate;
-import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
+import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 
 public class TracSearchResult extends TracObjectTemplate {
 
@@ -19,7 +19,7 @@ public class TracSearchResult extends TracObjectTemplate {
     private String excerpt;
 
     public TracSearchResult() {
-        setGetMultiResultReader(new DefaultAPIObjectReader());
+        setGetMultiResultReader(new GetMultiResultReader());
     }
 
     public String getHref() {
@@ -67,19 +67,19 @@ public class TracSearchResult extends TracObjectTemplate {
         return this;
     }
 
-    private static class DefaultAPIObjectReader implements
-            TracAPIObjectReader {
+    private static class GetMultiResultReader implements
+            TracAPIResultReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
-            final TracSearchResult result = (TracSearchResult) tracObj;
-            final Object[] attrs = (Object[]) apiObj;
-            result.setHref((String) attrs[0]);
-            result.setTitle((String) attrs[1]);
-            result.setDate((Date) attrs[2]);
-            result.setAuthor((String) attrs[3]);
-            result.setExcerpt((String) attrs[4]);
-            return result;
+        public TracObject read(final TracObject tracObj, final Object result) {
+            final TracSearchResult searchResult = (TracSearchResult) tracObj;
+            final Object[] attrs = (Object[]) result;
+            searchResult.setHref((String) attrs[0]);
+            searchResult.setTitle((String) attrs[1]);
+            searchResult.setDate((Date) attrs[2]);
+            searchResult.setAuthor((String) attrs[3]);
+            searchResult.setExcerpt((String) attrs[4]);
+            return searchResult;
         }
 
     }

@@ -3,8 +3,8 @@ package org.guess880.trac_connector.object.ticket;
 import org.guess880.trac_connector.object.AbsTracAttribute;
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracStructTemplate;
-import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
-import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
+import org.guess880.trac_connector.object.converter.TracAPIResultReader;
+import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public class TracTicketStructFieldTemplate extends TracStructTemplate {
 
@@ -13,11 +13,11 @@ public class TracTicketStructFieldTemplate extends TracStructTemplate {
 
     public TracTicketStructFieldTemplate() {
         super();
-        setGetMultiResultReader(new DefaultGetMultiResultReader());
+        setGetMultiResultReader(new GetMultiResultReader());
         setGetParamWriter(new NameOnlyParamWriter());
         setDeleteParamWriter(new NameOnlyParamWriter());
-        setCreateParamWriter(new DefaultCreateParamWriter());
-        setUpdateParamWriter(new DefaultUpdateParamWriter());
+        setCreateParamWriter(new CreateParamWriter());
+        setUpdateParamWriter(new UpdateParamWriter());
     }
 
     public String getUpdateKey() {
@@ -48,7 +48,7 @@ public class TracTicketStructFieldTemplate extends TracStructTemplate {
 
     }
 
-    private static class NameOnlyParamWriter implements TracAPIObjectWriter {
+    private static class NameOnlyParamWriter implements TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {
@@ -58,20 +58,20 @@ public class TracTicketStructFieldTemplate extends TracStructTemplate {
 
     }
 
-    private static class DefaultGetMultiResultReader implements
-            TracAPIObjectReader {
+    private static class GetMultiResultReader implements
+            TracAPIResultReader {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object result) {
             final TracTicketStructFieldTemplate field = (TracTicketStructFieldTemplate) tracObj;
-            field.setName((String) apiObj);
+            field.setName((String) result);
             return field;
         }
 
     }
 
-    private static class DefaultCreateParamWriter implements
-            TracAPIObjectWriter {
+    private static class CreateParamWriter implements
+            TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {
@@ -81,7 +81,7 @@ public class TracTicketStructFieldTemplate extends TracStructTemplate {
 
     }
 
-    private static class DefaultUpdateParamWriter implements TracAPIObjectWriter {
+    private static class UpdateParamWriter implements TracAPIParamWriter {
 
         @Override
         public Object[] write(final TracObject tracObj) {
