@@ -12,7 +12,7 @@ import org.guess880.trac_connector.object.converter.TracMultiResultReader;
 import org.guess880.trac_connector.object.ticket.TracTicketEnumField;
 import org.guess880.trac_connector.object.ticket.TracTicketEnumFields;
 
-abstract class AbsTracTicketEnumFieldAPI extends TracAPIBase {
+public abstract class AbsTracTicketEnumFieldAPI extends TracAPIBase {
 
     private TracMultiResultReader<TracTicketEnumField, TracTicketEnumFields> getAllResultReader;
 
@@ -48,6 +48,76 @@ abstract class AbsTracTicketEnumFieldAPI extends TracAPIBase {
         deleteParamWriter = new NameOnlyParamWriter();
         createParamWriter = new NameAndValueParamWriter();
         updateParamWriter = new NameAndValueParamWriter();
+    }
+
+    protected TracMultiResultReader<TracTicketEnumField, TracTicketEnumFields> getGetAllResultReader() {
+        return getAllResultReader;
+    }
+
+    public AbsTracTicketEnumFieldAPI setGetAllResultReader(
+            final TracMultiResultReader<TracTicketEnumField, TracTicketEnumFields> getAllResultReader) {
+        this.getAllResultReader = getAllResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketEnumFields> getGetAllParamWriter() {
+        return getAllParamWriter;
+    }
+
+    public AbsTracTicketEnumFieldAPI setGetAllParamWriter(
+            final TracAPIParamWriter<TracTicketEnumFields> getAllParamWriter) {
+        this.getAllParamWriter = getAllParamWriter;
+        return this;
+    }
+
+    protected TracAPIResultReader<TracTicketEnumField> getGetResultReader() {
+        return getResultReader;
+    }
+
+    public AbsTracTicketEnumFieldAPI setGetResultReader(
+            final TracAPIResultReader<TracTicketEnumField> getResultReader) {
+        this.getResultReader = getResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketEnumField> getGetParamWriter() {
+        return getParamWriter;
+    }
+
+    public AbsTracTicketEnumFieldAPI setGetParamWriter(
+            final TracAPIParamWriter<TracTicketEnumField> getParamWriter) {
+        this.getParamWriter = getParamWriter;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketEnumField> getDeleteParamWriter() {
+        return deleteParamWriter;
+    }
+
+    public AbsTracTicketEnumFieldAPI setDeleteParamWriter(
+            final TracAPIParamWriter<TracTicketEnumField> deleteParamWriter) {
+        this.deleteParamWriter = deleteParamWriter;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketEnumField> getCreateParamWriter() {
+        return createParamWriter;
+    }
+
+    public AbsTracTicketEnumFieldAPI setCreateParamWriter(
+            final TracAPIParamWriter<TracTicketEnumField> createParamWriter) {
+        this.createParamWriter = createParamWriter;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketEnumField> getUpdateParamWriter() {
+        return updateParamWriter;
+    }
+
+    public AbsTracTicketEnumFieldAPI setUpdateParamWriter(
+            final TracAPIParamWriter<TracTicketEnumField> updateParamWriter) {
+        this.updateParamWriter = updateParamWriter;
+        return this;
     }
 
     public TracTicketEnumFields getAll(final TracTicketEnumFields fields)

@@ -45,6 +45,46 @@ public class TracSearchAPI extends TracAPIBase {
         performSearchParamWriter = new PerformSearchParamWriter();
     }
 
+    protected TracMultiResultReader<TracSearchFilter, TracSearchFilters> getGetSearchFiltersResultReader() {
+        return getSearchFiltersResultReader;
+    }
+
+    public TracSearchAPI setGetSearchFiltersResultReader(
+            final TracMultiResultReader<TracSearchFilter, TracSearchFilters> getSearchFiltersResultReader) {
+        this.getSearchFiltersResultReader = getSearchFiltersResultReader;
+        return this;
+    }
+
+    protected TracMultiResultReader<TracSearchResult, TracSearchResults> getPerformSearchResultReader() {
+        return performSearchResultReader;
+    }
+
+    public TracSearchAPI setPerformSearchResultReader(
+            final TracMultiResultReader<TracSearchResult, TracSearchResults> performSearchResultReader) {
+        this.performSearchResultReader = performSearchResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracSearchFilters> getGetSearchFiltersParamWriter() {
+        return getSearchFiltersParamWriter;
+    }
+
+    public TracSearchAPI setGetSearchFiltersParamWriter(
+            final TracAPIParamWriter<TracSearchFilters> getSearchFiltersParamWriter) {
+        this.getSearchFiltersParamWriter = getSearchFiltersParamWriter;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracSearchResults> getPerformSearchParamWriter() {
+        return performSearchParamWriter;
+    }
+
+    public TracSearchAPI setPerformSearchParamWriter(
+            final TracAPIParamWriter<TracSearchResults> performSearchParamWriter) {
+        this.performSearchParamWriter = performSearchParamWriter;
+        return this;
+    }
+
     public TracSearchFilters getSearchFilters(final TracSearchFilters filters)
             throws XmlRpcException {
         return getSearchFiltersResultReader.read(

@@ -171,6 +171,226 @@ public class TracTicketAPI extends TracAPIBase {
         return version;
     }
 
+    protected TracMultiResultReader<TracTicket, TracTickets> getQueryResultReader() {
+        return queryResultReader;
+    }
+
+    public TracTicketAPI setQueryResultReader(
+            final TracMultiResultReader<TracTicket, TracTickets> queryResultReader) {
+        this.queryResultReader = queryResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTickets> getQueryParamWriter() {
+        return queryParamWriter;
+    }
+
+    public TracTicketAPI setQueryParamWriter(
+            final TracAPIParamWriter<TracTickets> queryParamWriter) {
+        this.queryParamWriter = queryParamWriter;
+        return this;
+    }
+
+    protected TracMultiResultReader<TracTicket, TracTickets> getGetRecentChangesResultReader() {
+        return getRecentChangesResultReader;
+    }
+
+    public TracTicketAPI setGetRecentChangesResultReader(
+            final TracMultiResultReader<TracTicket, TracTickets> getRecentChangesResultReader) {
+        this.getRecentChangesResultReader = getRecentChangesResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTickets> getGetRecentChangesParamWriter() {
+        return getRecentChangesParamWriter;
+    }
+
+    public TracTicketAPI setGetRecentChangesParamWriter(
+            final TracAPIParamWriter<TracTickets> getRecentChangesParamWriter) {
+        this.getRecentChangesParamWriter = getRecentChangesParamWriter;
+        return this;
+    }
+
+    protected TracAPIResultReader<TracTicket> getGetResultReader() {
+        return getResultReader;
+    }
+
+    public TracTicketAPI setGetResultReader(
+            final TracAPIResultReader<TracTicket> getResultReader) {
+        this.getResultReader = getResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicket> getGetParamWriter() {
+        return getParamWriter;
+    }
+
+    public TracTicketAPI setGetParamWriter(
+            final TracAPIParamWriter<TracTicket> getParamWriter) {
+        this.getParamWriter = getParamWriter;
+        return this;
+    }
+
+    protected TracAPIResultReader<TracTicket> getCreateResultReader() {
+        return createResultReader;
+    }
+
+    public TracTicketAPI setCreateResultReader(
+            final TracAPIResultReader<TracTicket> createResultReader) {
+        this.createResultReader = createResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicket> getCreateParamWriter() {
+        return createParamWriter;
+    }
+
+    public TracTicketAPI setCreateParamWriter(
+            final TracAPIParamWriter<TracTicket> createParamWriter) {
+        this.createParamWriter = createParamWriter;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicket> getDeleteParamWriter() {
+        return deleteParamWriter;
+    }
+
+    public TracTicketAPI setDeleteParamWriter(
+            final TracAPIParamWriter<TracTicket> deleteParamWriter) {
+        this.deleteParamWriter = deleteParamWriter;
+        return this;
+    }
+
+    protected TracAPIResultReader<TracTicket> getUpdateResultReader() {
+        return updateResultReader;
+    }
+
+    public TracTicketAPI setUpdateResultReader(
+            final TracAPIResultReader<TracTicket> updateResultReader) {
+        this.updateResultReader = updateResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicket> getUpdateParamWriter() {
+        return updateParamWriter;
+    }
+
+    public TracTicketAPI setUpdateParamWriter(
+            final TracAPIParamWriter<TracTicket> updateParamWriter) {
+        this.updateParamWriter = updateParamWriter;
+        return this;
+    }
+
+    protected TracMultiResultReader<TracTicketChangeLog, TracTicketChangeLogs> getChangeLogResultReader() {
+        return changeLogResultReader;
+    }
+
+    public TracTicketAPI setChangeLogResultReader(
+            final TracMultiResultReader<TracTicketChangeLog, TracTicketChangeLogs> changeLogResultReader) {
+        this.changeLogResultReader = changeLogResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketChangeLogs> getChangeLogParamWriter() {
+        return changeLogParamWriter;
+    }
+
+    public TracTicketAPI setChangeLogParamWriter(
+            final TracAPIParamWriter<TracTicketChangeLogs> changeLogParamWriter) {
+        this.changeLogParamWriter = changeLogParamWriter;
+        return this;
+    }
+
+    protected TracMultiResultReader<TracTicketAttachment, TracTicketAttachments> getListAttachmentsResultReader() {
+        return listAttachmentsResultReader;
+    }
+
+    public TracTicketAPI setListAttachmentsResultReader(
+            final TracMultiResultReader<TracTicketAttachment, TracTicketAttachments> listAttachmentsResultReader) {
+        this.listAttachmentsResultReader = listAttachmentsResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketAttachments> getListAttachmentsParamWriter() {
+        return listAttachmentsParamWriter;
+    }
+
+    public TracTicketAPI setListAttachmentsParamWriter(
+            final TracAPIParamWriter<TracTicketAttachments> listAttachmentsParamWriter) {
+        this.listAttachmentsParamWriter = listAttachmentsParamWriter;
+        return this;
+    }
+
+    protected TracAPIResultReader<TracTicketAttachment> getGetAttachmentResultReader() {
+        return getAttachmentResultReader;
+    }
+
+    public TracTicketAPI setGetAttachmentResultReader(
+            final TracAPIResultReader<TracTicketAttachment> getAttachmentResultReader) {
+        this.getAttachmentResultReader = getAttachmentResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketAttachment> getGetAttachmentParamWriter() {
+        return getAttachmentParamWriter;
+    }
+
+    public TracTicketAPI setGetAttachmentParamWriter(
+            final TracAPIParamWriter<TracTicketAttachment> getAttachmentParamWriter) {
+        this.getAttachmentParamWriter = getAttachmentParamWriter;
+        return this;
+    }
+
+    protected TracAPIResultReader<TracTicketAttachment> getPutAttachmentResultReader() {
+        return putAttachmentResultReader;
+    }
+
+    public TracTicketAPI setPutAttachmentResultReader(
+            final TracAPIResultReader<TracTicketAttachment> putAttachmentResultReader) {
+        this.putAttachmentResultReader = putAttachmentResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketAttachment> getPutAttachmentParamWriter() {
+        return putAttachmentParamWriter;
+    }
+
+    public TracTicketAPI setPutAttachmentParamWriter(
+            final TracAPIParamWriter<TracTicketAttachment> putAttachmentParamWriter) {
+        this.putAttachmentParamWriter = putAttachmentParamWriter;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketAttachment> getDeleteAttachmentParamWriter() {
+        return deleteAttachmentParamWriter;
+    }
+
+    public TracTicketAPI setDeleteAttachmentParamWriter(
+            final TracAPIParamWriter<TracTicketAttachment> deleteAttachmentParamWriter) {
+        this.deleteAttachmentParamWriter = deleteAttachmentParamWriter;
+        return this;
+    }
+
+    protected TracMultiResultReader<TracTicketField, TracTicketFields> getGetTicketFieldsResultReader() {
+        return getTicketFieldsResultReader;
+    }
+
+    public TracTicketAPI setGetTicketFieldsResultReader(
+            final TracMultiResultReader<TracTicketField, TracTicketFields> getTicketFieldsResultReader) {
+        this.getTicketFieldsResultReader = getTicketFieldsResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracTicketFields> getGetTicketFieldsParamWriter() {
+        return getTicketFieldsParamWriter;
+    }
+
+    public TracTicketAPI setGetTicketFieldsParamWriter(
+            final TracAPIParamWriter<TracTicketFields> getTicketFieldsParamWriter) {
+        this.getTicketFieldsParamWriter = getTicketFieldsParamWriter;
+        return this;
+    }
+
     public TracTickets query(final TracTickets tickets) throws XmlRpcException {
         return queryResultReader.read(
                 tickets,

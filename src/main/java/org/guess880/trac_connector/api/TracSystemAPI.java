@@ -56,6 +56,86 @@ public class TracSystemAPI extends TracAPIBase {
         getAPIVersionParamWriter = new TracEmptyParamWriter<TracVersion>();
     }
 
+    protected TracMultiResultReader<TracMethod, TracMethods> getListMethodsResultReader() {
+        return listMethodsResultReader;
+    }
+
+    public TracSystemAPI setListMethodsResultReader(
+            final TracMultiResultReader<TracMethod, TracMethods> listMethodsResultReader) {
+        this.listMethodsResultReader = listMethodsResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracMethods> getListMethodsParamWriter() {
+        return listMethodsParamWriter;
+    }
+
+    public TracSystemAPI setListMethodsParamWriter(
+            final TracAPIParamWriter<TracMethods> listMethodsParamWriter) {
+        this.listMethodsParamWriter = listMethodsParamWriter;
+        return this;
+    }
+
+    protected TracAPIResultReader<TracMethodHelp> getMethodHelpResultReader() {
+        return methodHelpResultReader;
+    }
+
+    public TracSystemAPI setMethodHelpResultReader(
+            final TracAPIResultReader<TracMethodHelp> methodHelpResultReader) {
+        this.methodHelpResultReader = methodHelpResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracMethodHelp> getMethodHelpParamWriter() {
+        return methodHelpParamWriter;
+    }
+
+    public TracSystemAPI setMethodHelpParamWriter(
+            final TracAPIParamWriter<TracMethodHelp> methodHelpParamWriter) {
+        this.methodHelpParamWriter = methodHelpParamWriter;
+        return this;
+    }
+
+    protected TracAPIResultReader<TracMethodSignature> getMethodSignatureResultReader() {
+        return methodSignatureResultReader;
+    }
+
+    public TracSystemAPI setMethodSignatureResultReader(
+            final TracAPIResultReader<TracMethodSignature> methodSignatureResultReader) {
+        this.methodSignatureResultReader = methodSignatureResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracMethodSignature> getMethodSignatureParamWriter() {
+        return methodSignatureParamWriter;
+    }
+
+    public TracSystemAPI setMethodSignatureParamWriter(
+            final TracAPIParamWriter<TracMethodSignature> methodSignatureParamWriter) {
+        this.methodSignatureParamWriter = methodSignatureParamWriter;
+        return this;
+    }
+
+    protected TracAPIResultReader<TracVersion> getGetAPIVersionResultReader() {
+        return getAPIVersionResultReader;
+    }
+
+    public TracSystemAPI setGetAPIVersionResultReader(
+            final TracAPIResultReader<TracVersion> getAPIVersionResultReader) {
+        this.getAPIVersionResultReader = getAPIVersionResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<TracVersion> getGetAPIVersionParamWriter() {
+        return getAPIVersionParamWriter;
+    }
+
+    public TracSystemAPI setGetAPIVersionParamWriter(
+            final TracAPIParamWriter<TracVersion> getAPIVersionParamWriter) {
+        this.getAPIVersionParamWriter = getAPIVersionParamWriter;
+        return this;
+    }
+
     public Object multicall() throws XmlRpcException {
         throw new UnsupportedOperationException(
                 "system.multicall is not supported.");
@@ -82,7 +162,8 @@ public class TracSystemAPI extends TracAPIBase {
                         methodHelpParamWriter.write(help)));
     }
 
-    public TracMethodHelp methodHelp(final String method) throws XmlRpcException {
+    public TracMethodHelp methodHelp(final String method)
+            throws XmlRpcException {
         return methodHelp(new TracMethod().setName(method));
     }
 

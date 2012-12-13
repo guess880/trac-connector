@@ -15,7 +15,7 @@ public class TracMultiResultReader<O extends TracObject, L extends AbsTracObject
     }
 
     @Override
-    public L read(final L tracObj, Object result) {
+    public L read(final L tracObj, final Object result) {
         tracObj.clear();
         final Object[] objAry = (Object[]) result;
         for (final Object obj : objAry) {

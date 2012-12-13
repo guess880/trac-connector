@@ -52,6 +52,76 @@ public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFiel
         updateParamWriter = new UpdateParamWriter();
     }
 
+    protected TracMultiResultReader<O, L> getGetAllResultReader() {
+        return getAllResultReader;
+    }
+
+    public AbsTracTicketStructFieldAPI<O, L> setGetAllResultReader(
+            final TracMultiResultReader<O, L> getAllResultReader) {
+        this.getAllResultReader = getAllResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<L> getGetAllParamWriter() {
+        return getAllParamWriter;
+    }
+
+    public AbsTracTicketStructFieldAPI<O, L> setGetAllParamWriter(
+            final TracAPIParamWriter<L> getAllParamWriter) {
+        this.getAllParamWriter = getAllParamWriter;
+        return this;
+    }
+
+    protected TracStructGetResultReader<O> getGetResultReader() {
+        return getResultReader;
+    }
+
+    public AbsTracTicketStructFieldAPI<O, L> setGetResultReader(
+            final TracStructGetResultReader<O> getResultReader) {
+        this.getResultReader = getResultReader;
+        return this;
+    }
+
+    protected TracAPIParamWriter<O> getGetParamWriter() {
+        return getParamWriter;
+    }
+
+    public AbsTracTicketStructFieldAPI<O, L> setGetParamWriter(
+            final TracAPIParamWriter<O> getParamWriter) {
+        this.getParamWriter = getParamWriter;
+        return this;
+    }
+
+    protected TracAPIParamWriter<O> getDeleteParamWriter() {
+        return deleteParamWriter;
+    }
+
+    public AbsTracTicketStructFieldAPI<O, L> setDeleteParamWriter(
+            final TracAPIParamWriter<O> deleteParamWriter) {
+        this.deleteParamWriter = deleteParamWriter;
+        return this;
+    }
+
+    protected TracAPIParamWriter<O> getCreateParamWriter() {
+        return createParamWriter;
+    }
+
+    public AbsTracTicketStructFieldAPI<O, L> setCreateParamWriter(
+            final TracAPIParamWriter<O> createParamWriter) {
+        this.createParamWriter = createParamWriter;
+        return this;
+    }
+
+    protected TracAPIParamWriter<O> getUpdateParamWriter() {
+        return updateParamWriter;
+    }
+
+    public AbsTracTicketStructFieldAPI<O, L> setUpdateParamWriter(
+            final TracAPIParamWriter<O> updateParamWriter) {
+        this.updateParamWriter = updateParamWriter;
+        return this;
+    }
+
     public L getAll() throws XmlRpcException {
         final L fields = newFields();
         return getAllResultReader.read(
