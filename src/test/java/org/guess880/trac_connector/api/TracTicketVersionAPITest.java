@@ -22,11 +22,12 @@ public class TracTicketVersionAPITest {
         api = new TracTicketVersionAPI(TracAPITestUtils.getTestConfig());
     }
 
+    // FIXME no assertion
     @Test
     public void testGetAll() throws XmlRpcException {
-        final TracTicketVersions components = api.getAll();
-        for (final TracTicketVersion component : components) {
-            System.out.println(component);
+        final TracTicketVersions versions = api.getAll();
+        for (final TracTicketVersion version : versions) {
+            System.out.println(version);
         }
     }
 

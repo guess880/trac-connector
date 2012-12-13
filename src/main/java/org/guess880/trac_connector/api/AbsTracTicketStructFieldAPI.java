@@ -25,42 +25,42 @@ public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFiel
         return fields;
     }
 
-    public O get(final O milestone)
+    public O get(final O field)
             throws XmlRpcException {
-        milestone.readGetResult(getRpcClient().execute(getAPIName("get"), milestone.writeGetParam()));
-        return milestone;
+        field.readGetResult(getRpcClient().execute(getAPIName("get"), field.writeGetParam()));
+        return field;
     }
 
     public O get(final String name) throws XmlRpcException {
-        final O milestone = newField();
-        milestone.setName(name);
-        return get(milestone);
+        final O field = newField();
+        field.setName(name);
+        return get(field);
     }
 
-    public O delete(final O milestone) throws XmlRpcException {
-        getRpcClient().execute(getAPIName("delete"), milestone.writeDeleteParam());
-        return milestone;
+    public O delete(final O field) throws XmlRpcException {
+        getRpcClient().execute(getAPIName("delete"), field.writeDeleteParam());
+        return field;
     }
 
     public O delete(final String name) throws XmlRpcException {
-        final O milestone = newField();
-        milestone.setName(name);
-        return delete(milestone);
+        final O field = newField();
+        field.setName(name);
+        return delete(field);
     }
 
-    public O create(final O milestone) throws XmlRpcException {
-        getRpcClient().execute(getAPIName("create"), milestone.writeCreateParam());
-        return milestone;
+    public O create(final O field) throws XmlRpcException {
+        getRpcClient().execute(getAPIName("create"), field.writeCreateParam());
+        return field;
     }
 
-    public O update(final O milestone) throws XmlRpcException {
-        getRpcClient().execute(getAPIName("update"), milestone.writeUpdateParam());
-        return milestone;
+    public O update(final O field) throws XmlRpcException {
+        getRpcClient().execute(getAPIName("update"), field.writeUpdateParam());
+        return field;
     }
 
-    public O update(final String name, final O milestone) throws XmlRpcException {
-        milestone.setUpdateKey(name);
-        return update(milestone);
+    public O update(final String name, final O field) throws XmlRpcException {
+        field.setUpdateKey(name);
+        return update(field);
     }
 
     protected abstract L newFields();

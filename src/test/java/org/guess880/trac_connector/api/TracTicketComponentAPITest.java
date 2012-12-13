@@ -20,6 +20,7 @@ public class TracTicketComponentAPITest {
         api = new TracTicketComponentAPI(TracAPITestUtils.getTestConfig());
     }
 
+    // FIXME no assertion
     @Test
     public void testGetAll() throws XmlRpcException {
         final TracTicketComponents components = api.getAll();

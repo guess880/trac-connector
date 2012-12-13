@@ -22,11 +22,12 @@ public class TracTicketMilestoneAPITest {
         api = new TracTicketMilestoneAPI(TracAPITestUtils.getTestConfig());
     }
 
+    // FIXME no assertion
     @Test
     public void testGetAll() throws XmlRpcException {
-        final TracTicketMilestones components = api.getAll();
-        for (final TracTicketMilestone component : components) {
-            System.out.println(component);
+        final TracTicketMilestones milestones = api.getAll();
+        for (final TracTicketMilestone milestone : milestones) {
+            System.out.println(milestone);
         }
     }
 
