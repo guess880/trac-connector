@@ -11,7 +11,7 @@ import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
 import org.guess880.trac_connector.object.converter.TracMultiResultReader;
-import org.guess880.trac_connector.object.converter.TrucStructGetResultReader;
+import org.guess880.trac_connector.object.converter.TracStructGetResultReader;
 import org.guess880.trac_connector.object.ticket.TracTicketStructFieldBase;
 
 public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFieldBase, L extends AbsTracObjects<?>> extends TracAPIBase {
@@ -45,7 +45,7 @@ public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFiel
         getAllResultReader = new TracMultiResultReader()
                 .setOneResultReader(new GetAllResultReader());
         getAllParamWriter = new TracEmptyParamWriter();
-        getResultReader = new TrucStructGetResultReader();
+        getResultReader = new TracStructGetResultReader();
         getParamWriter = new NameOnlyParamWriter();
         deleteParamWriter = new NameOnlyParamWriter();
         createParamWriter = new CreateParamWriter();

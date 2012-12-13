@@ -13,7 +13,7 @@ import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
 import org.guess880.trac_connector.object.converter.TracMultiResultReader;
-import org.guess880.trac_connector.object.converter.TrucStructGetResultReader;
+import org.guess880.trac_connector.object.converter.TracStructGetResultReader;
 import org.guess880.trac_connector.object.ticket.TracTicket;
 import org.guess880.trac_connector.object.ticket.TracTicket.Attribute;
 import org.guess880.trac_connector.object.ticket.TracTicketAttachment;
@@ -135,7 +135,7 @@ public class TracTicketAPI extends TracAPIBase {
         putAttachmentParamWriter = new PutAttachmentParamWriter();
         deleteAttachmentParamWriter = new DeleteAttachmentParamWriter();
         getTicketFieldsResultReader = new TracMultiResultReader()
-                .setOneResultReader(new TrucStructGetResultReader());
+                .setOneResultReader(new TracStructGetResultReader());
         getTicketFieldsParamWriter = new TracEmptyParamWriter();
     }
 

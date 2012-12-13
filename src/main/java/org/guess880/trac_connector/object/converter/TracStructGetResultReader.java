@@ -5,7 +5,7 @@ import java.util.Map;
 import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.TracStructBase;
 
-public class TrucStructGetResultReader implements
+public class TracStructGetResultReader implements
         TracAPIResultReader {
 
     @SuppressWarnings("unchecked")
