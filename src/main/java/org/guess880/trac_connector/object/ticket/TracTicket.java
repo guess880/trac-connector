@@ -1,19 +1,11 @@
 package org.guess880.trac_connector.object.ticket;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.guess880.trac_connector.object.TracAttributeBase;
-import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectBase;
 import org.guess880.trac_connector.object.TracStructBase;
-import org.guess880.trac_connector.object.converter.TracAPIResultReader;
-import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
 public class TracTicket extends TracStructBase {
-
-    private TracAPIResultReader createReader;
 
     private int id;
 
@@ -25,23 +17,6 @@ public class TracTicket extends TracStructBase {
 
     public TracTicket() {
         super();
-        setGetResultReader(new GetResultReader());
-        setGetMultiResultReader(new IdOnlyResultReader());
-        setCreateAPIObjectReader(new IdOnlyResultReader());
-        setGetParamWriter(new IdOnlyParamWriter());
-        setCreateParamWriter(new CreateParamWriter());
-        setDeleteParamWriter(new IdOnlyParamWriter());
-        setUpdateParamWriter(new UpdateParamWriter());
-    }
-
-    public TracObjectBase setCreateAPIObjectReader(final TracAPIResultReader createReader) {
-        this.createReader = createReader;
-        return this;
-    }
-
-    public TracObjectBase readCreateAPIObject(final Object apiObj) {
-        createReader.read(this, apiObj);
-        return this;
     }
 
     public int getId() {
@@ -214,7 +189,7 @@ public class TracTicket extends TracStructBase {
         return this;
     }
 
-    protected static class Attribute extends TracAttributeBase {
+    public static class Attribute extends TracAttributeBase {
 
         public static final Attribute TYPE = new Attribute("type");
 
@@ -252,71 +227,6 @@ public class TracTicket extends TracStructBase {
             super(name);
         }
 
-    }
-
-    private static class GetResultReader implements
-            TracAPIResultReader {
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final Object[] objAry = (Object[]) result;
-            final TracTicket ticket = (TracTicket) tracObj;
-            ticket.setId(((Integer) objAry[0]).intValue());
-            ticket.setValues((Map<String, Object>) objAry[3]);
-            return ticket;
-        }
-
-    }
-
-    private static class IdOnlyResultReader implements
-            TracAPIResultReader {
-
-        @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracTicket ticket = (TracTicket) tracObj;
-            ticket.setId((Integer) result);
-            return ticket;
-        }
-
-    }
-
-    private static class IdOnlyParamWriter implements
-            TracAPIParamWriter {
-
-        @Override
-        public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracTicket) tracObj).getId() };
-        }
-        
-    }
-
-    private static class CreateParamWriter implements
-            TracAPIParamWriter {
-
-        @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTicket ticket = (TracTicket) tracObj;
-            final Map<String, Object> attrs = new HashMap<String, Object>(ticket.getValues());
-            attrs.remove(Attribute.TIME.getName());
-            attrs.remove(Attribute.CHANGETIME.getName());
-            return new Object[] { ticket.getSummary(), ticket.getDescription(), attrs };
-        }
-        
-    }
-
-    private static class UpdateParamWriter implements
-            TracAPIParamWriter {
-
-        @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTicket ticket = (TracTicket) tracObj;
-            final Map<String, Object> attrs = new HashMap<String, Object>(ticket.getValues());
-            attrs.remove(Attribute.TIME.getName());
-            attrs.remove(Attribute.CHANGETIME.getName());
-            return new Object[] { ticket.getId(), ticket.getUpdateComment(), attrs };
-        }
-        
     }
 
 }

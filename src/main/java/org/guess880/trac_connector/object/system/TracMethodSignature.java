@@ -1,11 +1,9 @@
 package org.guess880.trac_connector.object.system;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectBase;
-import org.guess880.trac_connector.object.converter.TracAPIResultReader;
-import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
-public class TracMethodSignature extends TracObjectBase {
+public class TracMethodSignature implements TracObject {
 
     private final String name;
 
@@ -16,8 +14,6 @@ public class TracMethodSignature extends TracObjectBase {
     public TracMethodSignature(final String name) {
         super();
         this.name = name;
-        setGetResultReader(new GetResultReader());
-        setGetParamWriter(new GetParamWriter());
     }
 
     public String getName() {
@@ -42,26 +38,9 @@ public class TracMethodSignature extends TracObjectBase {
         return this;
     }
 
-    private static class GetResultReader implements TracAPIResultReader {
-
-        @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final Object[] objAry = (Object[]) result;
-            final TracMethodSignature signature = (TracMethodSignature) tracObj;
-            signature.setReturnType((String) objAry[0]);
-            signature.setParameterTypes((String) objAry[1]);
-            return signature;
-        }
-
-    }
-
-    private static class GetParamWriter implements TracAPIParamWriter {
-
-        @Override
-        public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracMethodSignature) tracObj).getName() };
-        }
-
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

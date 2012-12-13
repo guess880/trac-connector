@@ -2,13 +2,11 @@ package org.guess880.trac_connector.object.ticket;
 
 import org.guess880.trac_connector.object.TracAttributeBase;
 import org.guess880.trac_connector.object.TracStructBase;
-import org.guess880.trac_connector.object.converter.TrucStructGetResultReader;
 
 public class TracTicketField extends TracStructBase {
 
     public TracTicketField() {
         super();
-        setGetMultiResultReader(new TrucStructGetResultReader());
     }
 
     public String getName() {
@@ -92,7 +90,7 @@ public class TracTicketField extends TracStructBase {
         return this;
     }
 
-    protected static class Attribute extends TracAttributeBase {
+    public static class Attribute extends TracAttributeBase {
 
         public static final Attribute NAME = new Attribute("name");
 

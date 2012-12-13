@@ -1,10 +1,9 @@
 package org.guess880.trac_connector.object.search;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectBase;
-import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 
-public class TracSearchFilter extends TracObjectBase {
+public class TracSearchFilter implements TracObject {
 
     private String name;
 
@@ -12,7 +11,6 @@ public class TracSearchFilter extends TracObjectBase {
 
     public TracSearchFilter() {
         super();
-        setGetMultiResultReader(new GetMultiResultReader());
     }
 
     public String getName() {
@@ -33,18 +31,9 @@ public class TracSearchFilter extends TracObjectBase {
         return this;
     }
 
-    private static class GetMultiResultReader implements
-            TracAPIResultReader {
-
-        @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracSearchFilter filter = (TracSearchFilter) tracObj;
-            final Object[] attrs = (Object[]) result;
-            filter.setName((String) attrs[0]);
-            filter.setDescription((String) attrs[1]);
-            return filter;
-        }
-
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

@@ -17,6 +17,7 @@ import org.guess880.trac_connector.object.ticket.TracTicketAttachment;
 import org.guess880.trac_connector.object.ticket.TracTicketAttachments;
 import org.guess880.trac_connector.object.ticket.TracTicketChangeLog;
 import org.guess880.trac_connector.object.ticket.TracTicketChangeLogs;
+import org.guess880.trac_connector.object.ticket.TracTicketField;
 import org.guess880.trac_connector.object.ticket.TracTicketFields;
 import org.guess880.trac_connector.object.ticket.TracTickets;
 import org.junit.BeforeClass;
@@ -174,7 +175,9 @@ public class TracTicketAPITest {
     @Test
     public void testGetTicketFields() throws XmlRpcException {
         final TracTicketFields fields = api.getTicketFields();
-        System.out.println(fields);
+        for (final TracTicketField field : fields) {
+            System.out.println(field);
+        }
     }
 
 }

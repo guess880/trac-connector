@@ -2,11 +2,10 @@ package org.guess880.trac_connector.object.search;
 
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectBase;
-import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 
-public class TracSearchResult extends TracObjectBase {
+public class TracSearchResult implements TracObject {
 
     private String href;
 
@@ -20,7 +19,6 @@ public class TracSearchResult extends TracObjectBase {
 
     public TracSearchResult() {
         super();
-        setGetMultiResultReader(new GetMultiResultReader());
     }
 
     public String getHref() {
@@ -68,21 +66,9 @@ public class TracSearchResult extends TracObjectBase {
         return this;
     }
 
-    private static class GetMultiResultReader implements
-            TracAPIResultReader {
-
-        @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracSearchResult searchResult = (TracSearchResult) tracObj;
-            final Object[] attrs = (Object[]) result;
-            searchResult.setHref((String) attrs[0]);
-            searchResult.setTitle((String) attrs[1]);
-            searchResult.setDate((Date) attrs[2]);
-            searchResult.setAuthor((String) attrs[3]);
-            searchResult.setExcerpt((String) attrs[4]);
-            return searchResult;
-        }
-
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

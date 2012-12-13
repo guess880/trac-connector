@@ -4,40 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.guess880.trac_connector.object.converter.TracAPIResultReader;
-import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
-public abstract class AbsTracObjects<E extends TracObjectBase> implements
+public abstract class AbsTracObjects<E extends TracObject> implements
         TracObject, Iterable<E> {
-
-    private TracAPIResultReader getMultiResultReader;
-
-    private TracAPIParamWriter getMultiParamWriter;
 
     private final List<E> list;
 
     public AbsTracObjects() {
         this.list = new ArrayList<E>();
-        setGetMultiResultReader(new GetMultiResultReader());
-    }
-
-    public AbsTracObjects<E> setGetMultiResultReader(final TracAPIResultReader reader) {
-        this.getMultiResultReader = reader;
-        return this;
-    }
-
-    public AbsTracObjects<E> setGetMultiParamWriter(final TracAPIParamWriter writer) {
-        this.getMultiParamWriter = writer;
-        return this;
-    }
-
-    public AbsTracObjects<E> readGetMultiResult(final Object apiObj) {
-        getMultiResultReader.read(this, apiObj);
-        return this;
-    }
-
-    public Object[] writeGetMultiParam() {
-        return getMultiParamWriter.write(this);
     }
 
     @Override
@@ -69,20 +44,9 @@ public abstract class AbsTracObjects<E extends TracObjectBase> implements
 
     protected abstract E newElement();
 
-    private static class GetMultiResultReader implements
-            TracAPIResultReader {
-
-        @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final AbsTracObjects<?> objects = (AbsTracObjects<?>) tracObj;
-            objects.clear();
-            final Object[] objAry = (Object[]) result;
-            for (final Object obj : objAry) {
-                objects.addNewElement().readGetMultiResult(obj);
-            }
-            return objects;
-        }
-
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

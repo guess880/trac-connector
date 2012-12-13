@@ -1,11 +1,9 @@
 package org.guess880.trac_connector.object.system;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectBase;
-import org.guess880.trac_connector.object.converter.TracAPIResultReader;
-import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
 
-public class TracVersion extends TracObjectBase {
+public class TracVersion implements TracObject {
 
     private int epoc;
 
@@ -15,8 +13,6 @@ public class TracVersion extends TracObjectBase {
 
     public TracVersion() {
         super();
-        setGetResultReader(new GetMultiResultReader());
-        setGetParamWriter(new TracEmptyParamWriter());
     }
 
     public int getEpoc() {
@@ -46,18 +42,9 @@ public class TracVersion extends TracObjectBase {
         return this;
     }
 
-    private static class GetMultiResultReader implements TracAPIResultReader {
-
-        @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracVersion version = (TracVersion) tracObj;
-            final Object[] attrs = (Object[]) result;
-            version.setEpoc((Integer) attrs[0]);
-            version.setMajor((Integer) attrs[1]);
-            version.setMinor((Integer) attrs[2]);
-            return version;
-        }
-
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

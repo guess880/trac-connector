@@ -10,7 +10,7 @@ import org.guess880.trac_connector.object.ticket.TracTicketEnumField;
 import org.guess880.trac_connector.object.ticket.TracTicketEnumFields;
 import org.junit.Test;
 
-public class AbsTracTicketEnumFieldAPITestBase {
+public abstract class AbsTracTicketEnumFieldAPITestBase {
 
     protected static AbsTracTicketEnumFieldAPI api;
 
