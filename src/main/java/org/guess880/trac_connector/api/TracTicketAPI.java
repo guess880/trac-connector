@@ -195,7 +195,7 @@ public class TracTicketAPI extends TracAPIBase {
         return attachment;
     }
 
-    public TracTicketAttachment deleteAttachment(final int ticket, String filename) throws XmlRpcException {
+    public TracTicketAttachment deleteAttachment(final int ticket, final String filename) throws XmlRpcException {
         return deleteAttachment(new TracTicketAttachment(new TracTicket().setId(ticket)).setFilename(filename));
     }
 

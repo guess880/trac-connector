@@ -13,6 +13,7 @@ public class TracMethod extends TracObjectBase {
     private TracMethodSignature signature;
 
     public TracMethod() {
+        super();
         setGetMultiResultReader(new NameOnlyResultReader());
     }
 

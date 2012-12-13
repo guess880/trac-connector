@@ -19,6 +19,7 @@ public class TracSearchResult extends TracObjectBase {
     private String excerpt;
 
     public TracSearchResult() {
+        super();
         setGetMultiResultReader(new GetMultiResultReader());
     }
 
@@ -41,11 +42,11 @@ public class TracSearchResult extends TracObjectBase {
     }
 
     public Date getDate() {
-        return date;
+        return date == null ? null : (Date) date.clone();
     }
 
     public TracSearchResult setDate(final Date date) {
-        this.date = date;
+        this.date = date == null ? null : (Date) date.clone();
         return this;
     }
 

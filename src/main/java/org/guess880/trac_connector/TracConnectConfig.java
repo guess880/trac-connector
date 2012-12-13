@@ -12,7 +12,7 @@ public class TracConnectConfig {
         return url;
     }
 
-    public TracConnectConfig setUrl(String url) {
+    public TracConnectConfig setUrl(final String url) {
         this.url = url;
         return this;
     }
@@ -21,7 +21,7 @@ public class TracConnectConfig {
         return username;
     }
 
-    public TracConnectConfig setUsername(String username) {
+    public TracConnectConfig setUsername(final String username) {
         this.username = username;
         return this;
     }
@@ -30,7 +30,7 @@ public class TracConnectConfig {
         return password;
     }
 
-    public TracConnectConfig setPassword(String password) {
+    public TracConnectConfig setPassword(final String password) {
         this.password = password;
         return this;
     }

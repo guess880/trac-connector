@@ -21,15 +21,16 @@ public class TracTicketChangeLog extends TracObjectBase {
     private int permanent;
 
     public TracTicketChangeLog() {
+        super();
         setGetMultiResultReader(new GetMultiResultReader());
     }
 
     public Date getTime() {
-        return time;
+        return time == null ? null : (Date) time.clone();
     }
 
     public TracTicketChangeLog setTime(final Date time) {
-        this.time = time;
+        this.time = time == null ? null : (Date) time.clone();
         return this;
     }
 

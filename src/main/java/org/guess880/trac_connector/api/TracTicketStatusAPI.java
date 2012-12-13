@@ -11,6 +11,8 @@ import org.guess880.trac_connector.object.ticket.TracTicketStatuses;
 public class TracTicketStatusAPI extends
         AbsTracTicketStructFieldAPI<TracTicketStatus, TracTicketStatuses> {
 
+    private static final String DEPRECATED_MESSAGE = "Deprecated no-op method. Do not use.";
+
     public TracTicketStatusAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);
     }
@@ -39,54 +41,47 @@ public class TracTicketStatusAPI extends
     @Deprecated
     public TracTicketStatus get(final TracTicketStatus field)
             throws XmlRpcException {
-        throw new UnsupportedOperationException(
-                "Deprecated no-op method. Do not use.");
+        throw new UnsupportedOperationException(DEPRECATED_MESSAGE);
     }
 
     @Override
     @Deprecated
     public TracTicketStatus get(final String name) throws XmlRpcException {
-        throw new UnsupportedOperationException(
-                "Deprecated no-op method. Do not use.");
+        throw new UnsupportedOperationException(DEPRECATED_MESSAGE);
     }
 
     @Override
     @Deprecated
     public TracTicketStatus delete(final TracTicketStatus field)
             throws XmlRpcException {
-        throw new UnsupportedOperationException(
-                "Deprecated no-op method. Do not use.");
+        throw new UnsupportedOperationException(DEPRECATED_MESSAGE);
     }
 
     @Override
     @Deprecated
     public TracTicketStatus delete(final String name) throws XmlRpcException {
-        throw new UnsupportedOperationException(
-                "Deprecated no-op method. Do not use.");
+        throw new UnsupportedOperationException(DEPRECATED_MESSAGE);
     }
 
     @Override
     @Deprecated
     public TracTicketStatus create(final TracTicketStatus field)
             throws XmlRpcException {
-        throw new UnsupportedOperationException(
-                "Deprecated no-op method. Do not use.");
+        throw new UnsupportedOperationException(DEPRECATED_MESSAGE);
     }
 
     @Override
     @Deprecated
     public TracTicketStatus update(final TracTicketStatus field)
             throws XmlRpcException {
-        throw new UnsupportedOperationException(
-                "Deprecated no-op method. Do not use.");
+        throw new UnsupportedOperationException(DEPRECATED_MESSAGE);
     }
 
     @Override
     @Deprecated
     public TracTicketStatus update(final String name,
             final TracTicketStatus field) throws XmlRpcException {
-        throw new UnsupportedOperationException(
-                "Deprecated no-op method. Do not use.");
+        throw new UnsupportedOperationException(DEPRECATED_MESSAGE);
     }
 
 }

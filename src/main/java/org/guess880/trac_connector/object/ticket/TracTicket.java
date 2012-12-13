@@ -24,6 +24,7 @@ public class TracTicket extends TracStructBase {
     private TracTicketChangeLogs changelogs;
 
     public TracTicket() {
+        super();
         setGetResultReader(new GetResultReader());
         setGetMultiResultReader(new IdOnlyResultReader());
         setCreateAPIObjectReader(new IdOnlyResultReader());

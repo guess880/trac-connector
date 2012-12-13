@@ -49,12 +49,12 @@ public class TracTickets extends AbsTracObjects<TracTicket> {
 
     
     public Date getSince() {
-        return since;
+        return since == null ? null : (Date) since.clone();
     }
 
     
     public TracTickets setSince(final Date since) {
-        this.since = since;
+        this.since = since == null ? null : (Date) since.clone();
         return this;
     }
 

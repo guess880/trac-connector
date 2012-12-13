@@ -14,6 +14,7 @@ public class TracMethodSignature extends TracObjectBase {
     private String parameterTypes;
 
     public TracMethodSignature(final String name) {
+        super();
         this.name = name;
         setGetResultReader(new GetResultReader());
         setGetParamWriter(new GetParamWriter());

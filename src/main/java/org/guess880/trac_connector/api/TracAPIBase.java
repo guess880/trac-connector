@@ -10,7 +10,7 @@ import org.guess880.trac_connector.TracConnectConfig;
 
 public class TracAPIBase {
 
-    private XmlRpcClient rpcClient;
+    private final XmlRpcClient rpcClient;
 
     protected TracAPIBase(final XmlRpcClient rpcClient) {
         this.rpcClient = rpcClient;

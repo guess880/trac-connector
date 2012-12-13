@@ -12,6 +12,7 @@ public class TracMethodHelp extends TracObjectBase {
     private String help;
 
     public TracMethodHelp(final String name) {
+        super();
         this.name = name;
         setGetResultReader(new GetResultReader());
         setGetParamWriter(new GetParamWriter());

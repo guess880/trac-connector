@@ -1,5 +1,6 @@
 package org.guess880.trac_connector.object.ticket;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.guess880.trac_connector.object.TracObject;
@@ -24,6 +25,7 @@ public class TracTicketAttachment extends TracObjectBase {
     private byte[] data;
 
     public TracTicketAttachment(final TracTicket ticket) {
+        super();
         this.ticket = ticket;
         setGetMultiResultReader(new GetMultiResultReader());
         setGetResultReader(new GetResultReader());
@@ -68,11 +70,11 @@ public class TracTicketAttachment extends TracObjectBase {
     }
 
     public Date getTime() {
-        return time;
+        return time == null ? null : (Date) time.clone();
     }
 
     public TracTicketAttachment setTime(final Date time) {
-        this.time = time;
+        this.time = time == null ? null : (Date) time.clone();
         return this;
     }
 
@@ -86,12 +88,12 @@ public class TracTicketAttachment extends TracObjectBase {
     }
 
     public byte[] getData() {
-        return data;
+        return data == null ? null : Arrays.copyOf(data, data.length);
     }
 
     public TracTicketAttachment setData(final byte[] data) {
-        this.data = data;
-        return setSize(data.length);
+        this.data = data == null ? null : Arrays.copyOf(data, data.length);
+        return setSize(data == null ? 0 : data.length);
     }
 
     private static class GetMultiResultReader implements

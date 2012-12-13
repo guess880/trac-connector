@@ -11,6 +11,7 @@ public class TracSearchFilter extends TracObjectBase {
     private String description;
 
     public TracSearchFilter() {
+        super();
         setGetMultiResultReader(new GetMultiResultReader());
     }
 

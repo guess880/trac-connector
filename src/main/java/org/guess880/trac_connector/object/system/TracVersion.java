@@ -14,6 +14,7 @@ public class TracVersion extends TracObjectBase {
     private int minor;
 
     public TracVersion() {
+        super();
         setGetResultReader(new GetMultiResultReader());
         setGetParamWriter(new TracEmptyParamWriter());
     }

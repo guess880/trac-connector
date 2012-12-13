@@ -15,7 +15,7 @@ public class TracAttributeBase {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -25,7 +25,7 @@ public class TracAttributeBase {
         if (!(obj instanceof TracAttributeBase)) {
             return false;
         }
-        TracAttributeBase other = (TracAttributeBase) obj;
+        final TracAttributeBase other = (TracAttributeBase) obj;
         if (name == null) {
             if (other.name != null) {
                 return false;
@@ -38,10 +38,7 @@ public class TracAttributeBase {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
+        return 31 + ((name == null) ? 0 : name.hashCode());
     }
 
     @Override
