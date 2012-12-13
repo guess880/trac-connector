@@ -1,11 +1,11 @@
 package org.guess880.trac_connector.object.system;
 
-import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracObject;
+import org.guess880.trac_connector.object.TracObjectTemplate;
 import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
 import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
-public class TracMethodSignature extends TracObject {
+public class TracMethodSignature extends TracObjectTemplate {
 
     private final String name;
 
@@ -44,7 +44,7 @@ public class TracMethodSignature extends TracObject {
     private static class DefaultAPIObjectReader implements TracAPIObjectReader {
 
         @Override
-        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
             final Object[] objAry = (Object[]) apiObj;
             final TracMethodSignature signature = (TracMethodSignature) tracObj;
             signature.setReturnType((String) objAry[0]);
@@ -57,7 +57,7 @@ public class TracMethodSignature extends TracObject {
     private static class DefaultAPIObjectWriter implements TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             return new Object[] { ((TracMethodSignature) tracObj).getName() };
         }
 

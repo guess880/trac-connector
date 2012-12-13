@@ -2,12 +2,12 @@ package org.guess880.trac_connector.object.ticket;
 
 import java.util.Date;
 
-import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracObject;
+import org.guess880.trac_connector.object.TracObjectTemplate;
 import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
 import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
-public class TracTicketAttachment extends TracObject {
+public class TracTicketAttachment extends TracObjectTemplate {
 
     private final TracTicket ticket;
 
@@ -98,7 +98,7 @@ public class TracTicketAttachment extends TracObject {
             TracAPIObjectReader {
 
         @Override
-        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
             final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
             final Object[] attrs = (Object[]) apiObj;
             attach.setFilename((String) attrs[0]);
@@ -114,7 +114,7 @@ public class TracTicketAttachment extends TracObject {
             TracAPIObjectReader {
 
         @Override
-        public TracObject read(final ITracObject tracObj, final Object apiObj) {
+        public TracObjectTemplate read(final TracObject tracObj, final Object apiObj) {
             final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
             attach.setData((byte[]) apiObj);
             return attach;
@@ -125,7 +125,7 @@ public class TracTicketAttachment extends TracObject {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
             return new Object[] { attach.getId(), attach.getFilename() };
         }
@@ -136,7 +136,7 @@ public class TracTicketAttachment extends TracObject {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
             return new Object[] { attach.getId(), attach.getFilename(), attach.getDescription(), attach.getData() };
         }
@@ -147,7 +147,7 @@ public class TracTicketAttachment extends TracObject {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
             return new Object[] { attach.getId(), attach.getFilename() };
         }

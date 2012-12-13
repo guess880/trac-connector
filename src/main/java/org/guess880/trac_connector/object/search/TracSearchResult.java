@@ -2,11 +2,11 @@ package org.guess880.trac_connector.object.search;
 
 import java.util.Date;
 
-import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracObject;
+import org.guess880.trac_connector.object.TracObjectTemplate;
 import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
 
-public class TracSearchResult extends TracObject {
+public class TracSearchResult extends TracObjectTemplate {
 
     private String href;
 
@@ -71,7 +71,7 @@ public class TracSearchResult extends TracObject {
             TracAPIObjectReader {
 
         @Override
-        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
             final TracSearchResult result = (TracSearchResult) tracObj;
             final Object[] attrs = (Object[]) apiObj;
             result.setHref((String) attrs[0]);

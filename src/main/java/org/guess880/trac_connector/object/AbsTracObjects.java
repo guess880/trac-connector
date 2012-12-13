@@ -7,8 +7,8 @@ import java.util.List;
 import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
 import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
-public abstract class AbsTracObjects<E extends TracObject> implements
-        ITracObject, Iterable<E> {
+public abstract class AbsTracObjects<E extends TracObjectTemplate> implements
+        TracObject, Iterable<E> {
 
     private TracAPIObjectReader getMultiResultReader;
 
@@ -67,7 +67,7 @@ public abstract class AbsTracObjects<E extends TracObject> implements
             TracAPIObjectReader {
 
         @Override
-        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
             final AbsTracObjects<?> objects = (AbsTracObjects<?>) tracObj;
             objects.clear();
             final Object[] objAry = (Object[]) apiObj;

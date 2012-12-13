@@ -1,7 +1,7 @@
 package org.guess880.trac_connector.object.ticket;
 
 import org.guess880.trac_connector.object.AbsTracObjects;
-import org.guess880.trac_connector.object.ITracObject;
+import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
 public class TracTicketChangeLogs extends AbsTracObjects<TracTicketChangeLog> {
@@ -29,7 +29,7 @@ public class TracTicketChangeLogs extends AbsTracObjects<TracTicketChangeLog> {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             return new Object[] { ((TracTicketChangeLogs) tracObj).getTicket().getId() };
         }
 

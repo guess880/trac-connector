@@ -6,11 +6,11 @@ import java.util.Map;
 import org.guess880.trac_connector.object.converter.TrucStructGetResultReader;
 
 
-public class TracStruct extends TracObject {
+public class TracStructTemplate extends TracObjectTemplate {
 
     private Map<String, Object> values;
 
-    public TracStruct() {
+    public TracStructTemplate() {
         super();
         setGetResultReader(new TrucStructGetResultReader());
     }
@@ -19,7 +19,7 @@ public class TracStruct extends TracObject {
         return values;
     }
 
-    public TracObject setValues(final Map<String, Object> values) {
+    public TracObjectTemplate setValues(final Map<String, Object> values) {
         this.values = values;
         return this;
     }
@@ -28,7 +28,7 @@ public class TracStruct extends TracObject {
         return values == null ? null : values.get(attr.getName());
     }
 
-    public TracObject setValue(final AbsTracAttribute attr, final Object value) {
+    public TracObjectTemplate setValue(final AbsTracAttribute attr, final Object value) {
         if (values == null) {
             values = new HashMap<String, Object>();
         }

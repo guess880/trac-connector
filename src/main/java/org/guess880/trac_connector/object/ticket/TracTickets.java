@@ -3,7 +3,7 @@ package org.guess880.trac_connector.object.ticket;
 import java.util.Date;
 
 import org.guess880.trac_connector.object.AbsTracObjects;
-import org.guess880.trac_connector.object.ITracObject;
+import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
 public class TracTickets extends AbsTracObjects<TracTicket> {
@@ -61,7 +61,7 @@ public class TracTickets extends AbsTracObjects<TracTicket> {
     private static class DefaultAPIObjectWriter implements TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             final TracTickets tickets = (TracTickets) tracObj;
             return tickets.getQueryStr() == null
                     ? new Object[] {}
@@ -73,7 +73,7 @@ public class TracTickets extends AbsTracObjects<TracTicket> {
     private static class APIObjectWriterForRecentChanges implements TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             final TracTickets tickets = (TracTickets) tracObj;
             return tickets.getSince() == null
                     ? new Object[] {}

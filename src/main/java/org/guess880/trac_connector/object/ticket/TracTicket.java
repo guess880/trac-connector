@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.guess880.trac_connector.object.AbsTracAttribute;
-import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracStruct;
+import org.guess880.trac_connector.object.TracObjectTemplate;
+import org.guess880.trac_connector.object.TracStructTemplate;
 import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
 import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
-public class TracTicket extends TracStruct {
+public class TracTicket extends TracStructTemplate {
 
     private TracAPIObjectReader createReader;
 
@@ -33,12 +33,12 @@ public class TracTicket extends TracStruct {
         setUpdateParamWriter(new DefaultAPIObjectWriterForUpdate());
     }
 
-    public TracObject setCreateAPIObjectReader(final TracAPIObjectReader createReader) {
+    public TracObjectTemplate setCreateAPIObjectReader(final TracAPIObjectReader createReader) {
         this.createReader = createReader;
         return this;
     }
 
-    public TracObject readCreateAPIObject(final Object apiObj) {
+    public TracObjectTemplate readCreateAPIObject(final Object apiObj) {
         createReader.read(this, apiObj);
         return this;
     }
@@ -258,7 +258,7 @@ public class TracTicket extends TracStruct {
 
         @SuppressWarnings("unchecked")
         @Override
-        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
             final Object[] objAry = (Object[]) apiObj;
             final TracTicket ticket = (TracTicket) tracObj;
             ticket.setId(((Integer) objAry[0]).intValue());
@@ -272,7 +272,7 @@ public class TracTicket extends TracStruct {
             TracAPIObjectReader {
 
         @Override
-        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
             final TracTicket ticket = (TracTicket) tracObj;
             ticket.setId((Integer) apiObj);
             return ticket;
@@ -284,7 +284,7 @@ public class TracTicket extends TracStruct {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             return new Object[] { ((TracTicket) tracObj).getId() };
         }
         
@@ -294,7 +294,7 @@ public class TracTicket extends TracStruct {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             final TracTicket ticket = (TracTicket) tracObj;
             final Map<String, Object> attrs = new HashMap<String, Object>(ticket.getValues());
             attrs.remove(Attribute.TIME.getName());
@@ -308,7 +308,7 @@ public class TracTicket extends TracStruct {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             final TracTicket ticket = (TracTicket) tracObj;
             final Map<String, Object> attrs = new HashMap<String, Object>(ticket.getValues());
             attrs.remove(Attribute.TIME.getName());

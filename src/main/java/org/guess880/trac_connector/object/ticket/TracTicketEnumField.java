@@ -1,11 +1,11 @@
 package org.guess880.trac_connector.object.ticket;
 
-import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracObject;
+import org.guess880.trac_connector.object.TracObjectTemplate;
 import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
 import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
-public class TracTicketEnumField extends TracObject {
+public class TracTicketEnumField extends TracObjectTemplate {
 
     private String name;
 
@@ -42,7 +42,7 @@ public class TracTicketEnumField extends TracObject {
     private static class DefaultGetMultiResultReader implements TracAPIObjectReader {
 
         @Override
-        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
             return ((TracTicketEnumField) tracObj).setName((String) apiObj);
         }
         
@@ -51,7 +51,7 @@ public class TracTicketEnumField extends TracObject {
     private static class DefaultGetResultReader implements TracAPIObjectReader {
 
         @Override
-        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
             return ((TracTicketEnumField) tracObj).setValue((String) apiObj);
         }
         
@@ -60,7 +60,7 @@ public class TracTicketEnumField extends TracObject {
     private static class NameOnlyParamWriter implements TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             return new Object[] { ((TracTicketEnumField) tracObj).getName() };
         }
         
@@ -70,7 +70,7 @@ public class TracTicketEnumField extends TracObject {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             final TracTicketEnumField field = (TracTicketEnumField) tracObj;
             return new Object[] { field.getName(), field.getValue() };
         }

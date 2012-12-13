@@ -1,10 +1,10 @@
 package org.guess880.trac_connector.object.system;
 
-import org.guess880.trac_connector.object.ITracObject;
 import org.guess880.trac_connector.object.TracObject;
+import org.guess880.trac_connector.object.TracObjectTemplate;
 import org.guess880.trac_connector.object.converter.TracAPIObjectReader;
 
-public class TracMethod extends TracObject {
+public class TracMethod extends TracObjectTemplate {
 
     private String name;
 
@@ -52,7 +52,7 @@ public class TracMethod extends TracObject {
     private static class NameAPIObjectReader implements TracAPIObjectReader {
 
         @Override
-        public ITracObject read(final ITracObject tracObj, final Object apiObj) {
+        public TracObject read(final TracObject tracObj, final Object apiObj) {
             final TracMethod method = (TracMethod) tracObj;
             method.setName((String) apiObj);
             return method;

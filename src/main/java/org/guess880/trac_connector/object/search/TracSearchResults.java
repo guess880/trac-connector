@@ -1,7 +1,7 @@
 package org.guess880.trac_connector.object.search;
 
 import org.guess880.trac_connector.object.AbsTracObjects;
-import org.guess880.trac_connector.object.ITracObject;
+import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.converter.TracAPIObjectWriter;
 
 public class TracSearchResults extends AbsTracObjects<TracSearchResult> {
@@ -44,7 +44,7 @@ public class TracSearchResults extends AbsTracObjects<TracSearchResult> {
             TracAPIObjectWriter {
 
         @Override
-        public Object[] write(final ITracObject tracObj) {
+        public Object[] write(final TracObject tracObj) {
             final TracSearchResults results = (TracSearchResults) tracObj;
             return results.getFilters() == null
                     ? new Object[] { results.getQuery() }
