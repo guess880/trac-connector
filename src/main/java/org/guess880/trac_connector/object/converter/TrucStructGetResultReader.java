@@ -3,7 +3,7 @@ package org.guess880.trac_connector.object.converter;
 import java.util.Map;
 
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracStructTemplate;
+import org.guess880.trac_connector.object.TracStructBase;
 
 public class TrucStructGetResultReader implements
         TracAPIResultReader {
@@ -11,7 +11,7 @@ public class TrucStructGetResultReader implements
     @SuppressWarnings("unchecked")
     @Override
     public TracObject read(final TracObject tracObj, final Object result) {
-        final TracStructTemplate struct = (TracStructTemplate) tracObj;
+        final TracStructBase struct = (TracStructBase) tracObj;
         struct.setValues((Map<String, Object>) result);
         return struct;
     }

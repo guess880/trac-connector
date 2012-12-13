@@ -1,6 +1,6 @@
 package org.guess880.trac_connector.object.ticket;
 
-public class TracTicketComponent extends TracTicketStructFieldTemplate {
+public class TracTicketComponent extends TracTicketStructFieldBase {
 
     public TracTicketComponent() {
         super();
@@ -25,7 +25,7 @@ public class TracTicketComponent extends TracTicketStructFieldTemplate {
     }
 
     protected static class Attribute extends
-            TracTicketStructFieldTemplate.Attribute {
+            TracTicketStructFieldBase.Attribute {
 
         public static final Attribute OWNER = new Attribute("owner");
 

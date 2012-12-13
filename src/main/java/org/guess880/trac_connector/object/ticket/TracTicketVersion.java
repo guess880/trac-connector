@@ -2,7 +2,7 @@ package org.guess880.trac_connector.object.ticket;
 
 import java.util.Date;
 
-public class TracTicketVersion extends TracTicketStructFieldTemplate {
+public class TracTicketVersion extends TracTicketStructFieldBase {
 
     public TracTicketVersion() {
         super();
@@ -27,7 +27,7 @@ public class TracTicketVersion extends TracTicketStructFieldTemplate {
     }
 
     protected static class Attribute extends
-            TracTicketStructFieldTemplate.Attribute {
+            TracTicketStructFieldBase.Attribute {
 
         public static final Attribute TIME = new Attribute("time");
 

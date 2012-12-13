@@ -2,11 +2,11 @@ package org.guess880.trac_connector.object;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public abstract class AbsTracAttribute {
+public class TracAttributeBase {
 
     private final String name;
 
-    protected AbsTracAttribute(final String name) {
+    protected TracAttributeBase(final String name) {
         this.name = name;
     }
 
@@ -22,10 +22,10 @@ public abstract class AbsTracAttribute {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof AbsTracAttribute)) {
+        if (!(obj instanceof TracAttributeBase)) {
             return false;
         }
-        AbsTracAttribute other = (AbsTracAttribute) obj;
+        TracAttributeBase other = (TracAttributeBase) obj;
         if (name == null) {
             if (other.name != null) {
                 return false;

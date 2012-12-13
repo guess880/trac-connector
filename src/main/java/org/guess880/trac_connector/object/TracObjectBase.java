@@ -4,7 +4,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
-public class TracObjectTemplate implements TracObject {
+public class TracObjectBase implements TracObject {
 
     private TracAPIResultReader getMultiResultReader;
 
@@ -18,42 +18,42 @@ public class TracObjectTemplate implements TracObject {
 
     private TracAPIParamWriter updateParamWriter;
 
-    public TracObjectTemplate setGetMultiResultReader(final TracAPIResultReader reader) {
+    public TracObjectBase setGetMultiResultReader(final TracAPIResultReader reader) {
         this.getMultiResultReader = reader;
         return this;
     }
 
-    public TracObjectTemplate setGetResultReader(final TracAPIResultReader reader) {
+    public TracObjectBase setGetResultReader(final TracAPIResultReader reader) {
         this.getResultReader = reader;
         return this;
     }
 
-    public TracObjectTemplate setGetParamWriter(final TracAPIParamWriter writer) {
+    public TracObjectBase setGetParamWriter(final TracAPIParamWriter writer) {
         this.getParamWriter = writer;
         return this;
     }
 
-    public TracObjectTemplate setCreateParamWriter(final TracAPIParamWriter writer) {
+    public TracObjectBase setCreateParamWriter(final TracAPIParamWriter writer) {
         this.createParamWriter = writer;
         return this;
     }
 
-    public TracObjectTemplate setDeleteParamWriter(final TracAPIParamWriter writer) {
+    public TracObjectBase setDeleteParamWriter(final TracAPIParamWriter writer) {
         this.deleteParamWriter = writer;
         return this;
     }
 
-    public TracObjectTemplate setUpdateParamWriter(final TracAPIParamWriter writer) {
+    public TracObjectBase setUpdateParamWriter(final TracAPIParamWriter writer) {
         this.updateParamWriter = writer;
         return this;
     }
 
-    public TracObjectTemplate readGetMultiResult(final Object apiObj) {
+    public TracObjectBase readGetMultiResult(final Object apiObj) {
         getMultiResultReader.read(this, apiObj);
         return this;
     }
 
-    public TracObjectTemplate readGetResult(final Object apiObj) {
+    public TracObjectBase readGetResult(final Object apiObj) {
         getResultReader.read(this, apiObj);
         return this;
     }

@@ -2,7 +2,7 @@ package org.guess880.trac_connector.object.ticket;
 
 import java.util.Date;
 
-public class TracTicketMilestone extends TracTicketStructFieldTemplate {
+public class TracTicketMilestone extends TracTicketStructFieldBase {
 
     public TracTicketMilestone() {
         super();
@@ -36,7 +36,7 @@ public class TracTicketMilestone extends TracTicketStructFieldTemplate {
     }
 
     protected static class Attribute extends
-            TracTicketStructFieldTemplate.Attribute {
+            TracTicketStructFieldBase.Attribute {
 
         public static final Attribute DUE = new Attribute("due");
 

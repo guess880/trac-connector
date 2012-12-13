@@ -1,10 +1,10 @@
 package org.guess880.trac_connector.object.search;
 
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectTemplate;
+import org.guess880.trac_connector.object.TracObjectBase;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 
-public class TracSearchFilter extends TracObjectTemplate {
+public class TracSearchFilter extends TracObjectBase {
 
     private String name;
 

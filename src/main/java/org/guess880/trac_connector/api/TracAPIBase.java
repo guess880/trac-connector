@@ -8,15 +8,15 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 import org.guess880.trac_connector.TracConnectConfig;
 
-public class TracAPITemplate {
+public class TracAPIBase {
 
     private XmlRpcClient rpcClient;
 
-    public TracAPITemplate(final XmlRpcClient rpcClient) {
+    protected TracAPIBase(final XmlRpcClient rpcClient) {
         this.rpcClient = rpcClient;
     }
 
-    public TracAPITemplate(final TracConnectConfig cfg) throws MalformedURLException {
+    protected TracAPIBase(final TracConnectConfig cfg) throws MalformedURLException {
         final XmlRpcClientConfigImpl rpcCfg = new XmlRpcClientConfigImpl();
         rpcCfg.setServerURL(new URL(cfg.getUrl()));
         rpcCfg.setBasicUserName(cfg.getUsername());

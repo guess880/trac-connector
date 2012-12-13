@@ -4,14 +4,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.guess880.trac_connector.object.AbsTracAttribute;
+import org.guess880.trac_connector.object.TracAttributeBase;
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectTemplate;
-import org.guess880.trac_connector.object.TracStructTemplate;
+import org.guess880.trac_connector.object.TracObjectBase;
+import org.guess880.trac_connector.object.TracStructBase;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
-public class TracTicket extends TracStructTemplate {
+public class TracTicket extends TracStructBase {
 
     private TracAPIResultReader createReader;
 
@@ -33,12 +33,12 @@ public class TracTicket extends TracStructTemplate {
         setUpdateParamWriter(new UpdateParamWriter());
     }
 
-    public TracObjectTemplate setCreateAPIObjectReader(final TracAPIResultReader createReader) {
+    public TracObjectBase setCreateAPIObjectReader(final TracAPIResultReader createReader) {
         this.createReader = createReader;
         return this;
     }
 
-    public TracObjectTemplate readCreateAPIObject(final Object apiObj) {
+    public TracObjectBase readCreateAPIObject(final Object apiObj) {
         createReader.read(this, apiObj);
         return this;
     }
@@ -213,7 +213,7 @@ public class TracTicket extends TracStructTemplate {
         return this;
     }
 
-    protected static class Attribute extends AbsTracAttribute {
+    protected static class Attribute extends TracAttributeBase {
 
         public static final Attribute TYPE = new Attribute("type");
 

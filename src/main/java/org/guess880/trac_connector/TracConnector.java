@@ -3,13 +3,13 @@ package org.guess880.trac_connector;
 import java.net.MalformedURLException;
 
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.guess880.trac_connector.api.TracAPITemplate;
+import org.guess880.trac_connector.api.TracAPIBase;
 import org.guess880.trac_connector.api.TracSearchAPI;
 import org.guess880.trac_connector.api.TracSystemAPI;
 import org.guess880.trac_connector.api.TracTicketAPI;
 import org.guess880.trac_connector.api.TracWikiAPI;
 
-public class TracConnector extends TracAPITemplate {
+public class TracConnector extends TracAPIBase {
 
     private TracSearchAPI search;
 

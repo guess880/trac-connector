@@ -8,7 +8,7 @@ import org.guess880.trac_connector.TracConnectConfig;
 import org.guess880.trac_connector.object.ticket.TracTicketEnumField;
 import org.guess880.trac_connector.object.ticket.TracTicketEnumFields;
 
-abstract class AbsTracTicketEnumFieldAPI extends TracAPITemplate {
+abstract class AbsTracTicketEnumFieldAPI extends TracAPIBase {
 
     protected AbsTracTicketEnumFieldAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);

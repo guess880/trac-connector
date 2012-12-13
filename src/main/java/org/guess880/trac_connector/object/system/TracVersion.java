@@ -1,11 +1,11 @@
 package org.guess880.trac_connector.object.system;
 
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectTemplate;
+import org.guess880.trac_connector.object.TracObjectBase;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
 
-public class TracVersion extends TracObjectTemplate {
+public class TracVersion extends TracObjectBase {
 
     private int epoc;
 

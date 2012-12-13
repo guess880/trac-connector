@@ -8,7 +8,7 @@ import org.guess880.trac_connector.TracConnectConfig;
 import org.guess880.trac_connector.object.search.TracSearchFilters;
 import org.guess880.trac_connector.object.search.TracSearchResults;
 
-public class TracSearchAPI extends TracAPITemplate {
+public class TracSearchAPI extends TracAPIBase {
 
     public TracSearchAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);

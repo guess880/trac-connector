@@ -6,7 +6,7 @@ import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.TracConnectConfig;
 
 
-public class TracWikiAPI extends TracAPITemplate {
+public class TracWikiAPI extends TracAPIBase {
 
     public TracWikiAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);

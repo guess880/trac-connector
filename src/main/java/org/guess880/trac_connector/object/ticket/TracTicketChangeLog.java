@@ -3,10 +3,10 @@ package org.guess880.trac_connector.object.ticket;
 import java.util.Date;
 
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectTemplate;
+import org.guess880.trac_connector.object.TracObjectBase;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 
-public class TracTicketChangeLog extends TracObjectTemplate {
+public class TracTicketChangeLog extends TracObjectBase {
 
     private Date time;
 

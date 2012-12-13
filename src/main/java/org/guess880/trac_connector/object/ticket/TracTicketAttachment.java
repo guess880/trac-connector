@@ -3,11 +3,11 @@ package org.guess880.trac_connector.object.ticket;
 import java.util.Date;
 
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectTemplate;
+import org.guess880.trac_connector.object.TracObjectBase;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
-public class TracTicketAttachment extends TracObjectTemplate {
+public class TracTicketAttachment extends TracObjectBase {
 
     private final TracTicket ticket;
 
@@ -114,7 +114,7 @@ public class TracTicketAttachment extends TracObjectTemplate {
             TracAPIResultReader {
 
         @Override
-        public TracObjectTemplate read(final TracObject tracObj, final Object result) {
+        public TracObjectBase read(final TracObject tracObj, final Object result) {
             final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
             attach.setData((byte[]) result);
             return attach;

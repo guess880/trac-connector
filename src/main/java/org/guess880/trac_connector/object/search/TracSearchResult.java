@@ -3,10 +3,10 @@ package org.guess880.trac_connector.object.search;
 import java.util.Date;
 
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracObjectTemplate;
+import org.guess880.trac_connector.object.TracObjectBase;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 
-public class TracSearchResult extends TracObjectTemplate {
+public class TracSearchResult extends TracObjectBase {
 
     private String href;
 

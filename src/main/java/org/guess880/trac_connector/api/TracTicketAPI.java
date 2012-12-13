@@ -13,7 +13,7 @@ import org.guess880.trac_connector.object.ticket.TracTicketChangeLogs;
 import org.guess880.trac_connector.object.ticket.TracTicketFields;
 import org.guess880.trac_connector.object.ticket.TracTickets;
 
-public class TracTicketAPI extends TracAPITemplate {
+public class TracTicketAPI extends TracAPIBase {
 
     private TracTicketComponentAPI component;
 

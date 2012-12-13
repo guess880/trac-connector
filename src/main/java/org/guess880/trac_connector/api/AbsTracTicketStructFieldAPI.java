@@ -6,9 +6,9 @@ import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.TracConnectConfig;
 import org.guess880.trac_connector.object.AbsTracObjects;
-import org.guess880.trac_connector.object.ticket.TracTicketStructFieldTemplate;
+import org.guess880.trac_connector.object.ticket.TracTicketStructFieldBase;
 
-public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFieldTemplate, L extends AbsTracObjects<?>> extends TracAPITemplate {
+public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFieldBase, L extends AbsTracObjects<?>> extends TracAPIBase {
 
     public AbsTracTicketStructFieldAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);

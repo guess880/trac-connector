@@ -1,17 +1,17 @@
 package org.guess880.trac_connector.object.ticket;
 
-import org.guess880.trac_connector.object.AbsTracAttribute;
+import org.guess880.trac_connector.object.TracAttributeBase;
 import org.guess880.trac_connector.object.TracObject;
-import org.guess880.trac_connector.object.TracStructTemplate;
+import org.guess880.trac_connector.object.TracStructBase;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
-public class TracTicketStructFieldTemplate extends TracStructTemplate {
+public class TracTicketStructFieldBase extends TracStructBase {
 
     // TODO difficult to handle
     private String updateKey;
 
-    public TracTicketStructFieldTemplate() {
+    protected TracTicketStructFieldBase() {
         super();
         setGetMultiResultReader(new GetMultiResultReader());
         setGetParamWriter(new NameOnlyParamWriter());
@@ -24,7 +24,7 @@ public class TracTicketStructFieldTemplate extends TracStructTemplate {
         return updateKey;
     }
 
-    public TracTicketStructFieldTemplate setUpdateKey(final String updateKey) {
+    public TracTicketStructFieldBase setUpdateKey(final String updateKey) {
         this.updateKey = updateKey;
         return this;
     }
@@ -33,12 +33,12 @@ public class TracTicketStructFieldTemplate extends TracStructTemplate {
         return (String) getValue(Attribute.NAME);
     }
 
-    public TracTicketStructFieldTemplate setName(final String name) {
+    public TracTicketStructFieldBase setName(final String name) {
         setValue(Attribute.NAME, name);
         return this;
     }
 
-    protected static class Attribute extends AbsTracAttribute {
+    protected static class Attribute extends TracAttributeBase {
 
         public static final Attribute NAME = new Attribute("name");
 
@@ -52,7 +52,7 @@ public class TracTicketStructFieldTemplate extends TracStructTemplate {
 
         @Override
         public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracTicketStructFieldTemplate) tracObj)
+            return new Object[] { ((TracTicketStructFieldBase) tracObj)
                     .getName() };
         }
 
@@ -63,7 +63,7 @@ public class TracTicketStructFieldTemplate extends TracStructTemplate {
 
         @Override
         public TracObject read(final TracObject tracObj, final Object result) {
-            final TracTicketStructFieldTemplate field = (TracTicketStructFieldTemplate) tracObj;
+            final TracTicketStructFieldBase field = (TracTicketStructFieldBase) tracObj;
             field.setName((String) result);
             return field;
         }
@@ -75,7 +75,7 @@ public class TracTicketStructFieldTemplate extends TracStructTemplate {
 
         @Override
         public Object[] write(final TracObject tracObj) {
-            final TracTicketStructFieldTemplate field = (TracTicketStructFieldTemplate) tracObj;
+            final TracTicketStructFieldBase field = (TracTicketStructFieldBase) tracObj;
             return new Object[] { field.getName(), field.getValues() };
         }
 
@@ -85,7 +85,7 @@ public class TracTicketStructFieldTemplate extends TracStructTemplate {
 
         @Override
         public Object[] write(final TracObject tracObj) {
-            final TracTicketStructFieldTemplate field = (TracTicketStructFieldTemplate) tracObj;
+            final TracTicketStructFieldBase field = (TracTicketStructFieldBase) tracObj;
             return new Object[] { field.getUpdateKey(), field.getValues() };
         }
 

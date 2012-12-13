@@ -7,7 +7,7 @@ import java.util.List;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 
-public abstract class AbsTracObjects<E extends TracObjectTemplate> implements
+public abstract class AbsTracObjects<E extends TracObjectBase> implements
         TracObject, Iterable<E> {
 
     private TracAPIResultReader getMultiResultReader;

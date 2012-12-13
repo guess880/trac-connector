@@ -10,7 +10,7 @@ import org.guess880.trac_connector.object.system.TracMethodSignature;
 import org.guess880.trac_connector.object.system.TracMethods;
 import org.guess880.trac_connector.object.system.TracVersion;
 
-public class TracSystemAPI extends TracAPITemplate {
+public class TracSystemAPI extends TracAPIBase {
 
     public TracSystemAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);

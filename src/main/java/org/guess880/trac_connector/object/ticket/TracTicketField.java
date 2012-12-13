@@ -1,10 +1,10 @@
 package org.guess880.trac_connector.object.ticket;
 
-import org.guess880.trac_connector.object.AbsTracAttribute;
-import org.guess880.trac_connector.object.TracStructTemplate;
+import org.guess880.trac_connector.object.TracAttributeBase;
+import org.guess880.trac_connector.object.TracStructBase;
 import org.guess880.trac_connector.object.converter.TrucStructGetResultReader;
 
-public class TracTicketField extends TracStructTemplate {
+public class TracTicketField extends TracStructBase {
 
     public TracTicketField() {
         super();
@@ -92,7 +92,7 @@ public class TracTicketField extends TracStructTemplate {
         return this;
     }
 
-    protected static class Attribute extends AbsTracAttribute {
+    protected static class Attribute extends TracAttributeBase {
 
         public static final Attribute NAME = new Attribute("name");
 
