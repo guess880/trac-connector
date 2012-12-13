@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.TracConnectConfig;
-import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
@@ -15,19 +14,19 @@ import org.guess880.trac_connector.object.ticket.TracTicketEnumFields;
 
 abstract class AbsTracTicketEnumFieldAPI extends TracAPIBase {
 
-    private TracAPIResultReader getAllResultReader;
+    private TracMultiResultReader<TracTicketEnumField, TracTicketEnumFields> getAllResultReader;
 
-    private TracAPIParamWriter getAllParamWriter;
+    private TracAPIParamWriter<TracTicketEnumFields> getAllParamWriter;
 
-    private TracAPIResultReader getResultReader;
+    private TracAPIResultReader<TracTicketEnumField> getResultReader;
 
-    private TracAPIParamWriter getParamWriter;
+    private TracAPIParamWriter<TracTicketEnumField> getParamWriter;
 
-    private TracAPIParamWriter deleteParamWriter;
+    private TracAPIParamWriter<TracTicketEnumField> deleteParamWriter;
 
-    private TracAPIParamWriter createParamWriter;
+    private TracAPIParamWriter<TracTicketEnumField> createParamWriter;
 
-    private TracAPIParamWriter updateParamWriter;
+    private TracAPIParamWriter<TracTicketEnumField> updateParamWriter;
 
     protected AbsTracTicketEnumFieldAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);
@@ -41,9 +40,9 @@ abstract class AbsTracTicketEnumFieldAPI extends TracAPIBase {
     }
 
     private void setUpConverter() {
-        getAllResultReader = new TracMultiResultReader()
+        getAllResultReader = new TracMultiResultReader<TracTicketEnumField, TracTicketEnumFields>()
                 .setOneResultReader(new GetAllResultReader());
-        getAllParamWriter = new TracEmptyParamWriter();
+        getAllParamWriter = new TracEmptyParamWriter<TracTicketEnumFields>();
         getResultReader = new GetResultReader();
         getParamWriter = new NameOnlyParamWriter();
         deleteParamWriter = new NameOnlyParamWriter();
@@ -51,7 +50,8 @@ abstract class AbsTracTicketEnumFieldAPI extends TracAPIBase {
         updateParamWriter = new NameAndValueParamWriter();
     }
 
-    public TracTicketEnumFields getAll(final TracTicketEnumFields fields) throws XmlRpcException {
+    public TracTicketEnumFields getAll(final TracTicketEnumFields fields)
+            throws XmlRpcException {
         getAllResultReader.read(
                 fields,
                 getRpcClient().execute(getAPIName("getAll"),
@@ -63,19 +63,20 @@ abstract class AbsTracTicketEnumFieldAPI extends TracAPIBase {
         return getAll(new TracTicketEnumFields());
     }
 
-    public TracTicketEnumField get(final TracTicketEnumField field) throws XmlRpcException {
-        getResultReader.read(
+    public TracTicketEnumField get(final TracTicketEnumField field)
+            throws XmlRpcException {
+        return getResultReader.read(
                 field,
                 getRpcClient().execute(getAPIName("get"),
                         getParamWriter.write(field)));
-        return field;
     }
 
     public TracTicketEnumField get(final String name) throws XmlRpcException {
         return get(new TracTicketEnumField().setName(name));
     }
 
-    public TracTicketEnumField delete(final TracTicketEnumField field) throws XmlRpcException {
+    public TracTicketEnumField delete(final TracTicketEnumField field)
+            throws XmlRpcException {
         getRpcClient().execute(getAPIName("delete"),
                 deleteParamWriter.write(field));
         return field;
@@ -85,66 +86,70 @@ abstract class AbsTracTicketEnumFieldAPI extends TracAPIBase {
         return delete(new TracTicketEnumField().setName(name));
     }
 
-    public TracTicketEnumField create(final TracTicketEnumField field) throws XmlRpcException {
+    public TracTicketEnumField create(final TracTicketEnumField field)
+            throws XmlRpcException {
         getRpcClient().execute(getAPIName("create"),
                 createParamWriter.write(field));
         return field;
     }
 
-    public TracTicketEnumField update(final TracTicketEnumField field) throws XmlRpcException {
+    public TracTicketEnumField update(final TracTicketEnumField field)
+            throws XmlRpcException {
         getRpcClient().execute(getAPIName("update"),
                 updateParamWriter.write(field));
         return field;
     }
 
-    public TracTicketEnumField update(final String name, final String value) throws XmlRpcException {
+    public TracTicketEnumField update(final String name, final String value)
+            throws XmlRpcException {
         return update(new TracTicketEnumField().setName(name).setValue(value));
     }
 
     protected String getAPIName(final String method) {
-        return new StringBuilder("ticket.")
-            .append(getFieldName())
-            .append(".")
-            .append(method)
-            .toString();
+        return new StringBuilder("ticket.").append(getFieldName()).append(".")
+                .append(method).toString();
     }
 
     protected abstract String getFieldName();
 
-    private static class GetAllResultReader implements TracAPIResultReader {
+    private static class GetAllResultReader implements
+            TracAPIResultReader<TracTicketEnumField> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            return ((TracTicketEnumField) tracObj).setName((String) result);
+        public TracTicketEnumField read(final TracTicketEnumField tracObj,
+                final Object result) {
+            return tracObj.setName((String) result);
         }
-        
+
     }
 
-    private static class GetResultReader implements TracAPIResultReader {
+    private static class GetResultReader implements
+            TracAPIResultReader<TracTicketEnumField> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            return ((TracTicketEnumField) tracObj).setValue((String) result);
+        public TracTicketEnumField read(final TracTicketEnumField tracObj,
+                final Object result) {
+            return tracObj.setValue((String) result);
         }
-        
+
     }
 
-    private static class NameOnlyParamWriter implements TracAPIParamWriter {
+    private static class NameOnlyParamWriter implements
+            TracAPIParamWriter<TracTicketEnumField> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracTicketEnumField) tracObj).getName() };
+        public Object[] write(final TracTicketEnumField tracObj) {
+            return new Object[] { tracObj.getName() };
         }
-        
+
     }
 
     private static class NameAndValueParamWriter implements
-            TracAPIParamWriter {
+            TracAPIParamWriter<TracTicketEnumField> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTicketEnumField field = (TracTicketEnumField) tracObj;
-            return new Object[] { field.getName(), field.getValue() };
+        public Object[] write(final TracTicketEnumField tracObj) {
+            return new Object[] { tracObj.getName(), tracObj.getValue() };
         }
 
     }

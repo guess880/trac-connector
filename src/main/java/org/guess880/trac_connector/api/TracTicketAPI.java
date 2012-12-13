@@ -8,7 +8,6 @@ import java.util.Map;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.TracConnectConfig;
-import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
@@ -20,6 +19,7 @@ import org.guess880.trac_connector.object.ticket.TracTicketAttachment;
 import org.guess880.trac_connector.object.ticket.TracTicketAttachments;
 import org.guess880.trac_connector.object.ticket.TracTicketChangeLog;
 import org.guess880.trac_connector.object.ticket.TracTicketChangeLogs;
+import org.guess880.trac_connector.object.ticket.TracTicketField;
 import org.guess880.trac_connector.object.ticket.TracTicketFields;
 import org.guess880.trac_connector.object.ticket.TracTickets;
 
@@ -41,49 +41,49 @@ public class TracTicketAPI extends TracAPIBase {
 
     private TracTicketVersionAPI version;
 
-    private TracAPIResultReader queryResultReader;
+    private TracMultiResultReader<TracTicket, TracTickets> queryResultReader;
 
-    private TracAPIParamWriter queryParamWriter;
+    private TracAPIParamWriter<TracTickets> queryParamWriter;
 
-    private TracAPIResultReader getRecentChangesResultReader;
+    private TracMultiResultReader<TracTicket, TracTickets> getRecentChangesResultReader;
 
-    private TracAPIParamWriter getRecentChangesParamWriter;
+    private TracAPIParamWriter<TracTickets> getRecentChangesParamWriter;
 
-    private TracAPIResultReader getResultReader;
+    private TracAPIResultReader<TracTicket> getResultReader;
 
-    private TracAPIParamWriter getParamWriter;
+    private TracAPIParamWriter<TracTicket> getParamWriter;
 
-    private TracAPIResultReader createResultReader;
+    private TracAPIResultReader<TracTicket> createResultReader;
 
-    private TracAPIParamWriter createParamWriter;
+    private TracAPIParamWriter<TracTicket> createParamWriter;
 
-    private TracAPIParamWriter deleteParamWriter;
+    private TracAPIParamWriter<TracTicket> deleteParamWriter;
 
-    private TracAPIResultReader updateResultReader;
+    private TracAPIResultReader<TracTicket> updateResultReader;
 
-    private TracAPIParamWriter updateParamWriter;
+    private TracAPIParamWriter<TracTicket> updateParamWriter;
 
-    private TracAPIResultReader changeLogResultReader;
+    private TracMultiResultReader<TracTicketChangeLog, TracTicketChangeLogs> changeLogResultReader;
 
-    private TracAPIParamWriter changeLogParamWriter;
+    private TracAPIParamWriter<TracTicketChangeLogs> changeLogParamWriter;
 
-    private TracAPIResultReader listAttachmentsResultReader;
+    private TracMultiResultReader<TracTicketAttachment, TracTicketAttachments> listAttachmentsResultReader;
 
-    private TracAPIParamWriter listAttachmentsParamWriter;
+    private TracAPIParamWriter<TracTicketAttachments> listAttachmentsParamWriter;
 
-    private TracAPIResultReader getAttachmentResultReader;
+    private TracAPIResultReader<TracTicketAttachment> getAttachmentResultReader;
 
-    private TracAPIParamWriter getAttachmentParamWriter;
+    private TracAPIParamWriter<TracTicketAttachment> getAttachmentParamWriter;
 
-    private TracAPIResultReader putAttachmentResultReader;
+    private TracAPIResultReader<TracTicketAttachment> putAttachmentResultReader;
 
-    private TracAPIParamWriter putAttachmentParamWriter;
+    private TracAPIParamWriter<TracTicketAttachment> putAttachmentParamWriter;
 
-    private TracAPIParamWriter deleteAttachmentParamWriter;
+    private TracAPIParamWriter<TracTicketAttachment> deleteAttachmentParamWriter;
 
-    private TracAPIResultReader getTicketFieldsResultReader;
+    private TracMultiResultReader<TracTicketField, TracTicketFields> getTicketFieldsResultReader;
 
-    private TracAPIParamWriter getTicketFieldsParamWriter;
+    private TracAPIParamWriter<TracTicketFields> getTicketFieldsParamWriter;
 
     public TracTicketAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);
@@ -110,10 +110,10 @@ public class TracTicketAPI extends TracAPIBase {
     }
 
     private void setUpConverter() {
-        queryResultReader = new TracMultiResultReader()
+        queryResultReader = new TracMultiResultReader<TracTicket, TracTickets>()
                 .setOneResultReader(new IdOnlyResultReader());
         queryParamWriter = new QueryParamWriter();
-        getRecentChangesResultReader = new TracMultiResultReader()
+        getRecentChangesResultReader = new TracMultiResultReader<TracTicket, TracTickets>()
                 .setOneResultReader(new IdOnlyResultReader());
         getRecentChangesParamWriter = new GetRecentChangesParamWriter();
         getResultReader = new GetResultReader();
@@ -123,10 +123,10 @@ public class TracTicketAPI extends TracAPIBase {
         deleteParamWriter = new IdOnlyParamWriter();
         updateResultReader = new GetResultReader();
         updateParamWriter = new UpdateParamWriter();
-        changeLogResultReader = new TracMultiResultReader()
+        changeLogResultReader = new TracMultiResultReader<TracTicketChangeLog, TracTicketChangeLogs>()
                 .setOneResultReader(new ChangeLogResultReader());
         changeLogParamWriter = new ChangeLogParamWriter();
-        listAttachmentsResultReader = new TracMultiResultReader()
+        listAttachmentsResultReader = new TracMultiResultReader<TracTicketAttachment, TracTicketAttachments>()
                 .setOneResultReader(new ListAttachmentsResultReader());
         listAttachmentsParamWriter = new ListAttachmentsParamWriter();
         getAttachmentResultReader = new GetAttachmentResultReader();
@@ -134,9 +134,9 @@ public class TracTicketAPI extends TracAPIBase {
         putAttachmentResultReader = new PutAttachmentResultReader();
         putAttachmentParamWriter = new PutAttachmentParamWriter();
         deleteAttachmentParamWriter = new DeleteAttachmentParamWriter();
-        getTicketFieldsResultReader = new TracMultiResultReader()
-                .setOneResultReader(new TracStructGetResultReader());
-        getTicketFieldsParamWriter = new TracEmptyParamWriter();
+        getTicketFieldsResultReader = new TracMultiResultReader<TracTicketField, TracTicketFields>()
+                .setOneResultReader(new TracStructGetResultReader<TracTicketField>());
+        getTicketFieldsParamWriter = new TracEmptyParamWriter<TracTicketFields>();
     }
 
     public TracTicketComponentAPI component() {
@@ -172,26 +172,26 @@ public class TracTicketAPI extends TracAPIBase {
     }
 
     public TracTickets query(final TracTickets tickets) throws XmlRpcException {
-        queryResultReader.read(
+        return queryResultReader.read(
                 tickets,
                 getRpcClient().execute("ticket.query",
                         queryParamWriter.write(tickets)));
-        return tickets;
     }
 
     public TracTickets query(final String qstr) throws XmlRpcException {
         return query(new TracTickets().setQueryStr(qstr));
     }
 
-    public TracTickets getRecentChanges(final TracTickets tickets) throws XmlRpcException {
-        getRecentChangesResultReader.read(
+    public TracTickets getRecentChanges(final TracTickets tickets)
+            throws XmlRpcException {
+        return getRecentChangesResultReader.read(
                 tickets,
                 getRpcClient().execute("ticket.getRecentChanges",
                         getRecentChangesParamWriter.write(tickets)));
-        return tickets;
     }
 
-    public TracTickets getRecentChanges(final Date since) throws XmlRpcException {
+    public TracTickets getRecentChanges(final Date since)
+            throws XmlRpcException {
         return getRecentChanges(new TracTickets().setSince(since));
     }
 
@@ -205,7 +205,8 @@ public class TracTicketAPI extends TracAPIBase {
     // FIXME not implement
     @Deprecated
     public Object getAvailableActions(final int id) throws XmlRpcException {
-        return getRpcClient().execute("ticket.getAvailableActions", new Object[] { id });
+        return getRpcClient().execute("ticket.getAvailableActions",
+                new Object[] { id });
     }
 
     // FIXME not implement
@@ -214,11 +215,10 @@ public class TracTicketAPI extends TracAPIBase {
     }
 
     public TracTicket get(final TracTicket ticket) throws XmlRpcException {
-        getResultReader.read(
+        return getResultReader.read(
                 ticket,
                 getRpcClient().execute("ticket.get",
                         getParamWriter.write(ticket)));
-        return ticket;
     }
 
     public TracTicket get(final int id) throws XmlRpcException {
@@ -226,11 +226,10 @@ public class TracTicketAPI extends TracAPIBase {
     }
 
     public TracTicket create(final TracTicket ticket) throws XmlRpcException {
-        createResultReader.read(
+        return createResultReader.read(
                 ticket,
                 getRpcClient().execute("ticket.create",
                         createParamWriter.write(ticket)));
-        return ticket;
     }
 
     public TracTicket create() throws XmlRpcException {
@@ -238,16 +237,15 @@ public class TracTicketAPI extends TracAPIBase {
     }
 
     public TracTicket update(final TracTicket ticket) throws XmlRpcException {
-        updateResultReader.read(
+        return updateResultReader.read(
                 ticket,
                 getRpcClient().execute("ticket.update",
                         updateParamWriter.write(ticket)));
-        return ticket;
     }
 
     public TracTicket delete(final TracTicket ticket) throws XmlRpcException {
-        getRpcClient().execute("ticket.delete",
-                deleteParamWriter.write(ticket));
+        getRpcClient()
+                .execute("ticket.delete", deleteParamWriter.write(ticket));
         return ticket;
     }
 
@@ -255,72 +253,82 @@ public class TracTicketAPI extends TracAPIBase {
         return delete(new TracTicket().setId(id));
     }
 
-    public TracTicketChangeLogs changeLog(final TracTicket ticket) throws XmlRpcException {
+    public TracTicketChangeLogs changeLog(final TracTicket ticket)
+            throws XmlRpcException {
         final TracTicketChangeLogs changelogs = ticket.getChangelogs();
-        changeLogResultReader.read(
+        return changeLogResultReader.read(
                 changelogs,
                 getRpcClient().execute("ticket.changeLog",
                         changeLogParamWriter.write(changelogs)));
-        return changelogs;
     }
 
     public TracTicketChangeLogs changeLog(final int id) throws XmlRpcException {
         return changeLog(new TracTicket().setId(id));
     }
 
-    public TracTicketAttachments listAttachments(final TracTicket ticket) throws XmlRpcException {
+    public TracTicketAttachments listAttachments(final TracTicket ticket)
+            throws XmlRpcException {
         final TracTicketAttachments attachments = ticket.getAttachments();
-        listAttachmentsResultReader.read(
+        return listAttachmentsResultReader.read(
                 attachments,
                 getRpcClient().execute("ticket.listAttachments",
                         listAttachmentsParamWriter.write(attachments)));
-        return attachments;
     }
 
-    public TracTicketAttachments listAttachments(final int ticket) throws XmlRpcException {
+    public TracTicketAttachments listAttachments(final int ticket)
+            throws XmlRpcException {
         return listAttachments(new TracTicket().setId(ticket));
     }
 
-    public TracTicketAttachment getAttachment(final TracTicketAttachment attachment) throws XmlRpcException {
-        getAttachmentResultReader.read(
+    public TracTicketAttachment getAttachment(
+            final TracTicketAttachment attachment) throws XmlRpcException {
+        return getAttachmentResultReader.read(
                 attachment,
                 getRpcClient().execute("ticket.getAttachment",
                         getAttachmentParamWriter.write(attachment)));
-        return attachment;
     }
 
-    public TracTicketAttachment getAttachment(final int ticket, final String filename) throws XmlRpcException {
-        return getAttachment(new TracTicketAttachment(new TracTicket().setId(ticket)).setFilename(filename));
+    public TracTicketAttachment getAttachment(final int ticket,
+            final String filename) throws XmlRpcException {
+        return getAttachment(new TracTicketAttachment(
+                new TracTicket().setId(ticket)).setFilename(filename));
     }
 
-    public TracTicketAttachment putAttachment(final TracTicketAttachment attachment) throws XmlRpcException {
-        putAttachmentResultReader.read(
+    public TracTicketAttachment putAttachment(
+            final TracTicketAttachment attachment) throws XmlRpcException {
+        return putAttachmentResultReader.read(
                 attachment,
                 getRpcClient().execute("ticket.putAttachment",
                         putAttachmentParamWriter.write(attachment)));
-        return attachment;
     }
 
-    public TracTicketAttachment putAttachment(final int ticket, final String filename, final String description, final byte[] data) throws XmlRpcException {
-        return putAttachment(new TracTicketAttachment(new TracTicket().setId(ticket)).setFilename(filename).setData(data));
+    public TracTicketAttachment putAttachment(final int ticket,
+            final String filename, final String description, final byte[] data)
+            throws XmlRpcException {
+        return putAttachment(new TracTicketAttachment(
+                new TracTicket().setId(ticket)).setFilename(filename).setData(
+                data));
     }
 
-    public TracTicketAttachment deleteAttachment(final TracTicketAttachment attachment) throws XmlRpcException {
+    public TracTicketAttachment deleteAttachment(
+            final TracTicketAttachment attachment) throws XmlRpcException {
         getRpcClient().execute("ticket.deleteAttachment",
                 deleteAttachmentParamWriter.write(attachment));
         return attachment;
     }
 
-    public TracTicketAttachment deleteAttachment(final int ticket, final String filename) throws XmlRpcException {
-        return deleteAttachment(new TracTicketAttachment(new TracTicket().setId(ticket)).setFilename(filename));
+    public TracTicketAttachment deleteAttachment(final int ticket,
+            final String filename) throws XmlRpcException {
+        return deleteAttachment(new TracTicketAttachment(
+                new TracTicket().setId(ticket)).setFilename(filename));
     }
 
-    public TracTicketFields getTicketFields(final TracTicketFields fields) throws XmlRpcException {
-        getTicketFieldsResultReader.read(
+    public TracTicketFields getTicketFields(final TracTicketFields fields)
+            throws XmlRpcException {
+        return getTicketFieldsResultReader.read(
                 fields,
                 getRpcClient().execute("ticket.getTicketFields",
                         getTicketFieldsParamWriter.write(fields)));
-        return fields;
     }
 
     public TracTicketFields getTicketFields() throws XmlRpcException {
@@ -328,198 +336,188 @@ public class TracTicketAPI extends TracAPIBase {
     }
 
     private static class IdOnlyResultReader implements
-            TracAPIResultReader {
+            TracAPIResultReader<TracTicket> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracTicket ticket = (TracTicket) tracObj;
-            ticket.setId((Integer) result);
-            return ticket;
+        public TracTicket read(final TracTicket tracObj, final Object result) {
+            return tracObj.setId((Integer) result);
         }
 
     }
 
-    private static class QueryParamWriter implements TracAPIParamWriter {
+    private static class QueryParamWriter implements
+            TracAPIParamWriter<TracTickets> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTickets tickets = (TracTickets) tracObj;
-            return tickets.getQueryStr() == null
-                    ? new Object[] {}
-                    : new Object[] { tickets.getQueryStr() };
+        public Object[] write(final TracTickets tracObj) {
+            return tracObj.getQueryStr() == null ? new Object[] {}
+                    : new Object[] { tracObj.getQueryStr() };
         }
 
     }
 
-    private static class GetRecentChangesParamWriter implements TracAPIParamWriter {
+    private static class GetRecentChangesParamWriter implements
+            TracAPIParamWriter<TracTickets> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTickets tickets = (TracTickets) tracObj;
-            return tickets.getSince() == null
-                    ? new Object[] {}
-                    : new Object[] { tickets.getSince() };
+        public Object[] write(final TracTickets tracObj) {
+            return tracObj.getSince() == null ? new Object[] {}
+                    : new Object[] { tracObj.getSince() };
         }
 
     }
 
     private static class GetResultReader implements
-            TracAPIResultReader {
+            TracAPIResultReader<TracTicket> {
 
         @SuppressWarnings("unchecked")
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
+        public TracTicket read(final TracTicket tracObj, final Object result) {
             final Object[] objAry = (Object[]) result;
-            final TracTicket ticket = (TracTicket) tracObj;
-            ticket.setId(((Integer) objAry[0]).intValue());
-            ticket.setValues((Map<String, Object>) objAry[3]);
-            return ticket;
+            tracObj.setId(((Integer) objAry[0]).intValue());
+            tracObj.setValues((Map<String, Object>) objAry[3]);
+            return tracObj;
         }
 
     }
 
     private static class IdOnlyParamWriter implements
-            TracAPIParamWriter {
+            TracAPIParamWriter<TracTicket> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracTicket) tracObj).getId() };
+        public Object[] write(final TracTicket tracObj) {
+            return new Object[] { tracObj.getId() };
         }
-        
+
     }
 
     private static class CreateParamWriter implements
-            TracAPIParamWriter {
+            TracAPIParamWriter<TracTicket> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTicket ticket = (TracTicket) tracObj;
-            final Map<String, Object> attrs = new HashMap<String, Object>(ticket.getValues());
+        public Object[] write(final TracTicket tracObj) {
+            final Map<String, Object> attrs = new HashMap<String, Object>(
+                    tracObj.getValues());
             attrs.remove(Attribute.TIME.getName());
             attrs.remove(Attribute.CHANGETIME.getName());
-            return new Object[] { ticket.getSummary(), ticket.getDescription(), attrs };
+            return new Object[] { tracObj.getSummary(),
+                    tracObj.getDescription(), attrs };
         }
-        
+
     }
 
     private static class UpdateParamWriter implements
-            TracAPIParamWriter {
+            TracAPIParamWriter<TracTicket> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTicket ticket = (TracTicket) tracObj;
-            final Map<String, Object> attrs = new HashMap<String, Object>(ticket.getValues());
+        public Object[] write(final TracTicket tracObj) {
+            final Map<String, Object> attrs = new HashMap<String, Object>(
+                    tracObj.getValues());
             attrs.remove(Attribute.TIME.getName());
             attrs.remove(Attribute.CHANGETIME.getName());
-            return new Object[] { ticket.getId(), ticket.getUpdateComment(), attrs };
+            return new Object[] { tracObj.getId(), tracObj.getUpdateComment(),
+                    attrs };
         }
-        
+
     }
 
     private static class ChangeLogParamWriter implements
-            TracAPIParamWriter {
+            TracAPIParamWriter<TracTicketChangeLogs> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracTicketChangeLogs) tracObj).getTicket().getId() };
+        public Object[] write(final TracTicketChangeLogs tracObj) {
+            return new Object[] { tracObj.getTicket().getId() };
         }
 
     }
 
     private static class ChangeLogResultReader implements
-            TracAPIResultReader {
+            TracAPIResultReader<TracTicketChangeLog> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
+        public TracTicketChangeLog read(final TracTicketChangeLog tracObj,
+                final Object result) {
             final Object[] aryObj = (Object[]) result;
-            final TracTicketChangeLog changelog = (TracTicketChangeLog) tracObj;
-            changelog.setTime((Date) aryObj[0]);
-            changelog.setAuthor((String) aryObj[1]);
-            changelog.setField((String) aryObj[2]);
-            changelog.setOldvalue((String) aryObj[3]);
-            changelog.setNewvalue((String) aryObj[4]);
-            changelog.setPermanent((Integer) aryObj[5]);
-            return changelog;
+            return tracObj.setTime((Date) aryObj[0])
+                    .setAuthor((String) aryObj[1]).setField((String) aryObj[2])
+                    .setOldvalue((String) aryObj[3])
+                    .setNewvalue((String) aryObj[4])
+                    .setPermanent((Integer) aryObj[5]);
         }
 
     }
 
     private static class ListAttachmentsResultReader implements
-            TracAPIResultReader {
+            TracAPIResultReader<TracTicketAttachment> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
+        public TracTicketAttachment read(final TracTicketAttachment tracObj,
+                final Object result) {
             final Object[] attrs = (Object[]) result;
-            attach.setFilename((String) attrs[0]);
-            attach.setDescription((String) attrs[1]);
-            attach.setSize((Integer) attrs[2]);
-            attach.setTime((Date) attrs[3]);
-            attach.setAuthor((String) attrs[4]);
-            return attach;
+            return tracObj.setFilename((String) attrs[0])
+                    .setDescription((String) attrs[1])
+                    .setSize((Integer) attrs[2]).setTime((Date) attrs[3])
+                    .setAuthor((String) attrs[4]);
         }
     }
 
-    private static class ListAttachmentsParamWriter implements TracAPIParamWriter {
+    private static class ListAttachmentsParamWriter implements
+            TracAPIParamWriter<TracTicketAttachments> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracTicketAttachments) tracObj).getTicket().getId() };
+        public Object[] write(final TracTicketAttachments tracObj) {
+            return new Object[] { tracObj.getTicket().getId() };
         }
-        
+
     }
 
     private static class GetAttachmentResultReader implements
-            TracAPIResultReader {
+            TracAPIResultReader<TracTicketAttachment> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
-            attach.setData((byte[]) result);
-            return attach;
+        public TracTicketAttachment read(final TracTicketAttachment tracObj,
+                final Object result) {
+            return tracObj.setData((byte[]) result);
         }
     }
 
     private static class GetAttachmentParamWriter implements
-            TracAPIParamWriter {
+            TracAPIParamWriter<TracTicketAttachment> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
-            return new Object[] { attach.getId(), attach.getFilename() };
+        public Object[] write(final TracTicketAttachment tracObj) {
+            return new Object[] { tracObj.getId(), tracObj.getFilename() };
         }
 
     }
 
     private static class PutAttachmentResultReader implements
-            TracAPIResultReader {
+            TracAPIResultReader<TracTicketAttachment> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
-            attach.setFilename((String) result);
-            return attach;
+        public TracTicketAttachment read(final TracTicketAttachment tracObj,
+                final Object result) {
+            return tracObj.setFilename((String) result);
         }
     }
 
     private static class PutAttachmentParamWriter implements
-            TracAPIParamWriter {
+            TracAPIParamWriter<TracTicketAttachment> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
-            return new Object[] { attach.getId(), attach.getFilename(), attach.getDescription(), attach.getData() };
+        public Object[] write(final TracTicketAttachment tracObj) {
+            return new Object[] { tracObj.getId(), tracObj.getFilename(),
+                    tracObj.getDescription(), tracObj.getData() };
         }
 
     }
 
     private static class DeleteAttachmentParamWriter implements
-            TracAPIParamWriter {
+            TracAPIParamWriter<TracTicketAttachment> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTicketAttachment attach = (TracTicketAttachment) tracObj;
-            return new Object[] { attach.getId(), attach.getFilename() };
+        public Object[] write(final TracTicketAttachment tracObj) {
+            return new Object[] { tracObj.getId(), tracObj.getFilename() };
         }
 
     }

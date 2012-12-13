@@ -6,6 +6,8 @@ import static org.junit.Assert.assertThat;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.guess880.trac_connector.object.system.TracMethod;
+import org.guess880.trac_connector.object.system.TracMethodHelp;
+import org.guess880.trac_connector.object.system.TracMethodSignature;
 import org.guess880.trac_connector.object.system.TracMethods;
 import org.guess880.trac_connector.object.system.TracVersion;
 import org.junit.BeforeClass;
@@ -74,15 +76,15 @@ public class TracSystemAPITest {
 
     @Test
     public void testMethodHelp() throws XmlRpcException {
-        final TracMethod method = api.methodHelp("ticket.delete");
-        assertThat(method.getHelp().getHelp(), is(equalTo("int ticket.delete(int id)\n\nDelete ticket with the given id. ")));
+        final TracMethodHelp help = api.methodHelp("ticket.delete");
+        assertThat(help.getHelp(), is(equalTo("int ticket.delete(int id)\n\nDelete ticket with the given id. ")));
     }
 
     @Test
     public void testMethodSignature() throws XmlRpcException {
-        final TracMethod method = api.methodSignature("ticket.query");
-        assertThat(method.getSignature().getReturnType(), is(equalTo("array")));
-        assertThat(method.getSignature().getParameterTypes(), is(equalTo("array,string")));
+        final TracMethodSignature signature = api.methodSignature("ticket.query");
+        assertThat(signature.getReturnType(), is(equalTo("array")));
+        assertThat(signature.getParameterTypes(), is(equalTo("array,string")));
     }
 
     @Test

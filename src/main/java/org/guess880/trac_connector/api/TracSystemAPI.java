@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.TracConnectConfig;
-import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
@@ -18,21 +17,21 @@ import org.guess880.trac_connector.object.system.TracVersion;
 
 public class TracSystemAPI extends TracAPIBase {
 
-    private TracAPIResultReader listMethodsResultReader;
+    private TracMultiResultReader<TracMethod, TracMethods> listMethodsResultReader;
 
-    private TracAPIParamWriter listMethodsParamWriter;
+    private TracAPIParamWriter<TracMethods> listMethodsParamWriter;
 
-    private TracAPIResultReader methodHelpResultReader;
+    private TracAPIResultReader<TracMethodHelp> methodHelpResultReader;
 
-    private TracAPIParamWriter methodHelpParamWriter;
+    private TracAPIParamWriter<TracMethodHelp> methodHelpParamWriter;
 
-    private TracAPIResultReader methodSignatureResultReader;
+    private TracAPIResultReader<TracMethodSignature> methodSignatureResultReader;
 
-    private TracAPIParamWriter methodSignatureParamWriter;
+    private TracAPIParamWriter<TracMethodSignature> methodSignatureParamWriter;
 
-    private TracAPIResultReader getAPIVersionResultReader;
+    private TracAPIResultReader<TracVersion> getAPIVersionResultReader;
 
-    private TracAPIParamWriter getAPIVersionParamWriter;
+    private TracAPIParamWriter<TracVersion> getAPIVersionParamWriter;
 
     public TracSystemAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);
@@ -46,15 +45,15 @@ public class TracSystemAPI extends TracAPIBase {
     }
 
     private void setUpConverter() {
-        listMethodsResultReader = new TracMultiResultReader()
+        listMethodsResultReader = new TracMultiResultReader<TracMethod, TracMethods>()
                 .setOneResultReader(new MethodResultReader());
-        listMethodsParamWriter = new TracEmptyParamWriter();
+        listMethodsParamWriter = new TracEmptyParamWriter<TracMethods>();
         methodHelpResultReader = new MethodHelpResultReader();
         methodHelpParamWriter = new MethodHelpParamWriter();
         methodSignatureResultReader = new MethodSignatureResultReader();
         methodSignatureParamWriter = new MethodSignatureParamWriter();
         getAPIVersionResultReader = new GetAPIVersionResultReader();
-        getAPIVersionParamWriter = new TracEmptyParamWriter();
+        getAPIVersionParamWriter = new TracEmptyParamWriter<TracVersion>();
     }
 
     public Object multicall() throws XmlRpcException {
@@ -64,124 +63,117 @@ public class TracSystemAPI extends TracAPIBase {
 
     public TracMethods listMethods(final TracMethods methods)
             throws XmlRpcException {
-        listMethodsResultReader.read(
+        return listMethodsResultReader.read(
                 methods,
                 getRpcClient().execute("system.listMethods",
                         listMethodsParamWriter.write(methods)));
-        return methods;
     }
 
     public TracMethods listMethods() throws XmlRpcException {
         return listMethods(new TracMethods());
     }
 
-    public TracMethod methodHelp(final TracMethod method)
+    public TracMethodHelp methodHelp(final TracMethod method)
             throws XmlRpcException {
         final TracMethodHelp help = method.getHelp();
-        methodHelpResultReader.read(
+        return methodHelpResultReader.read(
                 help,
                 getRpcClient().execute("system.methodHelp",
                         methodHelpParamWriter.write(help)));
-        return method;
     }
 
-    public TracMethod methodHelp(final String method) throws XmlRpcException {
+    public TracMethodHelp methodHelp(final String method) throws XmlRpcException {
         return methodHelp(new TracMethod().setName(method));
     }
 
-    public TracMethod methodSignature(final TracMethod method)
+    public TracMethodSignature methodSignature(final TracMethod method)
             throws XmlRpcException {
         final TracMethodSignature signature = method.getSignature();
-        methodSignatureResultReader.read(
+        return methodSignatureResultReader.read(
                 signature,
                 getRpcClient().execute("system.methodSignature",
                         methodSignatureParamWriter.write(signature)));
-        return method;
     }
 
-    public TracMethod methodSignature(final String method)
+    public TracMethodSignature methodSignature(final String method)
             throws XmlRpcException {
         return methodSignature(new TracMethod().setName(method));
     }
 
     public TracVersion getAPIVersion(final TracVersion version)
             throws XmlRpcException {
-        getAPIVersionResultReader.read(
+        return getAPIVersionResultReader.read(
                 version,
                 getRpcClient().execute("system.getAPIVersion",
                         getAPIVersionParamWriter.write(version)));
-        return version;
     }
 
     public TracVersion getAPIVersion() throws XmlRpcException {
         return getAPIVersion(new TracVersion());
     }
 
-    private static class MethodResultReader implements TracAPIResultReader {
+    private static class MethodResultReader implements
+            TracAPIResultReader<TracMethod> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracMethod method = (TracMethod) tracObj;
-            method.setName((String) result);
-            return method;
+        public TracMethod read(final TracMethod tracObj, final Object result) {
+            return tracObj.setName((String) result);
         }
 
     }
 
-    private static class MethodHelpResultReader implements TracAPIResultReader {
+    private static class MethodHelpResultReader implements
+            TracAPIResultReader<TracMethodHelp> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracMethodHelp signature = (TracMethodHelp) tracObj;
-            signature.setHelp((String) result);
-            return signature;
+        public TracMethodHelp read(final TracMethodHelp tracObj,
+                final Object result) {
+            return tracObj.setHelp((String) result);
         }
 
     }
 
-    private static class MethodHelpParamWriter implements TracAPIParamWriter {
+    private static class MethodHelpParamWriter implements
+            TracAPIParamWriter<TracMethodHelp> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracMethodHelp) tracObj).getName() };
+        public Object[] write(final TracMethodHelp tracObj) {
+            return new Object[] { tracObj.getName() };
         }
 
     }
 
     private static class MethodSignatureResultReader implements
-            TracAPIResultReader {
+            TracAPIResultReader<TracMethodSignature> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
+        public TracMethodSignature read(final TracMethodSignature tracObj,
+                final Object result) {
             final Object[] objAry = (Object[]) result;
-            final TracMethodSignature signature = (TracMethodSignature) tracObj;
-            signature.setReturnType((String) objAry[0]);
-            signature.setParameterTypes((String) objAry[1]);
-            return signature;
+            return tracObj.setReturnType((String) objAry[0]).setParameterTypes(
+                    (String) objAry[1]);
         }
 
     }
 
     private static class MethodSignatureParamWriter implements
-            TracAPIParamWriter {
+            TracAPIParamWriter<TracMethodSignature> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracMethodSignature) tracObj).getName() };
+        public Object[] write(final TracMethodSignature tracObj) {
+            return new Object[] { tracObj.getName() };
         }
 
     }
 
-    private static class GetAPIVersionResultReader implements TracAPIResultReader {
+    private static class GetAPIVersionResultReader implements
+            TracAPIResultReader<TracVersion> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracVersion version = (TracVersion) tracObj;
+        public TracVersion read(final TracVersion tracObj, final Object result) {
             final Object[] attrs = (Object[]) result;
-            version.setEpoc((Integer) attrs[0]);
-            version.setMajor((Integer) attrs[1]);
-            version.setMinor((Integer) attrs[2]);
-            return version;
+            return tracObj.setEpoc((Integer) attrs[0])
+                    .setMajor((Integer) attrs[1]).setMinor((Integer) attrs[2]);
         }
 
     }

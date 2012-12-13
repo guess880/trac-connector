@@ -6,7 +6,6 @@ import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.TracConnectConfig;
 import org.guess880.trac_connector.object.AbsTracObjects;
-import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
@@ -14,21 +13,22 @@ import org.guess880.trac_connector.object.converter.TracMultiResultReader;
 import org.guess880.trac_connector.object.converter.TracStructGetResultReader;
 import org.guess880.trac_connector.object.ticket.TracTicketStructFieldBase;
 
-public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFieldBase, L extends AbsTracObjects<?>> extends TracAPIBase {
+public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFieldBase, L extends AbsTracObjects<O>>
+        extends TracAPIBase {
 
-    private TracAPIResultReader getAllResultReader;
+    private TracMultiResultReader<O, L> getAllResultReader;
 
-    private TracAPIParamWriter getAllParamWriter;
+    private TracAPIParamWriter<L> getAllParamWriter;
 
-    private TracAPIResultReader getResultReader;
+    private TracStructGetResultReader<O> getResultReader;
 
-    private TracAPIParamWriter getParamWriter;
+    private TracAPIParamWriter<O> getParamWriter;
 
-    private TracAPIParamWriter deleteParamWriter;
+    private TracAPIParamWriter<O> deleteParamWriter;
 
-    private TracAPIParamWriter createParamWriter;
+    private TracAPIParamWriter<O> createParamWriter;
 
-    private TracAPIParamWriter updateParamWriter;
+    private TracAPIParamWriter<O> updateParamWriter;
 
     public AbsTracTicketStructFieldAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);
@@ -42,10 +42,10 @@ public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFiel
     }
 
     private void setUpConverter() {
-        getAllResultReader = new TracMultiResultReader()
+        getAllResultReader = new TracMultiResultReader<O, L>()
                 .setOneResultReader(new GetAllResultReader());
-        getAllParamWriter = new TracEmptyParamWriter();
-        getResultReader = new TracStructGetResultReader();
+        getAllParamWriter = new TracEmptyParamWriter<L>();
+        getResultReader = new TracStructGetResultReader<O>();
         getParamWriter = new NameOnlyParamWriter();
         deleteParamWriter = new NameOnlyParamWriter();
         createParamWriter = new CreateParamWriter();
@@ -54,20 +54,17 @@ public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFiel
 
     public L getAll() throws XmlRpcException {
         final L fields = newFields();
-        getAllResultReader.read(
+        return getAllResultReader.read(
                 fields,
                 getRpcClient().execute(getAPIName("getAll"),
                         getAllParamWriter.write(fields)));
-        return fields;
     }
 
-    public O get(final O field)
-            throws XmlRpcException {
-        getResultReader.read(
-                    field,
-                    getRpcClient().execute(getAPIName("get"),
-                            getParamWriter.write(field)));
-        return field;
+    public O get(final O field) throws XmlRpcException {
+        return getResultReader.read(
+                field,
+                getRpcClient().execute(getAPIName("get"),
+                        getParamWriter.write(field)));
     }
 
     public O get(final String name) throws XmlRpcException {
@@ -110,54 +107,45 @@ public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFiel
     protected abstract O newField();
 
     protected String getAPIName(final String method) {
-        return new StringBuilder("ticket.")
-            .append(getFieldName())
-            .append(".")
-            .append(method)
-            .toString();
+        return new StringBuilder("ticket.").append(getFieldName()).append(".")
+                .append(method).toString();
     }
 
     protected abstract String getFieldName();
 
-    private static class NameOnlyParamWriter implements TracAPIParamWriter {
+    private class NameOnlyParamWriter implements TracAPIParamWriter<O> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            return new Object[] { ((TracTicketStructFieldBase) tracObj)
-                    .getName() };
+        public Object[] write(final O tracObj) {
+            return new Object[] { tracObj.getName() };
         }
 
     }
 
-    private static class GetAllResultReader implements
-            TracAPIResultReader {
+    private class GetAllResultReader implements TracAPIResultReader<O> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracTicketStructFieldBase field = (TracTicketStructFieldBase) tracObj;
-            field.setName((String) result);
-            return field;
+        public O read(final O tracObj, final Object result) {
+            tracObj.setName((String) result);
+            return tracObj;
         }
 
     }
 
-    private static class CreateParamWriter implements
-            TracAPIParamWriter {
+    private class CreateParamWriter implements TracAPIParamWriter<O> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTicketStructFieldBase field = (TracTicketStructFieldBase) tracObj;
-            return new Object[] { field.getName(), field.getValues() };
+        public Object[] write(final O tracObj) {
+            return new Object[] { tracObj.getName(), tracObj.getValues() };
         }
 
     }
 
-    private static class UpdateParamWriter implements TracAPIParamWriter {
+    private class UpdateParamWriter implements TracAPIParamWriter<O> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracTicketStructFieldBase field = (TracTicketStructFieldBase) tracObj;
-            return new Object[] { field.getUpdateKey(), field.getValues() };
+        public Object[] write(final O tracObj) {
+            return new Object[] { tracObj.getUpdateKey(), tracObj.getValues() };
         }
 
     }

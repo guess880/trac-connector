@@ -6,7 +6,6 @@ import java.util.Date;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.TracConnectConfig;
-import org.guess880.trac_connector.object.TracObject;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
@@ -18,13 +17,13 @@ import org.guess880.trac_connector.object.search.TracSearchResults;
 
 public class TracSearchAPI extends TracAPIBase {
 
-    private TracAPIResultReader getSearchFiltersResultReader;
+    private TracMultiResultReader<TracSearchFilter, TracSearchFilters> getSearchFiltersResultReader;
 
-    private TracAPIResultReader performSearchResultReader;
+    private TracMultiResultReader<TracSearchResult, TracSearchResults> performSearchResultReader;
 
-    private TracAPIParamWriter getSearchFiltersParamWriter;
+    private TracAPIParamWriter<TracSearchFilters> getSearchFiltersParamWriter;
 
-    private TracAPIParamWriter performSearchParamWriter;
+    private TracAPIParamWriter<TracSearchResults> performSearchParamWriter;
 
     public TracSearchAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);
@@ -38,68 +37,74 @@ public class TracSearchAPI extends TracAPIBase {
     }
 
     private void setUpConverter() {
-        getSearchFiltersResultReader = new TracMultiResultReader().setOneResultReader(new FilterResultReader());
-        getSearchFiltersParamWriter = new TracEmptyParamWriter();
-        performSearchResultReader = new TracMultiResultReader().setOneResultReader(new PerformSearchResultReader());
+        getSearchFiltersResultReader = new TracMultiResultReader<TracSearchFilter, TracSearchFilters>()
+                .setOneResultReader(new FilterResultReader());
+        getSearchFiltersParamWriter = new TracEmptyParamWriter<TracSearchFilters>();
+        performSearchResultReader = new TracMultiResultReader<TracSearchResult, TracSearchResults>()
+                .setOneResultReader(new PerformSearchResultReader());
         performSearchParamWriter = new PerformSearchParamWriter();
     }
 
-    public TracSearchFilters getSearchFilters(final TracSearchFilters filters) throws XmlRpcException {
-        getSearchFiltersResultReader.read(filters, getRpcClient().execute("search.getSearchFilters", getSearchFiltersParamWriter.write(filters)));
-        return filters;
+    public TracSearchFilters getSearchFilters(final TracSearchFilters filters)
+            throws XmlRpcException {
+        return getSearchFiltersResultReader.read(
+                filters,
+                getRpcClient().execute("search.getSearchFilters",
+                        getSearchFiltersParamWriter.write(filters)));
     }
 
     public TracSearchFilters getSearchFilters() throws XmlRpcException {
         return getSearchFilters(new TracSearchFilters());
     }
 
-    public TracSearchResults performSearch(final TracSearchResults results) throws XmlRpcException {
-        performSearchResultReader.read(results, getRpcClient().execute("search.performSearch", performSearchParamWriter.write(results)));
-        return results;
+    public TracSearchResults performSearch(final TracSearchResults results)
+            throws XmlRpcException {
+        return performSearchResultReader.read(
+                results,
+                getRpcClient().execute("search.performSearch",
+                        performSearchParamWriter.write(results)));
     }
 
-    public TracSearchResults performSearch(final String query, final TracSearchFilters filters) throws XmlRpcException {
-        return performSearch(new TracSearchResults().setQuery(query).setFilters(filters));
+    public TracSearchResults performSearch(final String query,
+            final TracSearchFilters filters) throws XmlRpcException {
+        return performSearch(new TracSearchResults().setQuery(query)
+                .setFilters(filters));
     }
 
-    private static class FilterResultReader implements TracAPIResultReader {
+    private static class FilterResultReader implements
+            TracAPIResultReader<TracSearchFilter> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracSearchFilter filter = (TracSearchFilter) tracObj;
+        public TracSearchFilter read(final TracSearchFilter tracObj,
+                final Object result) {
             final Object[] attrs = (Object[]) result;
-            filter.setName((String) attrs[0]);
-            filter.setDescription((String) attrs[1]);
-            return filter;
+            return tracObj.setName((String) attrs[0]).setDescription(
+                    (String) attrs[1]);
         }
     }
 
     private static class PerformSearchResultReader implements
-            TracAPIResultReader {
+            TracAPIResultReader<TracSearchResult> {
 
         @Override
-        public TracObject read(final TracObject tracObj, final Object result) {
-            final TracSearchResult searchResult = (TracSearchResult) tracObj;
+        public TracSearchResult read(final TracSearchResult tracObj,
+                final Object result) {
             final Object[] attrs = (Object[]) result;
-            searchResult.setHref((String) attrs[0]);
-            searchResult.setTitle((String) attrs[1]);
-            searchResult.setDate((Date) attrs[2]);
-            searchResult.setAuthor((String) attrs[3]);
-            searchResult.setExcerpt((String) attrs[4]);
-            return searchResult;
+            return tracObj.setHref((String) attrs[0])
+                    .setTitle((String) attrs[1]).setDate((Date) attrs[2])
+                    .setAuthor((String) attrs[3]).setExcerpt((String) attrs[4]);
         }
 
     }
 
     private static class PerformSearchParamWriter implements
-            TracAPIParamWriter {
+            TracAPIParamWriter<TracSearchResults> {
 
         @Override
-        public Object[] write(final TracObject tracObj) {
-            final TracSearchResults results = (TracSearchResults) tracObj;
-            return results.getFilters() == null
-                    ? new Object[] { results.getQuery() }
-                    : new Object[] { results.getQuery(), results.getFilters() };
+        public Object[] write(final TracSearchResults tracObj) {
+            return tracObj.getFilters() == null ? new Object[] { tracObj
+                    .getQuery() } : new Object[] { tracObj.getQuery(),
+                    tracObj.getFilters() };
         }
 
     }
