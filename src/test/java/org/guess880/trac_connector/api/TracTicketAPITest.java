@@ -13,6 +13,8 @@ import java.util.Calendar;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.guess880.trac_connector.object.ticket.TracTicket;
+import org.guess880.trac_connector.object.ticket.TracTicketAction;
+import org.guess880.trac_connector.object.ticket.TracTicketActions;
 import org.guess880.trac_connector.object.ticket.TracTicketAttachment;
 import org.guess880.trac_connector.object.ticket.TracTicketAttachments;
 import org.guess880.trac_connector.object.ticket.TracTicketChangeLog;
@@ -64,8 +66,10 @@ public class TracTicketAPITest {
     // FIXME no assertion
     @Test
     public void testGetActions() throws XmlRpcException {
-        final Object obj = api.getActions(1);
-        TracAPITestUtils.sysOutArray(obj);
+        final TracTicketActions actions = api.getActions(1);
+        for (final TracTicketAction action : actions) {
+            System.out.println(action);
+        }
     }
 
     @Test

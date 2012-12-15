@@ -81,7 +81,7 @@ public class TracTicketAttachment implements TracObject {
     }
 
     public byte[] getData() {
-        return data == null ? null : Arrays.copyOf(data, data.length);
+        return data == null ? new byte[0] : Arrays.copyOf(data, data.length);
     }
 
     public TracTicketAttachment setData(final byte[] data) {

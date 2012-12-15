@@ -15,6 +15,8 @@ public class TracTicket extends TracStructBase {
 
     private TracTicketChangeLogs changelogs;
 
+    private TracTicketActions actions;
+
     public TracTicket() {
         super();
     }
@@ -186,6 +188,18 @@ public class TracTicket extends TracStructBase {
 
     public TracTicket setAttachments(final TracTicketChangeLogs changelogs) {
         this.changelogs = changelogs;
+        return this;
+    }
+
+    public TracTicketActions getActions() {
+        if (actions == null) {
+            actions = new TracTicketActions(this);
+        }
+        return actions;
+    }
+
+    public TracTicket setActions(final TracTicketActions actions) {
+        this.actions = actions;
         return this;
     }
 

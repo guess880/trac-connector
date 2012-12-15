@@ -15,6 +15,10 @@ import org.guess880.trac_connector.object.converter.TracMultiResultReader;
 import org.guess880.trac_connector.object.converter.TracStructGetResultReader;
 import org.guess880.trac_connector.object.ticket.TracTicket;
 import org.guess880.trac_connector.object.ticket.TracTicket.Attribute;
+import org.guess880.trac_connector.object.ticket.TracTicketAction;
+import org.guess880.trac_connector.object.ticket.TracTicketActionField;
+import org.guess880.trac_connector.object.ticket.TracTicketActionFields;
+import org.guess880.trac_connector.object.ticket.TracTicketActions;
 import org.guess880.trac_connector.object.ticket.TracTicketAttachment;
 import org.guess880.trac_connector.object.ticket.TracTicketAttachments;
 import org.guess880.trac_connector.object.ticket.TracTicketChangeLog;
@@ -48,6 +52,10 @@ public class TracTicketAPI extends TracAPIBase {
     private TracMultiResultReader<TracTicket, TracTickets> getRecentChangesResultReader;
 
     private TracAPIParamWriter<TracTickets> getRecentChangesParamWriter;
+
+    private TracMultiResultReader<TracTicketAction, TracTicketActions> getActionsResultReader;
+
+    private TracAPIParamWriter<TracTicket> getActionsParamWriter;
 
     private TracAPIResultReader<TracTicket> getResultReader;
 
@@ -116,6 +124,9 @@ public class TracTicketAPI extends TracAPIBase {
         getRecentChangesResultReader = new TracMultiResultReader<TracTicket, TracTickets>()
                 .setOneResultReader(new IdOnlyResultReader());
         getRecentChangesParamWriter = new GetRecentChangesParamWriter();
+        getActionsResultReader = new TracMultiResultReader<TracTicketAction, TracTicketActions>()
+                .setOneResultReader(new GetActionsResultReader());
+        getActionsParamWriter = new IdOnlyParamWriter();
         getResultReader = new GetResultReader();
         getParamWriter = new IdOnlyParamWriter();
         createResultReader = new IdOnlyResultReader();
@@ -429,9 +440,16 @@ public class TracTicketAPI extends TracAPIBase {
                 new Object[] { id });
     }
 
-    // FIXME not implement
-    public Object getActions(final int id) throws XmlRpcException {
-        return getRpcClient().execute("ticket.getActions", new Object[] { id });
+    public TracTicketActions getActions(final TracTicket ticket)
+            throws XmlRpcException {
+        return getActionsResultReader.read(
+                ticket.getActions(),
+                getRpcClient().execute("ticket.getActions",
+                        getActionsParamWriter.write(ticket)));
+    }
+
+    public TracTicketActions getActions(final int id) throws XmlRpcException {
+        return getActions(new TracTicket().setId(id));
     }
 
     public TracTicket get(final TracTicket ticket) throws XmlRpcException {
@@ -583,6 +601,40 @@ public class TracTicketAPI extends TracAPIBase {
         public Object[] write(final TracTickets tracObj) {
             return tracObj.getSince() == null ? new Object[] {}
                     : new Object[] { tracObj.getSince() };
+        }
+
+    }
+
+    private static class GetActionsResultReader implements
+            TracAPIResultReader<TracTicketAction> {
+
+        private static final TracMultiResultReader<TracTicketActionField, TracTicketActionFields> fieldsReader = new TracMultiResultReader<TracTicketActionField, TracTicketActionFields>()
+                .setOneResultReader(new TracTicketActionInputFieldsResultReader());
+
+        @Override
+        public TracTicketAction read(final TracTicketAction tracObj,
+                final Object result) {
+            final Object[] objAry = (Object[]) result;
+            tracObj.setAction((String) objAry[0]);
+            tracObj.setLabel((String) objAry[1]);
+            tracObj.setHints((String) objAry[2]);
+            fieldsReader.read(tracObj.getInputFields(), objAry[3]);
+            return tracObj;
+        }
+
+    }
+
+    private static class TracTicketActionInputFieldsResultReader implements
+            TracAPIResultReader<TracTicketActionField> {
+
+        @Override
+        public TracTicketActionField read(final TracTicketActionField tracObj,
+                final Object result) {
+            final Object[] objAry = (Object[]) result;
+            tracObj.setName((String) objAry[0]);
+            tracObj.setValue((String) objAry[1]);
+            tracObj.setOptions((Object[]) objAry[2]);
+            return tracObj;
         }
 
     }
