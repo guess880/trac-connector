@@ -1,16 +1,10 @@
-package org.guess880.trac_connector;
+package org.guess880.trac_connector.api;
 
 import java.net.MalformedURLException;
 
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.guess880.trac_connector.api.TracAPIBase;
-import org.guess880.trac_connector.api.TracAPIConfig;
-import org.guess880.trac_connector.api.TracSearchAPI;
-import org.guess880.trac_connector.api.TracSystemAPI;
-import org.guess880.trac_connector.api.TracTicketAPI;
-import org.guess880.trac_connector.api.TracWikiAPI;
 
-public class TracConnector extends TracAPIBase {
+public class TracAPI extends TracAPIBase {
 
     private TracSearchAPI search;
 
@@ -20,12 +14,12 @@ public class TracConnector extends TracAPIBase {
 
     private TracWikiAPI wiki;
 
-    public TracConnector(final XmlRpcClient rpcClient) {
+    public TracAPI(final XmlRpcClient rpcClient) {
         super(rpcClient);
         newMemberAPI();
     }
 
-    public TracConnector(final TracAPIConfig cfg)
+    public TracAPI(final TracAPIConfig cfg)
             throws MalformedURLException {
         super(cfg);
         newMemberAPI();
