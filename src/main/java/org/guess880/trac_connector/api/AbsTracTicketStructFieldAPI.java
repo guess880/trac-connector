@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.guess880.trac_connector.TracConnectConfig;
 import org.guess880.trac_connector.object.AbsTracObjects;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
@@ -35,7 +34,7 @@ public abstract class AbsTracTicketStructFieldAPI<O extends TracTicketStructFiel
         setUpConverter();
     }
 
-    public AbsTracTicketStructFieldAPI(final TracConnectConfig cfg)
+    public AbsTracTicketStructFieldAPI(final TracAPIConfig cfg)
             throws MalformedURLException {
         super(cfg);
         setUpConverter();

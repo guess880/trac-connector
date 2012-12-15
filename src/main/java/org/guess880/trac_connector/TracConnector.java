@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.guess880.trac_connector.api.TracAPIBase;
+import org.guess880.trac_connector.api.TracAPIConfig;
 import org.guess880.trac_connector.api.TracSearchAPI;
 import org.guess880.trac_connector.api.TracSystemAPI;
 import org.guess880.trac_connector.api.TracTicketAPI;
@@ -24,7 +25,7 @@ public class TracConnector extends TracAPIBase {
         newMemberAPI();
     }
 
-    public TracConnector(final TracConnectConfig cfg)
+    public TracConnector(final TracAPIConfig cfg)
             throws MalformedURLException {
         super(cfg);
         newMemberAPI();

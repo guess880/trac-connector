@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.guess880.trac_connector.TracConnectConfig;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
@@ -99,7 +98,7 @@ public class TracTicketAPI extends TracAPIBase {
         setUpConverter();
     }
 
-    public TracTicketAPI(final TracConnectConfig cfg)
+    public TracTicketAPI(final TracAPIConfig cfg)
             throws MalformedURLException {
         super(cfg);
         newMemberAPI();

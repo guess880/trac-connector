@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.guess880.trac_connector.TracConnectConfig;
 import org.guess880.trac_connector.object.ticket.TracTicketStatus;
 import org.guess880.trac_connector.object.ticket.TracTicketStatuses;
 
@@ -17,7 +16,7 @@ public class TracTicketStatusAPI extends
         super(rpcClient);
     }
 
-    public TracTicketStatusAPI(final TracConnectConfig cfg)
+    public TracTicketStatusAPI(final TracAPIConfig cfg)
             throws MalformedURLException {
         super(cfg);
     }

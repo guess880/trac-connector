@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.guess880.trac_connector.TracConnectConfig;
 import org.guess880.trac_connector.object.converter.TracAPIParamWriter;
 import org.guess880.trac_connector.object.converter.TracAPIResultReader;
 import org.guess880.trac_connector.object.converter.TracEmptyParamWriter;
@@ -30,7 +29,7 @@ public class TracSearchAPI extends TracAPIBase {
         setUpConverter();
     }
 
-    public TracSearchAPI(final TracConnectConfig cfg)
+    public TracSearchAPI(final TracAPIConfig cfg)
             throws MalformedURLException {
         super(cfg);
         setUpConverter();

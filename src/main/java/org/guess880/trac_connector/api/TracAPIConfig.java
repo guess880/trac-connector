@@ -1,6 +1,6 @@
-package org.guess880.trac_connector;
+package org.guess880.trac_connector.api;
 
-public class TracConnectConfig {
+public class TracAPIConfig {
 
     private String url;
 
@@ -12,7 +12,7 @@ public class TracConnectConfig {
         return url;
     }
 
-    public TracConnectConfig setUrl(final String url) {
+    public TracAPIConfig setUrl(final String url) {
         this.url = url;
         return this;
     }
@@ -21,7 +21,7 @@ public class TracConnectConfig {
         return username;
     }
 
-    public TracConnectConfig setUsername(final String username) {
+    public TracAPIConfig setUsername(final String username) {
         this.username = username;
         return this;
     }
@@ -30,7 +30,7 @@ public class TracConnectConfig {
         return password;
     }
 
-    public TracConnectConfig setPassword(final String password) {
+    public TracAPIConfig setPassword(final String password) {
         this.password = password;
         return this;
     }

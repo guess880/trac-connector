@@ -3,7 +3,6 @@ package org.guess880.trac_connector.api;
 import java.net.MalformedURLException;
 
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.guess880.trac_connector.TracConnectConfig;
 import org.guess880.trac_connector.object.ticket.TracTicketVersion;
 import org.guess880.trac_connector.object.ticket.TracTicketVersions;
 
@@ -14,7 +13,7 @@ public class TracTicketVersionAPI extends
         super(rpcClient);
     }
 
-    public TracTicketVersionAPI(final TracConnectConfig cfg)
+    public TracTicketVersionAPI(final TracAPIConfig cfg)
             throws MalformedURLException {
         super(cfg);
     }

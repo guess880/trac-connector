@@ -3,7 +3,6 @@ package org.guess880.trac_connector.api;
 import java.net.MalformedURLException;
 
 import org.apache.xmlrpc.client.XmlRpcClient;
-import org.guess880.trac_connector.TracConnectConfig;
 
 public class TracTicketResolutionAPI extends AbsTracTicketEnumFieldAPI {
 
@@ -11,7 +10,7 @@ public class TracTicketResolutionAPI extends AbsTracTicketEnumFieldAPI {
         super(rpcClient);
     }
 
-    public TracTicketResolutionAPI(final TracConnectConfig cfg)
+    public TracTicketResolutionAPI(final TracAPIConfig cfg)
             throws MalformedURLException {
         super(cfg);
     }
